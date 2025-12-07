@@ -1,0 +1,28 @@
+# Test files
+tt.*
+.tests
+foo.*
+debug
+.repro
+data
+
+# Logs
+*.log
+
+# Vim tags
+doc/tags
+
+# Backup files
+*.swp
+*.swo
+*~
+
+# System
+.DS_Store
+
+# Plugins (auto-install)
+nvim/plugin/
+tmux/plugins/
+
+# Tmux resurrect backups
+tmux/resurrect/
