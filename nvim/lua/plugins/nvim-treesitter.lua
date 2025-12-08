@@ -12,33 +12,15 @@ return {
 	lazy = false,
 	config = function()
 		require("nvim-treesitter.configs").setup({
-			-- language parsers that MUST be installed  
 			ensure_installed = {
-				"bash",
-				"c",
-				"cpp",
-				"css",
-				"dockerfile",
-				"go",
-				"html",
-				"javascript",
-				"json",
-				"lua",
-				"markdown",
-				"markdown_inline",
-				"python",
-				"rust",
-				"svelte",
-				"typescript",
-				"vue",
-				"yaml",
+				"bash", "c", "cpp", "css", "dockerfile", "go",
+				"html", "javascript", "json", "lua", "markdown",
+				"markdown_inline", "python", "rust", "svelte",
+				"tsx", "typescript", "vue", "yaml",
 			},
-			auto_install = true, -- auto-install any other parsers on opening new language files
+			auto_install = true,
 			sync_install = false,
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = false,
-			},
+			highlight = { enable = true },
 			indent = { enable = true },
 			incremental_selection = {
 				enable = true,
@@ -52,3 +34,4 @@ return {
 		})
 	end,
 }
+
