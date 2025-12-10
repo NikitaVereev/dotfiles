@@ -1,6 +1,6 @@
 # 🚀 Dotfiles
 
-Personal development environment configuration for Neovim, Tmux, and Alacritty.
+Personal development environment configuration for Neovim, Tmux, Zsh, and Alacritty, managed with GNU Stow and Node via NVM.
 
 ---
 
@@ -8,6 +8,7 @@ Personal development environment configuration for Neovim, Tmux, and Alacritty.
 
 **Neovim** - Modern IDE with LSP support for TypeScript, Lua, Python, Go, C++, Solidity
 **Tmux** - Terminal multiplexer with vim-like keybindings
+**Zsh** - Shell configuration managed via GNU Stow
 **Alacritty** - GPU-accelerated terminal
 
 ---
@@ -18,26 +19,31 @@ Personal development environment configuration for Neovim, Tmux, and Alacritty.
 
 ```bash
 # Arch/Manjaro/EndeavourOS
-sudo pacman -S git nodejs npm ripgrep tmux neovim base-devel
+sudo pacman -S git stow tmux neovim ripgrep base-devel zsh ttf-jetbrains-mono-nerd
 
 # Ubuntu/Debian
-sudo apt install git nodejs npm ripgrep tmux neovim
+sudo apt install git stow tmux neovim ripgrep build-essential zsh fonts-jetbrains-mono
 
 # macOS
-brew install git node ripgrep tmux neovim
+brew install git stow tmux neovim ripgrep zsh font-jetbrains-mono
 ```
 
 ### Setup
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
-ln -sf ~/dotfiles/nvim ~/.config/nvim
-ln -sf ~/dotfiles/tmux ~/.config/tmux
-ln -sf ~/dotfiles/alacritty ~/.config/alacritty
-nvim
+cd ~/dotfiles
+
+# Link each module
+stow nvim
+stow tmux
+stow alacritty
+stow zshrc
 ```
 
 ---
+## Switch Shell to Zsh
+
 
 ## ⌨️ Key Bindings
 
