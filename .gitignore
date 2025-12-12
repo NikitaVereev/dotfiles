@@ -21,8 +21,8 @@ doc/tags
 .DS_Store
 
 # Plugins (auto-install)
-nvim/plugin/
-tmux/plugins/
+.config/nvim/plugin/
+.config/tmux/plugins/
 
 # Tmux resurrect backups
-tmux/resurrect/
+.config/tmux/resurrect/
