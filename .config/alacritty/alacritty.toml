@@ -20,34 +20,32 @@ style = "Regular"
 [window]
 padding = { x = 20, y = 20 }
 dynamic_padding = true
-
-
 decorations = "None"
-opacity = 0.95
+opacity = 0.75
 blur = true
 startup_mode = "Maximized"
 
 [colors.primary]
-background = "#221a0f"
-foreground = "#d3af86"
+background = "#2f383e"
+foreground = "#d3c6aa"
 
 [colors.normal]
-black = "#221a0f"
-red = "#c87e5a"
-green = "#879a6b"
-yellow = "#e4b581"
-blue = "#5d90cd"
-magenta = "#c792ea"
-cyan = "#6bbab2"
-white = "#d3af86"
+black   = "#272e33"
+red     = "#e67e80"
+green   = "#a7c080"
+yellow  = "#dbbc7f"
+blue    = "#7fbbb3"
+magenta = "#d699b6"
+cyan    = "#83c092"
+white   = "#d3c6aa"
 
 [colors.bright]
-black = "#7d6f48"
-red = "#c87e5a"
-green = "#879a6b"
-yellow = "#e4b581"
-blue = "#5d90cd"
-magenta = "#c792ea"
-cyan = "#6bbab2"
-white = "#f2cca8"
+black   = "#2f383e"
+red     = "#e67e80"
+green   = "#a7c080"
+yellow  = "#dbbc7f"
+blue    = "#7fbbb3"
+magenta = "#d699b6"
+cyan    = "#83c092"
+white   = "#f9f5d7"
 

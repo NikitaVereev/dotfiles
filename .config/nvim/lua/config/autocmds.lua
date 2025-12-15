@@ -1,13 +1,31 @@
--- ================================================================================================
--- TITLE : auto-commands
--- ABOUT : automatically run code on defined events (e.g. save, yank)
--- ================================================================================================
-local on_attach = require("utils.lsp").on_attach
+local api = vim.api
 
--- Restore last cursor position when reopening a file
-local last_cursor_group = vim.api.nvim_create_augroup("LastCursorGroup", {})
-vim.api.nvim_create_autocmd("BufReadPost", {
-	group = last_cursor_group,
+-- don't auto comment new line
+api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
+
+-- wrap words "softly" (no carriage return) in mail buffer
+api.nvim_create_autocmd("Filetype", {
+	pattern = "mail",
+	callback = function()
+		vim.opt.textwidth = 0
+		vim.opt.wrapmargin = 0
+		vim.opt.wrap = true
+		vim.opt.linebreak = true
+		vim.opt.columns = 80
+		vim.opt.colorcolumn = "80"
+	end,
+})
+
+-- Highlight on yank
+api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+})
+
+-- go to last loc when opening a buffer
+-- this mean that when you open a file, you will be at the last position
+api.nvim_create_autocmd("BufReadPost", {
 	callback = function()
 		local mark = vim.api.nvim_buf_get_mark(0, '"')
 		local lcount = vim.api.nvim_buf_line_count(0)
@@ -17,66 +35,88 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 	end,
 })
 
--- Highlight the yanked text for 200ms
-local highlight_yank_group = vim.api.nvim_create_augroup("HighlightYank", {})
-vim.api.nvim_create_autocmd("TextYankPost", {
-	group = highlight_yank_group,
+-- auto close brackets
+-- this
+api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
+
+-- show cursor line only in active window
+local cursorGrp = api.nvim_create_augroup("CursorLine", { clear = true })
+api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
 	pattern = "*",
-	callback = function()
-		vim.hl.on_yank({
-			higroup = "IncSearch",
-			timeout = 200,
-		})
+	command = "set cursorline",
+	group = cursorGrp,
+})
+api.nvim_create_autocmd(
+	{ "InsertEnter", "WinLeave" },
+	{ pattern = "*", command = "set nocursorline", group = cursorGrp }
+)
+
+-- Enable spell checking for certain file types
+api.nvim_create_autocmd(
+	{ "BufRead", "BufNewFile" },
+	-- { pattern = { "*.txt", "*.md", "*.tex" }, command = [[setlocal spell<cr> setlocal spelllang=en,de<cr>]] }
+	{
+		pattern = { "*.txt", "*.md", "*.tex" },
+		callback = function()
+			vim.opt.spell = true
+			vim.opt.spelllang = "en"
+		end,
+	}
+)
+
+-- vim.api.nvim_create_autocmd("ColorScheme", {
+--   callback = function()
+--     vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
+--     vim.api.nvim_set_hl(0, "LspInfoBorder", { link = "Normal" })
+--     vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+--   end,
+-- })
+
+-- close some filetypes with <q>
+vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
+	pattern = {
+		"PlenaryTestPopup",
+		"help",
+		"lspinfo",
+		"man",
+		"notify",
+		"qf",
+		"spectre_panel",
+		"startuptime",
+		"tsplayground",
+		"neotest-output",
+		"checkhealth",
+		"neotest-summary",
+		"neotest-output-panel",
+	},
+	callback = function(event)
+		vim.bo[event.buf].buflisted = false
+		vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
 	end,
 })
 
--- format on save using efm langserver and configured formatters
-local lsp_fmt_group = vim.api.nvim_create_augroup("FormatOnSaveGroup", {})
-vim.api.nvim_create_autocmd("BufWritePre", {
-	group = lsp_fmt_group,
+-- resize neovim split when terminal is resized
+vim.api.nvim_command("autocmd VimResized * wincmd =")
+
+-- fix terraform and hcl comment string
+vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("FixTerraformCommentString", { clear = true }),
+	callback = function(ev)
+		vim.bo[ev.buf].commentstring = "# %s"
+	end,
+	pattern = { "terraform", "hcl" },
+})
+
+vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
-		local efm = vim.lsp.get_clients({ name = "efm" })
-		if vim.tbl_isempty(efm) then
-			return
-		end
-		vim.lsp.buf.format({ name = "efm", async = true })
+		pcall(vim.treesitter.start)
 	end,
 })
 
--- on attach function shortcuts
-local lsp_on_attach_group = vim.api.nvim_create_augroup("LspMappings", {})
-vim.api.nvim_create_autocmd("LspAttach", {
-	group = lsp_on_attach_group,
-	callback = on_attach,
+-- Enable autoread and set up checking triggers
+vim.o.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+	command = "if mode() != 'c' | checktime | endif",
+	pattern = "*",
 })
-
--- Автоматически определяем корень проекта
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    local root_patterns = { ".git", "package.json", "tsconfig.json" }
-    local path = vim.fn.expand("%:p:h")
-    
-    -- Если открыт без файла, используем текущую директорию
-    if path == "" then
-      path = vim.fn.getcwd()
-    end
-    
-    for _, pattern in ipairs(root_patterns) do
-      local found = vim.fn.finddir(pattern, path .. ";")
-      if found ~= "" then
-        local root = vim.fn.fnamemodify(found, ":h")
-        vim.cmd("cd " .. root)
-        break
-      end
-      
-      -- Также ищем файлы (для package.json, tsconfig.json)
-      local found_file = vim.fn.findfile(pattern, path .. ";")
-      if found_file ~= "" then
-        local root = vim.fn.fnamemodify(found_file, ":h")
-        vim.cmd("cd " .. root)
-        break
-      end
-    end
-  end,
-})
-

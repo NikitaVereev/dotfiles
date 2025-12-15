@@ -30,6 +30,7 @@ require("config.globals")
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
+-- require("config.statusline")
 
 local plugins_dir = "plugins"
 
@@ -43,6 +44,5 @@ require("lazy").setup({
 			"netrwPlugin",
 		},
 	},
-	-- install = { colorscheme = { "melange" } },
 	checker = { enabled = true },
 })

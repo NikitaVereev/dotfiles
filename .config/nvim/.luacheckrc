@@ -1,13 +1,23 @@
+-- Luacheck configuration for Neovim
 globals = {
-  "vim",
+	"vim", -- Neovim global
 }
 
+max_line_length = false
+
 read_globals = {
-  "use",
+	"vim",
 }
 
 ignore = {
-  "212", -- Unused argument (common in callbacks)
-  "213", -- Unused loop variable
-  "631", -- Line is too long (if you prefer longer lines)
+	"631", -- Line is too long (if you prefer longer lines)
+	"212", -- Unused argument (common in callbacks)
+	"213", -- Unused loop variable
+	"122",
 }
+
+files["*_spec.lua"] = {
+	std = "+busted",
+}
+
+self = false
