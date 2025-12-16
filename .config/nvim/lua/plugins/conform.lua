@@ -1,3 +1,9 @@
+-- ============
+-- TITLE: Conform.nvim Configuration
+-- ABOUT: Async code formatter with language-specific tool support
+-- LINKS: https://github.com/stevearc/conform.nvim
+-- ============
+
 return {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" },
@@ -20,10 +26,8 @@ return {
 		formatters_by_ft = {
 			-- Go
 			go = { "goimports", "gofmt" },
-
 			-- Lua
 			lua = { "stylua" },
-
 			-- Web technologies
 			javascript = { "prettier" },
 			typescript = { "prettier" },
@@ -36,20 +40,15 @@ return {
 			html = { "prettier" },
 			css = { "prettier" },
 			scss = { "prettier" },
-
 			-- Python
 			python = { "isort", "black" },
-
 			-- PHP/Laravel
 			php = { "pint" },
-
 			-- Shell
 			sh = { "shfmt" },
 			bash = { "shfmt" },
-
 			-- Other (system tools)
 			rust = { "rustfmt" }, -- comes with Rust installation
-
 			-- Additional file types (uncomment as needed)
 			-- markdown = { "markdownlint" },
 			-- yaml = { "yamllint" },

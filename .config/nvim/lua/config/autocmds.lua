@@ -1,9 +1,16 @@
+-- ============
+-- TITLE: Autocommands
+-- ABOUT: Event-driven automation (format behavior, cursor position ,higlights, etc.)
+-- ============
+
 local api = vim.api
 
--- don't auto comment new line
-api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
+-- Disable automatic comment continuation on new line
+api.nvim_create_autocmd("BufEnter", {
+	command = [[set formatoptions-=cro]],
+})
 
--- wrap words "softly" (no carriage return) in mail buffer
+-- Soft wrap for email buffers
 api.nvim_create_autocmd("Filetype", {
 	pattern = "mail",
 	callback = function()
@@ -16,15 +23,14 @@ api.nvim_create_autocmd("Filetype", {
 	end,
 })
 
--- Highlight on yank
+-- Highlight yanked text briefly
 api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
 		vim.highlight.on_yank()
 	end,
 })
 
--- go to last loc when opening a buffer
--- this mean that when you open a file, you will be at the last position
+-- Restore cursor position on file open
 api.nvim_create_autocmd("BufReadPost", {
 	callback = function()
 		local mark = vim.api.nvim_buf_get_mark(0, '"')
@@ -35,11 +41,13 @@ api.nvim_create_autocmd("BufReadPost", {
 	end,
 })
 
--- auto close brackets
--- this
-api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
+-- Close man pages with 'q'
+api.nvim_create_autocmd("FileType", {
+	pattern = "man",
+	command = [[nnoremap <buffer><silent> q :quit<CR>]],
+})
 
--- show cursor line only in active window
+-- Show cursorline only in active window
 local cursorGrp = api.nvim_create_augroup("CursorLine", { clear = true })
 api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
 	pattern = "*",
@@ -51,28 +59,16 @@ api.nvim_create_autocmd(
 	{ pattern = "*", command = "set nocursorline", group = cursorGrp }
 )
 
--- Enable spell checking for certain file types
-api.nvim_create_autocmd(
-	{ "BufRead", "BufNewFile" },
-	-- { pattern = { "*.txt", "*.md", "*.tex" }, command = [[setlocal spell<cr> setlocal spelllang=en,de<cr>]] }
-	{
-		pattern = { "*.txt", "*.md", "*.tex" },
-		callback = function()
-			vim.opt.spell = true
-			vim.opt.spelllang = "en"
-		end,
-	}
-)
+-- Enable spell checking for text files
+api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*.txt", "*.md", "*.tex" },
+	callback = function()
+		vim.opt.spell = true
+		vim.opt.spelllang = "en"
+	end,
+})
 
--- vim.api.nvim_create_autocmd("ColorScheme", {
---   callback = function()
---     vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
---     vim.api.nvim_set_hl(0, "LspInfoBorder", { link = "Normal" })
---     vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
---   end,
--- })
-
--- close some filetypes with <q>
+-- Close special buffers with 'q'
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
 	pattern = {
@@ -96,10 +92,10 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- resize neovim split when terminal is resized
+-- Auto-resize splits on window resize
 vim.api.nvim_command("autocmd VimResized * wincmd =")
 
--- fix terraform and hcl comment string
+-- Fix comment string for Terraform/HCL
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("FixTerraformCommentString", { clear = true }),
 	callback = function(ev)
@@ -108,13 +104,14 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "terraform", "hcl" },
 })
 
+-- Auto-start Treesitter for all filetypes
 vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		pcall(vim.treesitter.start)
 	end,
 })
 
--- Enable autoread and set up checking triggers
+-- Auto-reload externally modified files
 vim.o.autoread = true
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
 	command = "if mode() != 'c' | checktime | endif",

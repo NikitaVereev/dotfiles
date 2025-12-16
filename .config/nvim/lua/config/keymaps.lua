@@ -1,44 +1,39 @@
-local opts = { noremap = true, silent = true }
--- local map = vim.keymap.set
+-- ============
+-- TITLE: Keymaps
+-- ABOUT: Custom keybindings for navigation, editing, and window management
+-- ============
 
--- Keep cursor centered when scrolling
--- vim.keymap.set("n", "<C-d>", "<C-d>zz", opts)
--- vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
---
--- Move selected line / block of text in visual mode
+local opts = { noremap = true, silent = true }
+
+-- Move lines up/down in visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", opts)
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", opts)
 
--- Fast saving
+-- Quick save/quit (commented out, likely using Snacks bufdelete instead)
 -- vim.keymap.set("n", "<leader>w", ":write!<CR>", { silent = true, desc = "Save file" })
 -- vim.keymap.set("n", "<leader>q", ":q!<CR>", opts)
 
--- Remap for dealing with visual line wraps
+-- Navigate wrapped lines naturally (j/k move by visual line, not actual line)
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
--- better indenting
+-- Indent without losing visual selection (commented out)
 -- vim.keymap.set("v", "<", "<gv")
 -- vim.keymap.set("v", ">", ">gv")
 
--- paste over currently selected text without yanking it
+-- Paste without yanking deleted text (replace without overwriting clipboard)
 vim.keymap.set("v", "p", '"_dp')
 vim.keymap.set("v", "P", '"_dP')
 
--- copy everything between { and } including the brackets
--- p puts text after the cursor,
--- P puts text before the cursor.
+-- Yank inner curly braces block
+-- p pastes after cursor, P pastes before cursor
 vim.keymap.set("n", "YY", "va{Vy", opts)
 
--- vim.keymap.set("n", "j", "gj", opts)
--- vim.keymap.set("n", "k", "gk", opts)
--- Move line on the screen rather than by line in the file
-
--- Exit on jj and jk
+-- Exit insert mode with double key press
 vim.keymap.set("i", "jj", "<ESC>", opts)
 vim.keymap.set("i", "jk", "<ESC>", opts)
--- Move to start/end of line
 
+-- Jump to start/end of line (H = start, L = end)
 vim.keymap.set({ "n", "x", "o" }, "H", "^", opts)
 vim.keymap.set({ "n", "x", "o" }, "L", "g_", opts)
 
@@ -46,59 +41,51 @@ vim.keymap.set({ "n", "x", "o" }, "L", "g_", opts)
 vim.keymap.set("n", "<leader>bn", "<Cmd>bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", "<Cmd>bprevious<CR>", { desc = "Previous buffer" })
 
--- Panes resizing
+-- Resize windows with arrow keys
 vim.keymap.set("n", "<C-Up>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
 vim.keymap.set("n", "<C-Down>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
 vim.keymap.set("n", "<C-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
 vim.keymap.set("n", "<C-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
 
--- Better window navigation
+-- Navigate between windows (Ctrl+hjkl like tmux)
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 
--- Center screen when jumping
+-- Center cursor on jumps/search
 vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
 
--- Splitting & Resizing
+-- Split windows
 vim.keymap.set("n", "<leader>sv", "<Cmd>vsplit<CR>", { desc = "Split window vertically" })
 vim.keymap.set("n", "<leader>sh", "<Cmd>split<CR>", { desc = "Split window horizontally" })
+
+-- NOTE: Duplicate resize bindings (already defined above)
 vim.keymap.set("n", "<C-Up>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
 vim.keymap.set("n", "<C-Down>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
 vim.keymap.set("n", "<C-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
 vim.keymap.set("n", "<C-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
 
--- map ; to resume last search
--- map("n", ";", "<cmd>Telescope resume<cr>", opts)
-
--- search current buffer
--- vim.keymap.set("n", "<C-s>", ":Telescope current_buffer_fuzzy_find<CR>", opts)
-
--- Split line with X
+-- Split line at cursor (keeps indentation)
 vim.keymap.set("n", "X", ":keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>", { silent = true })
 
--- ctrl + x to cut full line
+-- Cut line (delete line into clipboard)
 vim.keymap.set("n", "<C-x>", "dd", opts)
 
 -- Select all
 vim.keymap.set("n", "<C-a>", "ggVG", opts)
 
--- write file in current directory
--- :w %:h/<new-file-name>
+-- Create new file in current directory
 vim.keymap.set("n", "<C-n>", ":w %:h/", opts)
 
--- delete forward
--- w{number}dw
--- delete backward
--- w{number}db
-
+-- Toggle Go test file (switches between _test.go and .go)
 vim.keymap.set("n", "<C-P>", ':lua require("config.utils").toggle_go_test()<CR>', opts)
 
--- Get highlighted line numbers in visual mode
+-- Get line numbers of visual selection (custom utility function)
 vim.keymap.set("v", "<leader>ln", ':lua require("config.utils").get_highlighted_line_numbers()<CR>', opts)
 
+-- Clear search highlight
 vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", opts)

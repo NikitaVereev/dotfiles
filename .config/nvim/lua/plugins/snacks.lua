@@ -1,3 +1,10 @@
+-- ============
+-- TITLE: Snacks.nvim - Swiss Army Knife for Neovim
+-- ABOUT: All-in-one plugin collection: picker, dashboard, notifier, terminal, and more
+-- LINKS: https://github.com/folke/snacks.nvim
+-- NOTE: This replaces Telescope, dashboard-nvim, nvim-notify, and many other plugins
+-- ============
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,

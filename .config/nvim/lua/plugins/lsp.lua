@@ -1,3 +1,8 @@
+-- ============
+-- TITLE: LSP (Language Server Protocol) Configuration
+-- ABOUT: Complete LSP setup with Mason, keymaps, diagnostics, and auto-install
+-- ============
+
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -6,9 +11,7 @@ return {
 			"mason-org/mason-lspconfig.nvim",
 		},
 		config = function()
-			-- ============================================================================
 			-- LSP Keymaps Setup
-			-- ============================================================================
 			local function setup_keymaps(bufnr)
 				local function map(mode, lhs, rhs, desc)
 					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = "LSP: " .. desc, silent = true })
@@ -37,8 +40,6 @@ return {
 				-- Code actions
 				map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code action")
 				map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
-				-- Format keybinding handled by conform.nvim plugin
-				-- map("n", "<leader>cf", function() vim.lsp.buf.format({ async = true }) end, "Format buffer")
 
 				-- Diagnostics
 				map("n", "[d", function()
@@ -68,9 +69,7 @@ return {
 				end
 			end
 
-			-- ============================================================================
 			-- LSP Attach Handler
-			-- ============================================================================
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
 				callback = function(args)
@@ -110,9 +109,7 @@ return {
 				end,
 			})
 
-			-- ============================================================================
 			-- Diagnostic Configuration
-			-- ============================================================================
 			vim.diagnostic.config({
 				virtual_text = true,
 				underline = true,
@@ -239,7 +236,6 @@ return {
 					"html",
 					"jsonls",
 					"yamlls",
-
 					-- Linters
 					"eslint_d",
 					"luacheck",
@@ -253,7 +249,6 @@ return {
 					"phpstan",
 					"ruff",
 					"mypy",
-
 					-- Formatters
 					"stylua",
 					"goimports",
