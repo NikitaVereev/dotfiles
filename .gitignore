@@ -26,3 +26,6 @@ doc/tags
 
 # Tmux resurrect backups
 .config/tmux/resurrect/
+
+# Hyprland local
+.config/hypr/local.conf
