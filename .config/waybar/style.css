@@ -29,10 +29,12 @@ tooltip label {
   color: @fg;
 }
 
-.modules-center {
-  background-color: @bg0;
-  padding: 2px 4px;
-  border-radius: 24px;
+.modules-center,
+.modules-left,
+.modules-right {
+  background-color: @bg1;
+  border-radius: 12px;
+  padding: 0 8px;
 }
 
 #workspaces button {
@@ -40,26 +42,26 @@ tooltip label {
   box-shadow: none;
   text-shadow: none;
   padding: 1px 16px 0px;
-  border-radius: 9px;
+  border-radius: 8px;
+  transition: 0.3s ease;
 }
 
 #workspaces button:hover {
   color: @bg_green;
-  border-radius: 16px;
 }
 
 #workspaces button.active {
-  color: @bg0;
+  color: @bg1;
   background-color: @fg;
 }
 
 #workspaces button.urgent {
   color: @purple;
-  border-radius: 16px;
+  border-radius: 8px;
 }
 
 #workspaces button.persistent {
-  border-radius: 16px;
+  border-radius: 8px;
 }
 
 #battery,
@@ -68,12 +70,13 @@ tooltip label {
 #clock,
 #language,
 #custom-notification,
+#custom-arch,
 #bluetooth,
 #workspaces,
 #window,
 #cpu,
 #mpris {
-  padding: 8px 16px;
+  padding: 6px 14px;
 }
 
 #pulseaudio {
@@ -102,13 +105,16 @@ tooltip label {
 
 #custom-notification {
   background-color: alpha(@purple, 0.75);
-  /* border: 1px solid @surface_container; */
   border-radius: 20px;
   padding-top: 8px;
   padding-bottom: 8px;
   padding-right: 8px;
   padding-left: 15px;
   margin: 0 0 0 5px;
+}
+
+#custom-arch {
+  color: @blue;
 }
 
 #battery.critical:not(.charging) {

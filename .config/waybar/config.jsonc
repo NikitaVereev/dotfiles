@@ -6,10 +6,17 @@
   "spacing": 3,
   "fixed-center": true,
   "margin": "3 8 0",
-  "modules-center": [
+  "modules-left": [
+    "custom/arch",
+    "custom/separator#line",
     "clock",
+    "custom/separator#line",
+    "clock#day",
+    "custom/separator#line",
     "mpris",
-    "hyprland/workspaces",
+  ],
+  "modules-center": ["hyprland/workspaces"],
+  "modules-right": [
     "hyprland/language",
     "custom/separator#line",
     "pulseaudio",
@@ -26,19 +33,9 @@
     "format": "{:%H:%M}",
     "format-alt": " {:L%H:%M   %Y, %d %B, %A}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
-    "calendar": {
-      "mode": "year",
-      "mode-mon-col": 3,
-      "weeks-pos": "right",
-      "on-scroll": 1,
-      "format": {
-        "months": "<span color='#ffead3'><b>{}</b></span>",
-        "days": "<span color='#ecc6d9'><b>{}</b></span>",
-        "weeks": "<span color='#99ffdd'><b>W{:%V}</b></span>",
-        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
-      },
-    },
+  },
+  "clock#day": {
+    "format": " {:%d %B, %A}",
   },
 
   "hyprland/workspaces": {
@@ -89,7 +86,7 @@
 
   "network": {
     "format": "{icon}",
-    "format-wifi": "󰤥",
+    "format-wifi": "󰤥  {essid}",
     "format-ethernet": "󰌘",
     "format-disconnected": "󰌙",
     "tooltip-format": "{ifname}",
@@ -111,7 +108,7 @@
     },
     "format": "{icon} {capacity}%",
     "format-charging": " {capacity}%",
-    "format-plugged": "󱘖 {capacity}%",
+    "format-plugged": "{icon} {capacity}%",
     "format-alt-click": "click",
     "format-full": "{icon} Full",
     "format-alt": "{icon} {time}",
@@ -175,10 +172,8 @@
   },
 
   "pulseaudio": {
-    // "format": "{icon} {volume}%",
-    "format": "{icon}",
-    // "format-bluetooth": "{icon} 󰂰 {volume}%",
-    "format-bluetooth": "{icon}",
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "{icon} 󰂰 {volume}%",
     "format-muted": "󰖁",
     "format-icons": {
       "headphone": "",
@@ -202,8 +197,7 @@
   "bluetooth": {
     "format": "󰂯",
     "format-disabled": "󰂳",
-    // "format-connected": "󰂱 {num_connections}",
-    "format-connected": "󰂱",
+    "format-connected": "󰂱 {num_connections}",
     "tooltip-format": "{device_alias}",
     "tooltip-format-connected": "{device_enumerate}",
     "tooltip-format-enumerate-connected": " {device_alias} {device_battery_percentage}%",
@@ -214,6 +208,10 @@
   "custom/separator#line": {
     "format": "|",
     "interval": "once",
+    "tooltip": false,
+  },
+  "custom/arch": {
+    "format": " ",
     "tooltip": false,
   },
 }
