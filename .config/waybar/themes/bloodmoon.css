@@ -1,0 +1,25 @@
+/* Blood Moon  */
+@define-color bg_dim #0A0505;
+@define-color bg0 #1A0D0D;
+@define-color bg1 #26191A;
+@define-color bg2 #3D2626;
+@define-color bg3 #4F3333;
+@define-color bg5 #663939;
+@define-color bg_visual #4D1A1A;
+@define-color bg_red #8B0000;
+@define-color bg_green #663939;
+@define-color bg_blue #331A1A;
+@define-color bg_yellow #4D2626;
+
+@define-color fg #FFEBEE;
+@define-color red #DC143C;
+@define-color orange #FF4500;
+@define-color yellow #FF8C42;
+@define-color green #FF6B6B;
+@define-color aqua #FF8A80;
+@define-color blue #B71C1C;
+@define-color purple #AD1457;
+
+@define-color gray0 #663939;
+@define-color gray1 #994040;
+@define-color gray2 #CC5959;

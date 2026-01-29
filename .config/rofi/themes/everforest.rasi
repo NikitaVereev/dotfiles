@@ -1,0 +1,11 @@
+/* Everforest Rofi */
+* {
+    background: rgba(45, 53, 59, 0.90); 
+    foreground: #D3C6AA;               
+    selected: #A7C080;                
+    selected-fg: #2D353B;            
+    urgent: #E67E80;                
+    border-color: rgba(167, 192, 128, 0.3);
+    banner-image: url("~/Pictures/wallpapers/everforest.png", width);
+}
+

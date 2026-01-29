@@ -1,4 +1,4 @@
-@import "colors/everforest.css";
+@import "themes/current.css";
 
 * {
   border: none;
@@ -41,11 +41,7 @@ window#waybar.empty #window {
 }
 
 #workspaces button.active {
-  background: linear-gradient(
-    145deg,
-    rgba(211, 198, 170, 0.9),
-    rgba(255, 255, 255, 0.7)
-  );
+  background: @fg; 
   color: @bg1;
 }
 
