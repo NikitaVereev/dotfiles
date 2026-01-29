@@ -1,11 +1,12 @@
 @import "colors/everforest.css";
 
 * {
+  border: none;
   border-radius: 0px;
   font-family: "JetBrainsMono Nerd Font";
   font-size: 100%;
+  font-weight: 600;
   font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
-  font-weight: bold;
   min-height: 0;
   padding: 0;
   margin: 0;
@@ -19,98 +20,85 @@ window#waybar.empty #window {
   border: 0px;
 }
 
-tooltip {
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 12px;
-  padding: 8px 16px;
-}
-
-tooltip label {
-  color: @fg;
-}
-
-.modules-center,
 .modules-left,
+.modules-center,
 .modules-right {
-  background-color: @bg1;
-  border-radius: 12px;
-  padding: 0 8px;
+  background: rgba(46, 56, 60, 0.6);
+  border-radius: 24px;
+  padding: 8px 16px;
 }
 
 #workspaces button {
   color: @bg5;
-  box-shadow: none;
-  text-shadow: none;
-  padding: 1px 16px 0px;
-  border-radius: 8px;
-  transition: 0.3s ease;
+  padding: 4px 12px;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #workspaces button:hover {
-  color: @bg_green;
+  background: rgba(255, 255, 255, 0.15);
+  color: @fg;
 }
 
 #workspaces button.active {
+  background: linear-gradient(
+    145deg,
+    rgba(211, 198, 170, 0.9),
+    rgba(255, 255, 255, 0.7)
+  );
   color: @bg1;
-  background-color: @fg;
 }
 
 #workspaces button.urgent {
-  color: @purple;
-  border-radius: 8px;
-}
-
-#workspaces button.persistent {
-  border-radius: 8px;
+  background: rgba(230, 126, 128, 0.9);
+  color: @bg1;
 }
 
 #battery,
 #pulseaudio,
 #network,
+#bluetooth,
 #clock,
 #language,
+#mpris,
 #custom-notification,
-#custom-arch,
-#bluetooth,
-#workspaces,
-#window,
-#cpu,
-#mpris {
-  padding: 6px 14px;
+#custom-arch {
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+#battery:hover,
+#pulseaudio:hover,
+#network:hover,
+#mpris:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 #pulseaudio {
   color: @yellow;
 }
-
 #network {
-  color: @purple;
+  color: @aqua;
 }
-
 #battery {
   color: @green;
 }
-
 #mpris {
-  color: @aqua;
+  color: @purple;
 }
-
 #bluetooth {
   color: @blue;
 }
-
-#custom-separator {
-  color: @bg5;
+#clock {
+  color: @fg;
+}
+#custom-arch {
+  color: @blue;
 }
 
 #custom-notification {
   background-color: alpha(@purple, 0.75);
-  border-radius: 20px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-right: 8px;
-  padding-left: 15px;
-  margin: 0 0 0 5px;
 }
 
 #custom-arch {
@@ -119,4 +107,26 @@ tooltip label {
 
 #battery.critical:not(.charging) {
   color: #f53c3c;
+}
+
+#battery.critical:not(.charging) {
+  background: rgba(245, 60, 60, 0.4);
+  color: #fff;
+}
+#custom-separator#line {
+  color: rgba(255, 255, 255, 0.4);
+  padding: 0 8px;
+  margin: 0 4px;
+}
+
+tooltip {
+  background: rgba(52, 53, 62, 0.95);
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+tooltip label {
+  color: @fg;
 }

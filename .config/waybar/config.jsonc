@@ -3,9 +3,10 @@
   "layer": "top",
   "exclusive": true,
   "passthrough": false,
-  "spacing": 3,
+  "spacing": 4,
+  "gtk-layer-shell": true,
   "fixed-center": true,
-  "margin": "3 8 0",
+  "margin": "10 20 0",
   "modules-left": [
     "custom/arch",
     "custom/separator#line",
