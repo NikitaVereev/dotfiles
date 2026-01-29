@@ -5,6 +5,7 @@
 return {
 	{ "sainnhe/everforest", priority = 1000 },
 	{ "folke/tokyonight.nvim", priority = 1000 },
+	{ "catppuccin/nvim", priority = 1000 },
 
 	{
 		dir = vim.fn.stdpath("config"),
@@ -26,6 +27,8 @@ return {
 				vim.cmd.colorscheme("everforest")
 			elseif theme == "bloodmoon" then
 				vim.cmd.colorscheme("tokyonight-storm")
+			elseif theme == "catppuccin" then
+				vim.cmd.colorscheme("catppuccin-mocha")
 			end
 
 			vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })

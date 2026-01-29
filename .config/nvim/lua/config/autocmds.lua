@@ -138,6 +138,8 @@ vim.api.nvim_create_autocmd("Signal", {
 				vim.cmd("colorscheme everforest")
 			elseif theme == "bloodmoon" then
 				vim.cmd("colorscheme tokyonight-storm")
+			elseif theme == "catppuccin" then
+				vim.cmd("colorscheme catppuccin")
 			end
 
 			vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
