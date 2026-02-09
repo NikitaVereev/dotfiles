@@ -12,6 +12,11 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+require("config.globals")
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
+
 -- Bootstrap tree-sitter-cli if cargo is available
 if vim.fn.executable("tree-sitter") == 0 and vim.fn.executable("cargo") == 1 then
 	vim.notify("Installing tree-sitter-cli via cargo...", vim.log.levels.INFO)
