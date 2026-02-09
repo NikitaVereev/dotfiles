@@ -54,8 +54,11 @@ return {
 	{
 		"echasnovski/mini.icons",
 		enabled = true,
-		opts = {},
-		lazy = true,
+		lazy = false,
+		priority = 1000,
+		opts = {
+			style = "glyph",
+		},
 	},
 
 	-- ════════════════════════════════════════════════════════════════════════════

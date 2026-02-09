@@ -166,24 +166,6 @@ return {
 						},
 					})
 				end,
-
-				["intelephense"] = function()
-					local get_intelephense_license = function()
-						local f = assert(io.open(os.getenv("HOME") .. "/intelephense/license.txt", "rb"))
-						local content = f:read("*a")
-						f:close()
-						return string.gsub(content, "%s+", "")
-					end
-
-					lspconfig.intelephense.setup({
-						cmd = { "intelephense", "--stdio" },
-						filetypes = { "php", "blade" },
-						root_dir = lspconfig.util.root_pattern("composer.json", ".git"),
-						init_options = {
-							licenceKey = get_intelephense_license(),
-						},
-					})
-				end,
 			}
 
 			-- Setup mason-lspconfig with handlers
@@ -207,7 +189,6 @@ return {
 					"zls",
 					"ts_ls",
 					"rust-analyzer",
-					"intelephense",
 					"bashls",
 					"pyright",
 					"cssls",
@@ -224,7 +205,6 @@ return {
 					"jsonlint",
 					"htmlhint",
 					"stylelint",
-					"phpstan",
 					"ruff",
 					"mypy",
 					-- Formatters
@@ -234,7 +214,6 @@ return {
 					"black",
 					"isort",
 					"shfmt",
-					"pint",
 				},
 			})
 		end,
