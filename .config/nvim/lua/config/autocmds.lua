@@ -26,7 +26,7 @@ api.nvim_create_autocmd("Filetype", {
 -- Highlight yanked text briefly
 api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
-		vim.highlight.on_yank()
+		vim.hl.on_yank()
 	end,
 })
 
@@ -41,13 +41,6 @@ api.nvim_create_autocmd("BufReadPost", {
 	end,
 })
 
--- Close man pages with 'q'
-api.nvim_create_autocmd("FileType", {
-	pattern = "man",
-	command = [[nnoremap <buffer><silent> q :quit<CR>]],
-})
-
--- Show cursorline only in active window
 local cursorGrp = api.nvim_create_augroup("CursorLine", { clear = true })
 api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
 	pattern = "*",
@@ -59,7 +52,7 @@ api.nvim_create_autocmd(
 	{ pattern = "*", command = "set nocursorline", group = cursorGrp }
 )
 
--- Enable spell checking for text files
+-- Enable spell checking for certain file types
 api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = { "*.txt", "*.md", "*.tex" },
 	callback = function()
@@ -68,9 +61,9 @@ api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	end,
 })
 
--- Close special buffers with 'q'
-vim.api.nvim_create_autocmd("FileType", {
-	group = vim.api.nvim_create_augroup("close_with_q", { clear = true }),
+-- close some filetypes with <q>
+api.nvim_create_autocmd("FileType", {
+	group = api.nvim_create_augroup("close_with_q", { clear = true }),
 	pattern = {
 		"PlenaryTestPopup",
 		"help",
@@ -92,30 +85,29 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- Auto-resize splits on window resize
-vim.api.nvim_command("autocmd VimResized * wincmd =")
+-- Resize neovim split when terminal is resized
+api.nvim_create_autocmd("VimResized", {
+	callback = function()
+		vim.cmd("wincmd =")
+	end,
+})
 
--- Fix comment string for Terraform/HCL
-vim.api.nvim_create_autocmd("FileType", {
-	group = vim.api.nvim_create_augroup("FixTerraformCommentString", { clear = true }),
+-- Fix terraform and hcl comment string
+api.nvim_create_autocmd("FileType", {
+	group = api.nvim_create_augroup("FixTerraformCommentString", { clear = true }),
+	pattern = { "terraform", "hcl" },
 	callback = function(ev)
 		vim.bo[ev.buf].commentstring = "# %s"
 	end,
-	pattern = { "terraform", "hcl" },
 })
 
--- Auto-start Treesitter for all filetypes
-vim.api.nvim_create_autocmd("FileType", {
+-- Check for external file changes (works with Claude Code)
+api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, { -- CursorHold
 	callback = function()
-		pcall(vim.treesitter.start)
+		if vim.fn.mode() ~= "c" then
+			vim.cmd("checktime")
+		end
 	end,
-})
-
--- Auto-reload externally modified files
-vim.o.autoread = true
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
-	command = "if mode() != 'c' | checktime | endif",
-	pattern = "*",
 })
 
 -- Switch system theme

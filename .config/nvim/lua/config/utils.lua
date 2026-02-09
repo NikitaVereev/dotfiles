@@ -7,19 +7,22 @@ local M = {}
 
 -- Toggle between Go Source file and its corresponding test file
 M.toggle_go_test = function()
-	local current_file = vim.fn.expand("%:p") -- Get absolute path of current file
+	-- Get the current buffer's file name
+	local current_file = vim.fn.expand("%:p")
 	if string.match(current_file, "_test.go$") then
-		-- Currently in test file, switch to source file
+		-- If the current file ends with '_test.go', try to find the corresponding non-test file
 		local non_test_file = string.gsub(current_file, "_test.go$", ".go")
 		if vim.fn.filereadable(non_test_file) == 1 then
+			-- Open the corresponding non-test file if it exists
 			vim.cmd.edit(non_test_file)
 		else
 			print("No corresponding non-test file found")
 		end
 	else
-		-- Currently in source file, switch to test file
+		-- If the current file is a non-test file, try to find the corresponding test file
 		local test_file = string.gsub(current_file, ".go$", "_test.go")
 		if vim.fn.filereadable(test_file) == 1 then
+			-- Open the corresponding test file if it exists
 			vim.cmd.edit(test_file)
 		else
 			print("No corresponding test file found")
@@ -29,15 +32,15 @@ end
 
 -- Get line numbers for visual selection (outputs GitHub-style L80 or L80-85)
 M.get_highlighted_line_numbers = function()
-	local start_line = vim.fn.line("'<") -- Start of visual selection
-	local end_line = vim.fn.line("'>") -- End of visual selection
+	local start_line = vim.fn.line("'<")
+	local end_line = vim.fn.line("'>")
 
 	if start_line == 0 or end_line == 0 then
 		print("No visual selection found")
 		return
 	end
 
-	-- Normalize order (handle reverse selection)
+	-- Ensure start_line is always less than or equal to end_line
 	if start_line > end_line then
 		start_line, end_line = end_line, start_line
 	end
@@ -66,31 +69,29 @@ end
 
 -- Copy current file path with line number as GitHub URL (or local path if not in repo)
 M.copyFilePathAndLineNumber = function()
-	local current_file = vim.fn.expand("%:p") -- Absolute file path
-	local current_line = vim.fn.line(".") -- Current line number
+	local current_file = vim.fn.expand("%:p")
+	local current_line = vim.fn.line(".")
 	local is_git_repo = vim.fn.system("git rev-parse --is-inside-work-tree"):match("true")
 
 	if is_git_repo then
-		-- Inside Git repositoty: generate GitHub URL
 		local current_repo = vim.fn.systemlist("git remote get-url origin")[1]
 		local current_branch = vim.fn.systemlist("git rev-parse --abbrev-ref HEAD")[1]
 
-		-- Convert SSH URL to HTTPS format
+		-- Convert Git URL to GitHub web URL format
 		current_repo = current_repo:gsub("git@github.com:", "https://github.com/")
 		current_repo = current_repo:gsub("%.git$", "")
 
-		-- Git relative path from repository root
+		-- Remove leading system path to repository root
 		local repo_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
 		if repo_root then
-			current_file = current_file:sub(#repo_root + 2) -- Remove leading path + separator
+			current_file = current_file:sub(#repo_root + 2)
 		end
 
-		-- Bould GitHub URL: https://github.com/user/repo/blob/branch/path/file.ts#L42
 		local url = string.format("%s/blob/%s/%s#L%s", current_repo, current_branch, current_file, current_line)
 		vim.fn.setreg("+", url)
 		print("Copied to clipboard: " .. url)
 	else
-		-- Not in Git repo: copy absolute path with line number
+		-- If not in a Git directory, copy the full file path
 		vim.fn.setreg("+", current_file .. "#L" .. current_line)
 		print("Copied full path to clipboard: " .. current_file .. "#L" .. current_line)
 	end

@@ -1,91 +1,102 @@
--- ============
--- TITLE: Keymaps
--- ABOUT: Custom keybindings for navigation, editing, and window management
--- ============
+-- ════════════════════════════════════════════════════════════════════════════
+-- Essential Operations
+-- ════════════════════════════════════════════════════════════════════════════
 
-local opts = { noremap = true, silent = true }
+-- Save
+vim.keymap.set("n", "<C-s>", "<cmd>w<cr>", { desc = "Save File" })
+vim.keymap.set({ "i", "x" }, "<C-s>", "<Esc><cmd>w<cr>", { desc = "Save File" })
 
--- Move lines up/down in visual mode
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", opts)
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", opts)
-
--- Quick save/quit (commented out, likely using Snacks bufdelete instead)
--- vim.keymap.set("n", "<leader>w", ":write!<CR>", { silent = true, desc = "Save file" })
--- vim.keymap.set("n", "<leader>q", ":q!<CR>", opts)
-
--- Navigate wrapped lines naturally (j/k move by visual line, not actual line)
-vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
-vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
-
--- Indent without losing visual selection (commented out)
--- vim.keymap.set("v", "<", "<gv")
--- vim.keymap.set("v", ">", ">gv")
-
--- Paste without yanking deleted text (replace without overwriting clipboard)
-vim.keymap.set("v", "p", '"_dp')
-vim.keymap.set("v", "P", '"_dP')
-
--- Yank inner curly braces block
--- p pastes after cursor, P pastes before cursor
-vim.keymap.set("n", "YY", "va{Vy", opts)
-
--- Exit insert mode with double key press
-vim.keymap.set("i", "jj", "<ESC>", opts)
-vim.keymap.set("i", "jk", "<ESC>", opts)
-
--- Jump to start/end of line (H = start, L = end)
-vim.keymap.set({ "n", "x", "o" }, "H", "^", opts)
-vim.keymap.set({ "n", "x", "o" }, "L", "g_", opts)
-
--- Buffer navigation
-vim.keymap.set("n", "<leader>bn", "<Cmd>bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<leader>bp", "<Cmd>bprevious<CR>", { desc = "Previous buffer" })
-
--- Resize windows with arrow keys
-vim.keymap.set("n", "<C-Up>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
-vim.keymap.set("n", "<C-Down>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
-vim.keymap.set("n", "<C-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
-vim.keymap.set("n", "<C-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
-
--- Navigate between windows (Ctrl+hjkl like tmux)
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
-
--- Center cursor on jumps/search
-vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
-vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
-
--- Split windows
-vim.keymap.set("n", "<leader>sv", "<Cmd>vsplit<CR>", { desc = "Split window vertically" })
-vim.keymap.set("n", "<leader>sh", "<Cmd>split<CR>", { desc = "Split window horizontally" })
-
--- NOTE: Duplicate resize bindings (already defined above)
-vim.keymap.set("n", "<C-Up>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
-vim.keymap.set("n", "<C-Down>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
-vim.keymap.set("n", "<C-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
-vim.keymap.set("n", "<C-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
-
--- Split line at cursor (keeps indentation)
-vim.keymap.set("n", "X", ":keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>", { silent = true })
-
--- Cut line (delete line into clipboard)
-vim.keymap.set("n", "<C-x>", "dd", opts)
-
--- Select all
-vim.keymap.set("n", "<C-a>", "ggVG", opts)
-
--- Create new file in current directory
-vim.keymap.set("n", "<C-n>", ":w %:h/", opts)
-
--- Toggle Go test file (switches between _test.go and .go)
-vim.keymap.set("n", "<C-P>", ':lua require("config.utils").toggle_go_test()<CR>', opts)
-
--- Get line numbers of visual selection (custom utility function)
-vim.keymap.set("v", "<leader>ln", ':lua require("config.utils").get_highlighted_line_numbers()<CR>', opts)
+-- Quit
+vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { desc = "Quit" })
+vim.keymap.set("n", "<leader>Q", "<cmd>qa<cr>", { desc = "Quit All" })
 
 -- Clear search highlight
-vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", opts)
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear Highlight", silent = true })
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- Window Navigation (no prefix for speed)
+-- ════════════════════════════════════════════════════════════════════════════
+
+vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go Left" })
+vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go Down" })
+vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go Up" })
+vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go Right" })
+
+-- Window resizing
+vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Height" })
+vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Height" })
+vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Width" })
+vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Width" })
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- Line Movement (Visual Mode)
+-- ════════════════════════════════════════════════════════════════════════════
+
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Lines Down" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Lines Up" })
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- Better Navigation
+-- ════════════════════════════════════════════════════════════════════════════
+
+-- Wrapped line navigation
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, desc = "Up (wrapped)" })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, desc = "Down (wrapped)" })
+
+-- Start/End of line (easier than ^ and $)
+vim.keymap.set({ "n", "x", "o" }, "H", "^", { desc = "Start of Line" })
+vim.keymap.set({ "n", "x", "o" }, "L", "g_", { desc = "End of Line" })
+
+-- Keep search results centered
+vim.keymap.set("n", "n", "nzzzv", { desc = "Next Match (centered)" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "Prev Match (centered)" })
+vim.keymap.set("n", "*", "*zzzv", { desc = "Search Word (centered)" })
+vim.keymap.set("n", "#", "#zzzv", { desc = "Search Word Back (centered)" })
+
+-- Buffer navigation
+vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- Better Editing
+-- ════════════════════════════════════════════════════════════════════════════
+
+-- Better indenting (stay in visual mode)
+vim.keymap.set("v", "<", "<gv", { desc = "Indent Left" })
+vim.keymap.set("v", ">", ">gv", { desc = "Indent Right" })
+
+-- Paste over selection without yanking
+vim.keymap.set("v", "p", '"_dP', { desc = "Paste (no yank)" })
+
+-- Yank block
+vim.keymap.set("n", "YY", "va{Vy", { desc = "Yank Block {}" })
+
+-- Split line (opposite of J)
+vim.keymap.set(
+	"n",
+	"X",
+	":keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>",
+	{ desc = "Split Line", silent = true }
+)
+
+-- Select all
+vim.keymap.set("n", "<C-a>", "ggVG", { desc = "Select All" })
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- Insert Mode Escapes
+-- ════════════════════════════════════════════════════════════════════════════
+
+vim.keymap.set("i", "jj", "<Esc>", { desc = "Exit Insert" })
+vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit Insert" })
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- Terminal Mode
+-- ════════════════════════════════════════════════════════════════════════════
+
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit Terminal Mode" })
+vim.keymap.set("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go Left" })
+vim.keymap.set("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go Down" })
+vim.keymap.set("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go Up" })
+vim.keymap.set("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go Right" })

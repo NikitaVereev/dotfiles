@@ -14,15 +14,15 @@ return {
 			-- LSP Keymaps Setup
 			local function setup_keymaps(bufnr)
 				local function map(mode, lhs, rhs, desc)
-					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = "LSP: " .. desc, silent = true })
+					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
 				end
 
-				-- Navigation
-				map("n", "gd", vim.lsp.buf.definition, "Go to definition")
-				map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-				map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
-				map("n", "gr", vim.lsp.buf.references, "Go to references")
-				map("n", "gt", vim.lsp.buf.type_definition, "Go to type definition")
+				-- Navigation (snacks.lua)
+				-- map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+				-- map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+				-- map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+				-- map("n", "gr", vim.lsp.buf.references, "Go to references")
+				-- map("n", "gt", vim.lsp.buf.type_definition, "Go to type definition")
 
 				-- Information
 				-- map("n", "K", vim.lsp.buf.hover, "Hover documentation")
@@ -32,41 +32,30 @@ return {
 						max_height = 25, -- Sets a maximum height
 						max_width = 120, -- Sets a maximum width
 					})
-				end, "Hover documentation")
+				end, "Hover")
 
-				map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
-				map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
+				map({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
 
-				-- Code actions
+				-- <leader>c
 				map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code action")
 				map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+				map("n", "<leader>cd", vim.diagnostic.open_float, "Line Diagnostic")
+				map("n", "<leader>cv", "<cmd>vsplit | lua vim.lsp.buf.definition()<cr>", "Definition in Vsplit")
+
+				-- <leader>l
+				map("n", "<leader>li", "<cmd>LspInfo<cr>", "LSP Info")
+				map("n", "<leader>lr", "<cmd>LspRestart<cr>", "LSP Restart")
+				map("n", "<leader>lh", function()
+					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+				end, "Toggle Inlay Hints")
 
 				-- Diagnostics
 				map("n", "[d", function()
 					vim.diagnostic.jump({ count = -1 })
-				end, "Previous diagnostic")
+				end, "Prev diagnostic")
 				map("n", "]d", function()
 					vim.diagnostic.jump({ count = 1 })
 				end, "Next diagnostic")
-				map("n", "<leader>cd", vim.diagnostic.open_float, "Show diagnostic")
-				map("n", "<leader>cl", vim.diagnostic.setloclist, "Diagnostics to loclist")
-
-				-- Workspace
-				map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
-				map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder")
-				map("n", "<leader>wl", function()
-					print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-				end, "List workspace folders")
-
-				-- Inlay hints toggle (useful for manual control)
-				if vim.lsp.inlay_hint then
-					map("n", "<leader>ih", function()
-						vim.lsp.inlay_hint.enable(
-							not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }),
-							{ bufnr = bufnr }
-						)
-					end, "Toggle inlay hints")
-				end
 			end
 
 			-- LSP Attach Handler
@@ -86,23 +75,17 @@ return {
 					-- Enable completion triggered by <c-x><c-o>
 					vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-					-- Enable inlay hints if supported (Neovim 0.10+)
-					if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-						vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-					end
-
 					-- Document highlight on cursor hold
 					if client.server_capabilities.documentHighlightProvider then
-						local highlight_group =
-							vim.api.nvim_create_augroup("LspDocumentHighlight_" .. bufnr, { clear = true })
+						local group = vim.api.nvim_create_augroup("LspDocumentHighlight_" .. bufnr, { clear = true })
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 							buffer = bufnr,
-							group = highlight_group,
+							group = group,
 							callback = vim.lsp.buf.document_highlight,
 						})
 						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 							buffer = bufnr,
-							group = highlight_group,
+							group = group,
 							callback = vim.lsp.buf.clear_references,
 						})
 					end
@@ -115,12 +98,7 @@ return {
 				underline = true,
 				update_in_insert = false,
 				severity_sort = true,
-				float = {
-					border = "rounded",
-					source = true,
-					header = "",
-					prefix = "",
-				},
+				float = { border = "rounded", source = true, header = "", prefix = "" },
 				signs = {
 					text = {
 						[vim.diagnostic.severity.ERROR] = "󰅚 ",

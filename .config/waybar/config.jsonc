@@ -1,6 +1,7 @@
 {
   "position": "top",
   "layer": "top",
+  "height": 30,
   "exclusive": true,
   "passthrough": false,
   "spacing": 4,
@@ -27,7 +28,12 @@
     "bluetooth",
     "custom/separator#line",
     "battery",
+    "tray"
   ],
+  "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
 
   "clock": {
     "interval": 1,
