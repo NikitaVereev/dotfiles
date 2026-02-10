@@ -129,7 +129,7 @@ vim.api.nvim_create_autocmd("Signal", {
 				vim.g.everforest_better_performance = 1
 				vim.cmd("colorscheme everforest")
 			elseif theme == "bloodmoon" then
-				vim.cmd("colorscheme tokyonight-storm")
+				require("themes.bloodmoon").setup()
 			elseif theme == "catppuccin" then
 				vim.cmd("colorscheme catppuccin")
 			end

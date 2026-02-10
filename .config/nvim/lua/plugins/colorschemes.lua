@@ -4,7 +4,6 @@
 
 return {
 	{ "sainnhe/everforest", priority = 1000 },
-	{ "folke/tokyonight.nvim", priority = 1000 },
 	{ "catppuccin/nvim", priority = 1000 },
 
 	{
@@ -26,7 +25,7 @@ return {
 				vim.g.everforest_transparent_background = 2
 				vim.cmd.colorscheme("everforest")
 			elseif theme == "bloodmoon" then
-				vim.cmd.colorscheme("tokyonight-storm")
+				require("themes.bloodmoon").setup()
 			elseif theme == "catppuccin" then
 				vim.cmd.colorscheme("catppuccin-mocha")
 			end
