@@ -103,9 +103,9 @@ function M.setup()
 		-- ═══════════════════════════════════════════════════════════════════
 		-- EDITOR
 		-- ═══════════════════════════════════════════════════════════════════
-		Normal = { fg = c.fg, bg = c.bg1 },
-		NormalFloat = { fg = c.fg, bg = c.bg2 },
-		NormalNC = { fg = c.fg, bg = c.bg0 },
+		Normal = { fg = c.fg, bg = c.none },
+		NormalFloat = { fg = c.fg, bg = c.none },
+		NormalNC = { fg = c.fg, bg = c.none },
 
 		-- Cursor
 		Cursor = { fg = c.cursor_bg, bg = c.cursor },
@@ -116,7 +116,7 @@ function M.setup()
 		-- Line numbers
 		LineNr = { fg = c.gray1 },
 		CursorLineNr = { fg = c.orange, bold = true },
-		SignColumn = { fg = c.gray1, bg = c.bg1 },
+		SignColumn = { fg = c.gray1, bg = c.none },
 
 		-- Visual mode
 		Visual = { bg = c.visual },
@@ -134,8 +134,8 @@ function M.setup()
 		PmenuThumb = { bg = c.orange },
 
 		-- Statusline
-		StatusLine = { fg = c.fg, bg = c.bg3 },
-		StatusLineNC = { fg = c.gray1, bg = c.bg2 },
+		StatusLine = { fg = c.fg, bg = c.none },
+		StatusLineNC = { fg = c.gray1, bg = c.none },
 
 		-- Tabline
 		TabLine = { fg = c.gray2, bg = c.bg2 },
@@ -169,6 +169,10 @@ function M.setup()
 		ModeMsg = { fg = c.orange, bold = true },
 		MoreMsg = { fg = c.success, bold = true },
 		Question = { fg = c.purple },
+
+		-- Misc
+		NonText = { fg = c.fg },
+		SnacksPickerGitStatusUntracked = { fg = c.fg, bg = c.none },
 
 		-- ═══════════════════════════════════════════════════════════════════
 		-- SYNTAX
