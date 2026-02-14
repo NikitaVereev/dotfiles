@@ -1,17 +1,47 @@
-/* Catppuccin */
-@define-color bg_dim #181825;
-@define-color bg0 #1e1e2e;
-@define-color bg1 #313244;
-@define-color bg2 #45475a;
-@define-color bg3 #585b70;
+/* ═══════════════════════════════════════════════════════════════════════════
+   CATPPUCCIN MOCHA — Official palette
+   For waybar
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-@define-color fg #cdd6f4;
-@define-color fg_dim #a6adc8;
+/* Backgrounds */
+@define-color bg_dim   #11111B;
+@define-color bg0      #1E1E2E;
+@define-color bg1      #181825;
+@define-color bg2      #313244;
+@define-color bg3      #45475A;
+@define-color bg4      #585B70;
+@define-color bg5      #6C7086;
 
-@define-color red #f38ba8;
-@define-color green #a6e3a1;
-@define-color yellow #f9e2af;
-@define-color blue #89b4fa;
-@define-color purple #cba6f7;
-@define-color aqua #94e2d5;
-@define-color orange #fab387;
+/* Semantic backgrounds */
+@define-color bg_visual #45475A;
+@define-color bg_red    #3E2A35;
+@define-color bg_green  #2A3E2E;
+@define-color bg_blue   #2A2E45;
+@define-color bg_yellow #3E3A2A;
+
+/* Foregrounds */
+@define-color fg       #CDD6F4;
+@define-color fg_dim   #A6ADC8;
+@define-color fg_muted #6C7086;
+
+/* Accents */
+@define-color red      #F38BA8;
+@define-color orange   #FAB387;
+@define-color yellow   #F9E2AF;
+@define-color green    #A6E3A1;
+@define-color aqua     #94E2D5;
+@define-color blue     #89B4FA;
+@define-color purple   #CBA6F7;
+@define-color pink     #F5C2E7;
+
+/* Grays */
+@define-color gray0    #585B70;
+@define-color gray1    #6C7086;
+@define-color gray2    #7F849C;
+
+/* Module panel background (semi-transparent) */
+@define-color panel_bg rgba(30, 30, 46, 0.65);
+
+/* Tooltip */
+@define-color tooltip_bg rgba(17, 17, 27, 0.95);
+@define-color tooltip_border rgba(137, 180, 250, 0.15);

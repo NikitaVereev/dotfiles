@@ -1,33 +1,33 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   EVERFOREST — Dark Medium
-   Official palette for rofi
+   KANAGAWA WAVE — Inspired by Hokusai
+   Warm indigo tones of the Great Wave
    ═══════════════════════════════════════════════════════════════════════════ */
 * {
     /* Backgrounds */
-    background:       rgba(45, 53, 59, 0.90);
-    background-alt:   rgba(52, 63, 68, 0.80);
+    background:       rgba(31, 31, 40, 0.92);
+    background-alt:   rgba(42, 42, 55, 0.80);
     background-entry: rgba(0, 0, 0, 0.45);
 
     /* Foregrounds */
-    foreground:       #D3C6AA;
-    foreground-dim:   rgba(211, 198, 170, 0.50);
-    foreground-muted: rgba(133, 146, 137, 0.60);
+    foreground:       #DCD7BA;
+    foreground-dim:   rgba(220, 215, 186, 0.50);
+    foreground-muted: rgba(200, 192, 147, 0.50);
 
     /* Accents */
-    selected:         #A7C080;
-    selected-fg:      #2D353B;
-    urgent:           #E67E80;
-    border-color:     rgba(167, 192, 128, 0.3);
+    selected:         #E6C384;
+    selected-fg:      #1F1F28;
+    urgent:           #E46876;
+    border-color:     rgba(230, 195, 132, 0.3);
 
     /* Element states */
     element-bg:       transparent;
-    element-selected: rgba(167, 192, 128, 0.12);
-    scrollbar-bg:     rgba(133, 146, 137, 0.15);
+    element-selected: rgba(230, 195, 132, 0.12);
+    scrollbar-bg:     rgba(200, 192, 147, 0.15);
 
     /* Error */
     error-bg:         rgba(0, 0, 0, 0.50);
-    error-fg:         #E67E80;
+    error-fg:         #E82424;
 
     /* Banner */
-    banner-image:     url("~/Pictures/wallpapers/everforest.png", width);
+    banner-image:     url("~/Pictures/wallpapers/kanagawa.png", width);
 }

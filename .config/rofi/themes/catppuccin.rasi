@@ -1,11 +1,33 @@
-/* Catppuccin Rasi */
+/* ═══════════════════════════════════════════════════════════════════════════
+   CATPPUCCIN MOCHA — Official palette
+   For rofi
+   ═══════════════════════════════════════════════════════════════════════════ */
 * {
-    background: rgba(30, 30, 46, 0.95);
-    foreground: #cdd6f4;
-    selected: #cba6f7;
-    selected-fg: #1e1e2e;
-    urgent: #f38ba8;
-    border-color: rgba(203, 166, 247, 0.5);
-    
-    banner-image: url("~/Pictures/wallpapers/catppuccin.png", width);
+    /* Backgrounds */
+    background:       rgba(30, 30, 46, 0.93);
+    background-alt:   rgba(49, 50, 68, 0.80);
+    background-entry: rgba(0, 0, 0, 0.45);
+
+    /* Foregrounds */
+    foreground:       #CDD6F4;
+    foreground-dim:   rgba(205, 214, 244, 0.50);
+    foreground-muted: rgba(108, 112, 134, 0.60);
+
+    /* Accents */
+    selected:         #CBA6F7;
+    selected-fg:      #1E1E2E;
+    urgent:           #F38BA8;
+    border-color:     rgba(203, 166, 247, 0.3);
+
+    /* Element states */
+    element-bg:       transparent;
+    element-selected: rgba(203, 166, 247, 0.12);
+    scrollbar-bg:     rgba(108, 112, 134, 0.15);
+
+    /* Error */
+    error-bg:         rgba(0, 0, 0, 0.45);
+    error-fg:         #F38BA8;
+
+    /* Banner */
+    banner-image:     url("~/Pictures/wallpapers/catppuccin.png", width);
 }

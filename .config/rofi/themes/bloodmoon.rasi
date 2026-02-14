@@ -1,11 +1,33 @@
-/* Blood Moon Rofi */
+/* ═══════════════════════════════════════════════════════════════════════════
+   BLOODMOON — Crimson Dark
+   Custom palette for rofi
+   ═══════════════════════════════════════════════════════════════════════════ */
 * {
-    background: rgba(26, 13, 13, 0.90);
-    foreground: #FFEBEE;
-    selected: #DC143C;
-    selected-fg: #1A0D0D;
-    urgent: #FF4500;
-    border-color: rgba(220, 20, 60, 0.3);
-    banner-image: url("~/Pictures/wallpapers/bloodmoon.png", width);
-}
+    /* Backgrounds */
+    background:       rgba(26, 13, 13, 0.90);
+    background-alt:   rgba(61, 38, 38, 0.80);
+    background-entry: rgba(0, 0, 0, 0.55);
 
+    /* Foregrounds */
+    foreground:       #FFEBEE;
+    foreground-dim:   rgba(255, 235, 238, 0.50);
+    foreground-muted: rgba(204, 153, 153, 0.60);
+
+    /* Accents */
+    selected:         #DC143C;
+    selected-fg:      #1A0D0D;
+    urgent:           #FF4500;
+    border-color:     rgba(220, 20, 60, 0.3);
+
+    /* Element states */
+    element-bg:       transparent;
+    element-selected: rgba(220, 20, 60, 0.15);
+    scrollbar-bg:     rgba(204, 153, 153, 0.15);
+
+    /* Error */
+    error-bg:         rgba(0, 0, 0, 0.55);
+    error-fg:         #FF4500;
+
+    /* Banner */
+    banner-image:     url("~/Pictures/wallpapers/bloodmoon.png", width);
+}

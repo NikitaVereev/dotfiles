@@ -1,0 +1,47 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   KANAGAWA WAVE — Inspired by Hokusai
+   For waybar
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Backgrounds */
+@define-color bg_dim   #16161D;
+@define-color bg0      #1F1F28;
+@define-color bg1      #2A2A37;
+@define-color bg2      #363646;
+@define-color bg3      #54546D;
+@define-color bg4      #223249;
+@define-color bg5      #2D4F67;
+
+/* Semantic backgrounds */
+@define-color bg_visual #223249;
+@define-color bg_red    #43242B;
+@define-color bg_green  #2B3328;
+@define-color bg_blue   #252535;
+@define-color bg_yellow #49443C;
+
+/* Foregrounds */
+@define-color fg       #DCD7BA;
+@define-color fg_dim   #C8C093;
+@define-color fg_muted #727169;
+
+/* Accents */
+@define-color red      #E46876;
+@define-color orange   #FFA066;
+@define-color yellow   #E6C384;
+@define-color green    #98BB6C;
+@define-color aqua     #7AA89F;
+@define-color blue     #7E9CD8;
+@define-color purple   #957FB8;
+@define-color pink     #D27E99;
+
+/* Grays */
+@define-color gray0    #727169;
+@define-color gray1    #717C7C;
+@define-color gray2    #938AA9;
+
+/* Module panel background (semi-transparent) */
+@define-color panel_bg rgba(31, 31, 40, 0.65);
+
+/* Tooltip */
+@define-color tooltip_bg rgba(22, 22, 29, 0.95);
+@define-color tooltip_border rgba(230, 195, 132, 0.15);

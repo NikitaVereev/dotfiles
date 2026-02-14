@@ -8,11 +8,11 @@ configuration {
     display-window:             "  WINDOW";
     drun-display-format:        "{name}";
     window-format:              "{w} · {c} · {t}";
-    
+
     hover-select:               true;
     me-select-entry:            "MouseSecondary";
     me-accept-entry:            "MousePrimary";
-    
+
     font:                       "JetBrains Mono Nerd Font Bold 11";
     icon-theme:                 "candy-icons";
 }
@@ -60,9 +60,9 @@ inputbar {
     margin:                     10px;
     padding:                    40px 40px 200px 40px;
     background-color:           transparent;
-    
+
     background-image:           @banner-image;
-    
+
     border-radius:              16px;
     orientation:                horizontal;
     children:                   [ "entry", "dummy", "mode-switcher" ];
@@ -75,11 +75,11 @@ entry {
     width:                      300px;
     padding:                    14px;
     border-radius:              12px;
-    background-color:           rgba(0, 0, 0, 0.5);
+    background-color:           @background-entry;
     text-color:                 @foreground;
     cursor:                     text;
     placeholder:                "Search...";
-    placeholder-color:          rgba(255, 255, 255, 0.5);
+    placeholder-color:          @foreground-dim;
     vertical-align:             0.5;
 }
 
@@ -98,8 +98,8 @@ mode-switcher{
 button {
     padding:                    12px 24px;
     border-radius:              12px;
-    background-color:           rgba(0, 0, 0, 0.5);
-    text-color:                 rgba(255, 255, 255, 0.5);
+    background-color:           @background-entry;
+    text-color:                 @foreground-dim;
     cursor:                     pointer;
 }
 
@@ -129,7 +129,7 @@ listview {
     reverse:                    false;
     fixed-height:               false;
     fixed-columns:              true;
-    
+
     spacing:                    10px;
     background-color:           transparent;
     text-color:                 @foreground;
@@ -140,7 +140,7 @@ scrollbar {
     handle-width:               4px;
     handle-color:               @selected;
     border-radius:              4px;
-    background-color:           rgba(255, 255, 255, 0.1);
+    background-color:           @scrollbar-bg;
 }
 
 /*****----- Elements -----*****/
@@ -151,18 +151,18 @@ element {
     padding:                    12px 16px;
     border:                     0px;
     border-radius:              12px;
-    background-color:           transparent;
-    text-color:                 rgba(255, 255, 255, 0.5);
+    background-color:           @element-bg;
+    text-color:                 @foreground-dim;
     cursor:                     pointer;
 }
 
 element normal.normal {
-    background-color:           transparent;
-    text-color:                 rgba(255, 255, 255, 0.5);
+    background-color:           @element-bg;
+    text-color:                 @foreground-dim;
 }
 
 element selected.normal {
-    background-color:           rgba(255, 255, 255, 0.08);
+    background-color:           @element-selected;
     text-color:                 @foreground;
 }
 
@@ -190,7 +190,7 @@ message {
 textbox {
     padding:                    15px;
     border-radius:              12px;
-    background-color:           rgba(255, 255, 255, 0.05);
+    background-color:           @scrollbar-bg;
     text-color:                 @foreground;
     vertical-align:             0.5;
     horizontal-align:           0.0;
@@ -198,7 +198,6 @@ textbox {
 error-message {
     padding:                    15px;
     border-radius:              20px;
-    background-color:           rgba(0, 0, 0, 0.5);
-    text-color:                 #ff6b6b;
+    background-color:           @error-bg;
+    text-color:                 @error-fg;
 }
-
