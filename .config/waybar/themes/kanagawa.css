@@ -1,47 +1,47 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   KANAGAWA WAVE — Inspired by Hokusai
-   For waybar
+   KANAGAWA WAVE — Katsushika Hokusai, 1831
+   Palette derived directly from the woodblock print
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Backgrounds */
-@define-color bg_dim   #16161D;
-@define-color bg0      #1F1F28;
-@define-color bg1      #2A2A37;
-@define-color bg2      #363646;
-@define-color bg3      #54546D;
-@define-color bg4      #223249;
-@define-color bg5      #2D4F67;
+/* Backgrounds — layers of the cream sky */
+@define-color bg_dim   #E8DAB8;
+@define-color bg0      #F2E6C8;
+@define-color bg1      #EAD9B5;
+@define-color bg2      #D6C9A8;
+@define-color bg3      #C4B490;
+@define-color bg4      #8FA8BE;
+@define-color bg5      #2E5F8A;
 
 /* Semantic backgrounds */
-@define-color bg_visual #223249;
-@define-color bg_red    #43242B;
-@define-color bg_green  #2B3328;
-@define-color bg_blue   #252535;
-@define-color bg_yellow #49443C;
+@define-color bg_visual #C8D8E8;
+@define-color bg_red    #E8C8C8;
+@define-color bg_green  #C8DCC8;
+@define-color bg_blue   #C8D8E8;
+@define-color bg_yellow #E8DCC8;
 
 /* Foregrounds */
-@define-color fg       #DCD7BA;
-@define-color fg_dim   #C8C093;
-@define-color fg_muted #727169;
+@define-color fg       #1A3A5C;
+@define-color fg_dim   #2E5F8A;
+@define-color fg_muted #4A3728;
 
-/* Accents */
-@define-color red      #E46876;
-@define-color orange   #FFA066;
-@define-color yellow   #E6C384;
-@define-color green    #98BB6C;
-@define-color aqua     #7AA89F;
-@define-color blue     #7E9CD8;
-@define-color purple   #957FB8;
-@define-color pink     #D27E99;
+/* Accents — colours from the print */
+@define-color red      #8B2A2A;
+@define-color orange   #C8882A;
+@define-color yellow   #D9A845;
+@define-color green    #3D6B3D;
+@define-color aqua     #3A7AA8;
+@define-color blue     #1A3A5C;
+@define-color purple   #4A3728;
+@define-color pink     #B86070;
 
-/* Grays */
-@define-color gray0    #727169;
-@define-color gray1    #717C7C;
-@define-color gray2    #938AA9;
+/* Grays — warm sandy tones */
+@define-color gray0    #A09480;
+@define-color gray1    #8A7A68;
+@define-color gray2    #706050;
 
-/* Module panel background (semi-transparent) */
-@define-color panel_bg rgba(31, 31, 40, 0.65);
+/* Module panel background (semi-transparent cream) */
+@define-color panel_bg rgba(242, 230, 200, 0.75);
 
 /* Tooltip */
-@define-color tooltip_bg rgba(22, 22, 29, 0.95);
-@define-color tooltip_border rgba(230, 195, 132, 0.15);
+@define-color tooltip_bg rgba(242, 230, 200, 0.97);
+@define-color tooltip_border rgba(26, 58, 92, 0.25);
