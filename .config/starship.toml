@@ -1,0 +1,18 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+
+[character]
+success_symbol = "[❯](bold mauve)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+vimcmd_replace_one_symbol = "[❮](bold yellow)"
+vimcmd_replace_symbol = "[❮](bold yellow)"
+vimcmd_visual_symbol = "[❮](bold blue)"
+
+[package]
+symbol = "󰏗 "
+style = "fg:peach"
+format = '[$symbol$version]($style) '
+disabled = false
+display_private = false
