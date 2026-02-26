@@ -29,3 +29,10 @@ doc/tags
 
 # Hyprland local
 .config/hypr/local.conf
+
+# Current theme
+.config/hypr/themes/current.conf
+.config/kitty/themes/current.conf
+.config/nvim/themes/current
+.config/rofi/current.rasi
+.config/waybar/themes/current.css
