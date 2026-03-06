@@ -74,5 +74,13 @@ if command -v alacritty >/dev/null 2>&1 && [[ -f "$CONFIG_DIR/alacritty/themes/$
   ln -sf "$CONFIG_DIR/alacritty/themes/$THEME.toml" "$CONFIG_DIR/alacritty/themes/current.toml"
 fi
 
+# 8. GHOSTTY (terminal - live reload via SIGUSR2)
+if [[ -f "$CONFIG_DIR/ghostty/themes/$THEME" ]]; then
+  sed -i "s/^theme = .*/theme = $THEME/" "$CONFIG_DIR/ghostty/config"
+  pkill -USR2 ghostty 2>/dev/null || true
+else
+  notify-send "Warning" "Ghostty theme '$THEME' not found" -u low
+fi
+
 # Success notification
 notify-send "Theme" "'$THEME' applied successfully!" -i preferences-desktop-theme
