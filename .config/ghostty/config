@@ -27,7 +27,7 @@ window-save-state = always
 background-opacity = 0.95
 
 # ── Colors ────────────────────────────────────────────────────
-theme = catppuccin
+theme = oxocarbon
 
 # ── Shell integration ─────────────────────────────────────────
 shell-integration = detect

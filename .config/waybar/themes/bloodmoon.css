@@ -29,12 +29,12 @@
 @define-color orange   #FF4500;
 @define-color yellow   #FFA726;
 @define-color green    #66BB6A;
-@define-color aqua     #FF8A80;
-@define-color blue     #EF5350;
+@define-color aqua     #FF8A80; /* warm salmon — fills teal/aqua roles */
+@define-color blue     #EF5350; /* warm rose   — fills blue roles       */
 @define-color purple   #AB47BC;
 @define-color pink     #FF69B4;
 
-/* Grays */
+/* Warm neutrals (red-tinted, replace grays) */
 @define-color gray0    #663939;
 @define-color gray1    #994040;
 @define-color gray2    #CC5959;

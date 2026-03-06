@@ -1,0 +1,27 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   OXOCARBON — IBM Carbon Design System
+   For rofi
+   ═══════════════════════════════════════════════════════════════════════════ */
+* {
+    background:       rgba(22, 22, 22, 0.95);
+    background-alt:   rgba(38, 38, 38, 0.80);
+    background-entry: rgba(0, 0, 0, 0.45);
+
+    foreground:       #f2f4f8;
+    foreground-dim:   rgba(242, 244, 248, 0.50);
+    foreground-muted: rgba(141, 144, 149, 0.60);
+
+    selected:         #78a9ff;
+    selected-fg:      #161616;
+    urgent:           #ee5396;
+    border-color:     rgba(120, 169, 255, 0.3);
+
+    element-bg:       transparent;
+    element-selected: rgba(120, 169, 255, 0.12);
+    scrollbar-bg:     rgba(141, 144, 149, 0.15);
+
+    error-bg:         rgba(0, 0, 0, 0.45);
+    error-fg:         #ee5396;
+
+    banner-image:     url("~/Pictures/wallpapers/oxocarbon.png", width);
+}
