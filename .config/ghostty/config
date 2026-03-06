@@ -1,25 +1,81 @@
+# ══════════════════════════════════════════════════════════════
+# Ghostty — terminal configuration
+# Docs: https://ghostty.org/docs/config
+# ══════════════════════════════════════════════════════════════
+
+# ── Font ──────────────────────────────────────────────────────
 font-family = JetBrains Mono
 font-size = 11
 
+# Enable ligatures (JetBrains Mono supports them natively)
+font-feature = calt
+font-feature = liga
+font-feature = ss01
+font-feature = ss02
+
+# ── Cursor ────────────────────────────────────────────────────
 cursor-style = block
 cursor-style-blink = true
 
+# ── Window ────────────────────────────────────────────────────
 window-padding-x = 40
 window-padding-y = 40
 window-padding-balance = true
 window-decoration = false
+
+# window-theme controls the OS title bar / decoration theme (not color scheme)
 window-theme = ghostty
 window-save-state = always
 
+# ── Appearance ────────────────────────────────────────────────
 background-opacity = 0.88
 
+# ── Shaders ───────────────────────────────────────────────────
+custom-shader = ~/.config/ghostty/shaders/cursor-glow.glsl
+custom-shader-animation = true
 
+# ── Shell integration ─────────────────────────────────────────
+# Enables: prompt markers, working-dir tracking, SSH title, etc.
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# ── Mouse & clipboard ─────────────────────────────────────────
 mouse-hide-while-typing = true
 copy-on-select = clipboard
-confirm-close-surface = false
-scrollback-limit = 10000
 clipboard-paste-protection = true
 
+# ── Scrollback ────────────────────────────────────────────────
+scrollback-limit = 10000
+
+# ── Behaviour ─────────────────────────────────────────────────
+confirm-close-surface = false
+
+# ── Linux / GTK ───────────────────────────────────────────────
 gtk-single-instance = true
 
+# ── Splits ────────────────────────────────────────────────────
+unfocused-split-opacity = 0.85
+focus-follows-mouse = true
 
+# ── Keybindings ───────────────────────────────────────────────
+# Splits
+keybind = alt+shift+v=new_split:right
+keybind = alt+shift+s=new_split:down
+keybind = alt+shift+w=close_surface
+
+# Navigate between splits
+keybind = alt+h=goto_split:left
+keybind = alt+l=goto_split:right
+keybind = alt+k=goto_split:up
+keybind = alt+j=goto_split:down
+
+# Tabs
+keybind = ctrl+shift+t=new_tab
+keybind = ctrl+shift+w=close_tab
+keybind = ctrl+shift+left_bracket=previous_tab
+keybind = ctrl+shift+right_bracket=next_tab
+
+# Font size
+keybind = ctrl+equal=increase_font_size:1
+keybind = ctrl+minus=decrease_font_size:1
+keybind = ctrl+zero=reset_font_size
