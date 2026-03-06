@@ -1,52 +1,53 @@
 #!/bin/bash
-# =================================================================================================
-# Hyprland Theme Switcher
-# Unified theme switching for Hyprland, Kitty, Waybar, Rofi, Neovim, Alacritty
-# ================================================================================================
+# =============================================================================
+# Theme Switcher
+# Unified theme switching for Hyprland, Kitty, Ghostty, Waybar, Rofi, Neovim
+# Usage: theme-switch.sh <theme-name>
+# =============================================================================
 
 set -euo pipefail
 
-readonly THEME="$1"
+readonly THEME="${1:-}"
 readonly CONFIG_DIR="$HOME/.config"
 
-# Validate Hyprland theme file
+# ── Validation ────────────────────────────────────────────────────────────────
+
 if [[ -z "$THEME" ]]; then
-  notify-send "Error" "No theme specified!" -u critical
+  notify-send "Theme Switcher" "No theme specified!" -u critical
   exit 1
 fi
 
-# Validate Hyprland theme file
 if [[ ! -f "$CONFIG_DIR/hypr/themes/$THEME.conf" ]]; then
-  notify-send "Error" "Hyprland theme '$THEME' not found!" -u critical
+  notify-send "Theme Switcher" "Theme '$THEME' not found!" -u critical
   exit 1
 fi
 
-# 1. WALLPAPER (with smooth transition)
+# ── 1. Wallpaper ──────────────────────────────────────────────────────────────
+
 if [[ -f "$HOME/Pictures/wallpapers/$THEME.png" ]]; then
   swww img "$HOME/Pictures/wallpapers/$THEME.png" \
     --transition-type grow \
     --transition-duration 1.5 || true
 else
-  notify-send "Warning" "Wallpaper '$THEME.png' not found" -u low
+  notify-send "Theme Switcher" "Wallpaper '$THEME.png' not found" -u low
 fi
 
-# 2. HYPRLAND (window decorations)
+# ── 2. Hyprland ───────────────────────────────────────────────────────────────
+
 ln -sf "$CONFIG_DIR/hypr/themes/$THEME.conf" "$CONFIG_DIR/hypr/themes/current.conf"
 hyprctl reload
 
-if [[ ! -f "$HOME/.config/kitty/themes/$THEME.conf" ]]; then
-  notify-send "Warning" "Kitty theme $THEME not found!" -u low
-fi
+# ── 3. Kitty ──────────────────────────────────────────────────────────────────
 
-# 3. KITTY (terminal colors - supports reload)
 if [[ -f "$CONFIG_DIR/kitty/themes/$THEME.conf" ]]; then
   ln -sf "$CONFIG_DIR/kitty/themes/$THEME.conf" "$CONFIG_DIR/kitty/themes/current.conf"
   killall -SIGUSR1 kitty 2>/dev/null || true
 else
-  notify-send "Warning" "Kitty theme '$THEME.conf' not found" -u low
+  notify-send "Theme Switcher" "Kitty theme '$THEME' not found" -u low
 fi
 
-# 4. WAYBAR (status bar - supports hot reload)
+# ── 4. Waybar ─────────────────────────────────────────────────────────────────
+
 if [[ -f "$CONFIG_DIR/waybar/themes/$THEME.css" ]]; then
   ln -sf "$CONFIG_DIR/waybar/themes/$THEME.css" "$CONFIG_DIR/waybar/themes/current.css"
   if command -v waybar-msg >/dev/null 2>&1; then
@@ -57,30 +58,31 @@ if [[ -f "$CONFIG_DIR/waybar/themes/$THEME.css" ]]; then
     waybar &>/dev/null &
   fi
 else
-  notify-send "Warning" "Waybar theme '$THEME.css' not found" -u low
+  notify-send "Theme Switcher" "Waybar theme '$THEME' not found" -u low
 fi
 
-# 5. ROFI (launcher - requires restart)
+# ── 5. Rofi ───────────────────────────────────────────────────────────────────
+
 if [[ -f "$CONFIG_DIR/rofi/themes/$THEME.rasi" ]]; then
   ln -sf "$CONFIG_DIR/rofi/themes/$THEME.rasi" "$CONFIG_DIR/rofi/current.rasi"
+else
+  notify-send "Theme Switcher" "Rofi theme '$THEME' not found" -u low
 fi
 
-# 6. NEOVIM (live reload via SIGUSR1)
+# ── 6. Neovim ─────────────────────────────────────────────────────────────────
+
 echo "$THEME" >"$CONFIG_DIR/nvim/themes/current"
 pkill -USR1 nvim 2>/dev/null || true
 
-# 7. ALACRITTY (terminal - requires restart)
-if command -v alacritty >/dev/null 2>&1 && [[ -f "$CONFIG_DIR/alacritty/themes/$THEME.toml" ]]; then
-  ln -sf "$CONFIG_DIR/alacritty/themes/$THEME.toml" "$CONFIG_DIR/alacritty/themes/current.toml"
-fi
+# ── 7. Ghostty ────────────────────────────────────────────────────────────────
 
-# 8. GHOSTTY (terminal - live reload via SIGUSR2)
 if [[ -f "$CONFIG_DIR/ghostty/themes/$THEME" ]]; then
   sed -i "s/^theme = .*/theme = $THEME/" "$CONFIG_DIR/ghostty/config"
   pkill -USR2 ghostty 2>/dev/null || true
 else
-  notify-send "Warning" "Ghostty theme '$THEME' not found" -u low
+  notify-send "Theme Switcher" "Ghostty theme '$THEME' not found" -u low
 fi
 
-# Success notification
-notify-send "Theme" "'$THEME' applied successfully!" -i preferences-desktop-theme
+# ── Done ──────────────────────────────────────────────────────────────────────
+
+notify-send "Theme Switcher" "'$THEME' applied" -i preferences-desktop-theme
