@@ -28,7 +28,7 @@ doc/tags
 .config/tmux/resurrect/
 
 # Hyprland local
-.config/hypr/local.conf
+.config/hypr/modules/monitors.conf
 
 # Current theme
 .config/hypr/themes/current.conf
