@@ -1,28 +1,42 @@
 # ═══════════════════════════════════════════════════════════════════════════
-# BLOODMOON — Crimson Dark
-# Deep crimson atmosphere, warm-tinted functional colors
+# BLOODMOON — Vivid Crimson Dark
 # ═══════════════════════════════════════════════════════════════════════════
 
-background = #1a0808
-foreground = #f5e6e0
-cursor-color = #ff4500
-cursor-text = #1a0808
-selection-background = #dc143c
-selection-foreground = #f5e6e0
+background        = #131010
+foreground        = #F2E8E4
+cursor-color      = #E03050
+cursor-text       = #0D0A0A
+selection-background = #362828
+selection-foreground = #F2E8E4
 
-palette = 0=#2a1212
-palette = 1=#dc143c
-palette = 2=#7ab870
-palette = 3=#ffb347
-palette = 4=#8b9dc8
-palette = 5=#c47ac0
-palette = 6=#7ab8a0
-palette = 7=#f5e6e0
-palette = 8=#4a2626
-palette = 9=#ff1744
-palette = 10=#9fcf9e
-palette = 11=#ffc97a
-palette = 12=#a8bbdd
-palette = 13=#d899d4
-palette = 14=#9ecfbf
-palette = 15=#fff5f0
+# Black
+palette = 0=#2A1E1E
+palette = 8=#362828
+
+# Red
+palette = 1=#E03050
+palette = 9=#FF4060
+
+# Green
+palette = 2=#5AAA6A
+palette = 10=#70C07A
+
+# Yellow / Amber
+palette = 3=#D09828
+palette = 11=#E0B040
+
+# Blue / Steel
+palette = 4=#6A9EC8
+palette = 12=#80B8E0
+
+# Magenta / Purple
+palette = 5=#C878C0
+palette = 13=#D898D0
+
+# Cyan / Teal
+palette = 6=#50A090
+palette = 14=#60B8A8
+
+# White
+palette = 7=#D8CECA
+palette = 15=#F2E8E4

@@ -3,7 +3,7 @@
 # ══════════════════════════════════════════════════════════════
 
 # ── Font ──────────────────────────────────────────────────────
-font-family = JetBrains Mono
+font-family = JetBrains Mono Nerd Font
 font-size = 11
 font-feature = calt
 font-feature = liga

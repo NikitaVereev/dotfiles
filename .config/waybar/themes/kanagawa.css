@@ -1,47 +1,39 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   KANAGAWA WAVE — Katsushika Hokusai, 1831
-   Palette derived directly from the woodblock print
+   KANAGAWA WAVE — Light / Woodblock Print
+   Katsushika Hokusai, "The Great Wave off Kanagawa", 1831
+   Warm cream sky · prussian blue waves · ochre highlights
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Backgrounds — layers of the cream sky */
-@define-color bg_dim   #E8DAB8;
-@define-color bg0      #F2E6C8;
-@define-color bg1      #EAD9B5;
-@define-color bg2      #D6C9A8;
-@define-color bg3      #C4B490;
-@define-color bg4      #8FA8BE;
-@define-color bg5      #2E5F8A;
+/* ── Backgrounds (sandy cream) ───────────────────────────────────────────── */
+@define-color bg_dim   #E2D4B0;
+@define-color bg0      #F4EAD0;
+@define-color bg1      #EDE3C6;
+@define-color bg2      #E4D8BA;
+@define-color bg3      #D8CCA8;
+@define-color bg4      #C8BEAA;
+@define-color bg5      #706050;  /* workspace inactive buttons — ~4.7:1 on cream */
 
-/* Semantic backgrounds */
-@define-color bg_visual #C8D8E8;
-@define-color bg_red    #E8C8C8;
-@define-color bg_green  #C8DCC8;
-@define-color bg_blue   #C8D8E8;
-@define-color bg_yellow #E8DCC8;
-
-/* Foregrounds */
+/* ── Foregrounds (prussian blue hierarchy) ───────────────────────────────── */
 @define-color fg       #1A3A5C;
 @define-color fg_dim   #2E5F8A;
-@define-color fg_muted #4A3728;
+@define-color fg_muted #706050;
 
-/* Accents — colours from the print */
-@define-color red      #8B2A2A;
-@define-color orange   #C8882A;
-@define-color yellow   #D9A845;
-@define-color green    #3D6B3D;
-@define-color aqua     #3A7AA8;
-@define-color blue     #1A3A5C;
-@define-color purple   #4A3728;
-@define-color pink     #B86070;
+/* ── Accents — woodblock print palette ───────────────────────────────────── */
+@define-color red      #A03030;
+@define-color orange   #9A4810;
+@define-color yellow   #906010;
+@define-color green    #2A6030;
+@define-color aqua     #1A6878;
+@define-color blue     #1A4A90;
+@define-color purple   #6A2088;
+@define-color pink     #8B2A4A;
 
-/* Grays — warm sandy tones */
-@define-color gray0    #A09480;
+/* ── Grays — warm, sandy ─────────────────────────────────────────────────── */
+@define-color gray0    #706050;
 @define-color gray1    #8A7A68;
-@define-color gray2    #706050;
+@define-color gray2    #A89888;
 
-/* Module panel background (semi-transparent cream) */
-@define-color panel_bg rgba(242, 230, 200, 0.75);
-
-/* Tooltip */
-@define-color tooltip_bg rgba(242, 230, 200, 0.97);
+/* ── Panels ──────────────────────────────────────────────────────────────── */
+@define-color panel_bg      rgba(244, 234, 208, 0.90);
+@define-color tooltip_bg    rgba(226, 212, 176, 0.97);
 @define-color tooltip_border rgba(26, 58, 92, 0.25);

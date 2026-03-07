@@ -1,47 +1,49 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   BLOODMOON — Crimson Dark
-   Custom palette for waybar
+   BLOODMOON — Vivid Crimson Dark
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Backgrounds */
-@define-color bg_dim   #0A0505;
-@define-color bg0      #1A0D0D;
-@define-color bg1      #261919;
-@define-color bg2      #3D2626;
-@define-color bg3      #4F3333;
-@define-color bg4      #5C3D3D;
-@define-color bg5      #663939;
+/* ── Backgrounds ─────────────────────────────────────────────────────────── */
+@define-color bg_dim   #0D0A0A;
+@define-color bg0      #131010;
+@define-color bg1      #1E1616;
+@define-color bg2      #2A1E1E;
+@define-color bg3      #362828;
+@define-color bg4      #422E2E;
 
-/* Semantic backgrounds */
-@define-color bg_visual #4D1A1A;
-@define-color bg_red    #5C1010;
-@define-color bg_green  #2A3A20;
-@define-color bg_blue   #331A2A;
-@define-color bg_yellow #4D3318;
+/* ── Foregrounds ─────────────────────────────────────────────────────────── */
+@define-color fg       #F2E8E4;
+@define-color fg_dim   #D8CECA;
+@define-color fg_muted #9A8280;
 
-/* Foregrounds */
-@define-color fg       #FFEBEE;
-@define-color fg_dim   #CC9999;
-@define-color fg_muted #996666;
+/* ── Primary accent ──────────────────────────────────────────────────────── */
+@define-color red        #E03050;
+@define-color red_bright #FF4060;
+@define-color red_dim    #7A1828;
 
-/* Accents */
-@define-color red      #DC143C;
-@define-color orange   #FF4500;
-@define-color yellow   #FFA726;
-@define-color green    #66BB6A;
-@define-color aqua     #FF8A80; /* warm salmon — fills teal/aqua roles */
-@define-color blue     #EF5350; /* warm rose   — fills blue roles       */
-@define-color purple   #AB47BC;
-@define-color pink     #FF69B4;
+/* ── Secondary accents ───────────────────────────────────────────────────── */
+@define-color amber  #E09030;
+@define-color ochre  #D09828;
+@define-color rust   #C07050;
+@define-color green  #5AAA6A;
+@define-color steel  #6A9EC8;
+@define-color purple #C878C0;
+@define-color teal   #50A090;
 
-/* Warm neutrals (red-tinted, replace grays) */
-@define-color gray0    #663939;
-@define-color gray1    #994040;
-@define-color gray2    #CC5959;
+/* ── Neutrals ────────────────────────────────────────────────────────────── */
+@define-color gray0  #362828;
+@define-color gray1  #5A4442;
+@define-color gray2  #8A7270;
+@define-color gray3  #A08888;
+@define-color bg5    #8A7270;  /* workspace inactive buttons */
 
-/* Module panel background (semi-transparent) */
-@define-color panel_bg rgba(26, 13, 13, 0.7);
+/* ── Aliases required by style.css ──────────────────────────────────────── */
+@define-color yellow #D09828;  /* pulseaudio  → ochre/amber  */
+@define-color aqua   #50A090;  /* network     → teal         */
+@define-color blue   #6A9EC8;  /* bluetooth / arch → steel   */
+@define-color pink   #C07050;  /* notify trace → rust        */
+@define-color orange #E09030;  /* misc        → amber        */
 
-/* Tooltip */
-@define-color tooltip_bg rgba(10, 5, 5, 0.95);
-@define-color tooltip_border rgba(220, 20, 60, 0.2);
+/* ── Panels ──────────────────────────────────────────────────────────────── */
+@define-color panel_bg      rgba(19, 16, 16, 0.80);
+@define-color tooltip_bg    rgba(13, 10, 10, 0.96);
+@define-color tooltip_border rgba(224, 48, 80, 0.28);

@@ -1,23 +1,44 @@
-background = #F2E6C8
-foreground = #1A3A5C
-cursor-color = #C8882A
-cursor-text = #F2E6C8
-selection-background = #2E5F8A
-selection-foreground = #F2E6C8
+# ═══════════════════════════════════════════════════════════════════════════
+# KANAGAWA WAVE — Light / Woodblock Print
+# Katsushika Hokusai, "The Great Wave off Kanagawa", 1831
+# Warm cream sky · prussian blue waves · ochre highlights
+# ═══════════════════════════════════════════════════════════════════════════
 
+background        = #F4EAD0
+foreground        = #1A3A5C
+cursor-color      = #C8882A
+cursor-text       = #F4EAD0
+selection-background = #C8D8E8
+selection-foreground = #1A3A5C
+
+# Black — dark wood ink / aged parchment
 palette = 0=#2C1F14
-palette = 1=#8B2A2A
-palette = 2=#3D6B3D
-palette = 3=#C8882A
-palette = 4=#1A3A5C
-palette = 5=#4A3728
-palette = 6=#2E5F8A
-palette = 7=#D6C9A8
-palette = 8=#4A3728
-palette = 9=#B83232
-palette = 10=#5A8C5A
-palette = 11=#D9A845
+palette = 8=#6B5040
+
+# Red — vermillion lacquer (~7.3:1 / ~6.4:1)
+palette = 1=#A03030
+palette = 9=#C83838
+
+# Green — pine shore (~5.8:1 / ~6.4:1)
+palette = 2=#2A6030
+palette = 10=#1E5828
+
+# Yellow — true ochre (~5.2:1 / ~6.4:1)
+palette = 3=#906010
+palette = 11=#7A5010
+
+# Blue — rich prussian (~7.0:1 / ~5.6:1)
+palette = 4=#1A4A90
 palette = 12=#2E5F8A
-palette = 13=#8FA8BE
-palette = 14=#3A7AA8
-palette = 15=#F2E6C8
+
+# Magenta — deep indigo (~9.7:1 / ~7.2:1)
+palette = 5=#6A2088
+palette = 13=#8830A8
+
+# Cyan — rich teal (~4.8:1 / ~7.0:1)
+palette = 6=#1A6878
+palette = 14=#1A4D68
+
+# White — on light bg "white" must be a dark readable shade
+palette = 7=#5A4A38
+palette = 15=#1A3A5C

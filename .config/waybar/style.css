@@ -89,6 +89,9 @@ window#waybar.empty #window {
 #clock {
     color: @fg;
 }
+#language {
+    color: @fg;
+}
 #custom-arch {
     color: @blue;
 }

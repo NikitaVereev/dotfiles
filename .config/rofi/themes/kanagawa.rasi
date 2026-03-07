@@ -1,33 +1,28 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   KANAGAWA WAVE — Katsushika Hokusai, 1831
-   Palette derived directly from the woodblock print
+   KANAGAWA WAVE — Light / Woodblock Print
+   Katsushika Hokusai, "The Great Wave off Kanagawa", 1831
+   Warm cream sky · prussian blue waves · ochre highlights
    ═══════════════════════════════════════════════════════════════════════════ */
 * {
-    /* Backgrounds — warm cream of the print sky */
-    background:       rgba(242, 230, 200, 0.94);
-    background-alt:   rgba(230, 217, 181, 0.85);
-    background-entry: rgba(255, 248, 235, 0.60);
+    background:       rgba(244, 234, 208, 0.96);
+    background-alt:   rgba(232, 220, 192, 0.90);
+    background-entry: rgba(226, 212, 176, 0.60);
 
-    /* Foregrounds — deep prussian blue */
     foreground:       #1A3A5C;
     foreground-dim:   rgba(26, 58, 92, 0.55);
-    foreground-muted: rgba(74, 55, 40, 0.55);
+    foreground-muted: rgba(112, 96, 80, 0.70);
 
-    /* Accents */
     selected:         #1A3A5C;
-    selected-fg:      #F2E6C8;
+    selected-fg:      #F4EAD0;
     urgent:           #8B2A2A;
     border-color:     rgba(26, 58, 92, 0.30);
 
-    /* Element states */
     element-bg:       transparent;
-    element-selected: rgba(26, 58, 92, 0.12);
-    scrollbar-bg:     rgba(26, 58, 92, 0.15);
+    element-selected: rgba(200, 216, 232, 0.55);
+    scrollbar-bg:     rgba(112, 96, 80, 0.20);
 
-    /* Error */
-    error-bg:         rgba(255, 248, 235, 0.60);
+    error-bg:         rgba(139, 42, 42, 0.12);
     error-fg:         #8B2A2A;
 
-    /* Banner */
     banner-image:     url("~/Pictures/wallpapers/kanagawa.png", width);
 }

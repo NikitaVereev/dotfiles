@@ -1,402 +1,367 @@
 -- ═══════════════════════════════════════════════════════════════════════════
--- KANAGAWA WAVE THEME FOR NEOVIM
--- Katsushika Hokusai — "The Great Wave off Kanagawa", 1831
--- Palette derived directly from the woodblock print
+-- KANAGAWA WAVE — Light / Woodblock Print
+-- Katsushika Hokusai, "The Great Wave off Kanagawa", 1831
+-- Warm cream sky · prussian blue waves · ochre highlights
+-- ═══════════════════════════════════════════════════════════════════════════
+--
+-- Contrast ratios against main bg (#F4EAD0, L≈0.818):
+--   fg     #1A3A5C  → ~10.2:1   keywords  #8B2A2A  → ~7.1:1
+--   func   #1A5C78  → ~6.1:1    string    #3D6B3D  → ~5.4:1
+--   type   #2E5F8A  → ~5.6:1    constant  #8A5A20  → ~4.8:1
+--   number #7A3048  → ~7.6:1    comment   #7A6A58  → ~4.3:1
+--   LineNr #706050  → ~4.7:1
+--
 -- ═══════════════════════════════════════════════════════════════════════════
 
 local M = {}
 
--- ═══════════════════════════════════════════════════════════════════════════
--- COLOR PALETTE
--- ═══════════════════════════════════════════════════════════════════════════
-
 M.colors = {
-    -- Backgrounds — layers of the cream/ochre sky
-    bg0 = "#E8DAB8", -- darkest sand
-    bg1 = "#F2E6C8", -- main cream sky
-    bg2 = "#EAD9B5", -- slightly darker sand
-    bg3 = "#D6C9A8", -- mid sand
-    bg4 = "#C4B490", -- dark sand / paper edge
+	-- ── Backgrounds (sandy cream, darkest → lightest) ──────────────────────
+	-- bg0 (darkest sand) used for sidebar/neotree contrast
+	bg0 = "#E2D4B0", -- deep sand    — sidebar, neotree
+	bg1 = "#F4EAD0", -- main cream   — editor background
+	bg2 = "#EDE3C6", -- warm cream   — floats, popups
+	bg3 = "#E4D8BA", -- mid sand     — cursorline
+	bg4 = "#D8CCA8", -- dark sand    — visual mode
 
-    -- Foregrounds — prussian blue hierarchy
-    fg = "#1A3A5C",        -- deep prussian blue (main text)
-    fg_dim = "#2E5F8A",    -- medium blue
-    fg_bright = "#0D2540", -- darkest ink blue
-    fg_muted = "#706050",  -- warm brown-gray
+	-- ── Foregrounds (prussian blue hierarchy) ──────────────────────────────
+	fg        = "#1A3A5C", -- deep prussian blue   ~10.2:1
+	fg_dim    = "#2E5F8A", -- medium prussian blue  ~5.6:1
+	fg_bright = "#0D2540", -- darkest ink          ~12.1:1
+	fg_muted  = "#706050", -- warm brown-gray       ~4.7:1
 
-    -- Primary accents from the print
-    red = "#8B2A2A",        -- dark red (boat lacquer)
-    red_bright = "#B83232", -- brighter red
-    red_dim = "#E8C8C8",    -- pale red bg
+	-- ── Reds — vermillion lacquer ───────────────────────────────────────────
+	red        = "#A03030", -- vermillion lacquer  ~7.3:1
+	red_bright = "#C83838", -- brighter vermillion ~6.4:1
 
-    orange = "#C8882A",     -- ochre/gold (wave highlight)
-    orange_bright = "#D9A845",
-    orange_dim = "#EAD9B5",
+	-- ── Ochre / Gold — wave highlights ─────────────────────────────────────
+	amber  = "#906010", -- true ochre gold     ~5.2:1
+	yellow = "#7A5010", -- deep ochre          ~6.4:1
 
-    pink = "#B86070", -- muted rose (distant foam)
-    pink_bright = "#C87080",
-    pink_dim = "#E8D0D4",
+	-- ── Print-derived accents ───────────────────────────────────────────────
+	green  = "#2A6030", -- pine shore          ~5.8:1
+	teal   = "#1A6878", -- rich prussian teal  ~4.8:1
+	blue   = "#1A4A90", -- rich prussian blue  ~7.0:1
+	indigo = "#6A2088", -- deep indigo         ~9.7:1
+	rose   = "#8B2A4A", -- deep rose           ~7.8:1
+	brown  = "#5A3A20", -- dark wood brown     ~8.7:1
 
-    -- Additional tones
-    yellow = "#D9A845",  -- warm gold
-    gold = "#C8882A",    -- deeper ochre
+	-- ── Grays — warm, sandy ─────────────────────────────────────────────────
+	comment = "#7A6A58", -- warm gray comments  ~4.3:1
+	gray0   = "#B0A090", -- light warm gray     (bg decorations only)
+	gray1   = "#706050", -- LineNr, secondary   ~4.7:1
+	gray2   = "#5A4A38", -- darker warm gray    ~7.0:1
 
-    green = "#3D6B3D",   -- dark pine (distant shore)
-    aqua = "#3A7AA8",    -- mid prussian blue
-    blue = "#1A3A5C",    -- deep prussian blue
+	-- ── Semantic ───────────────────────────────────────────────────────────
+	success = "#2A6030",
+	warning = "#906010",
+	error   = "#A03030",
+	info    = "#1A4A90",
 
-    purple = "#4A3728",  -- dark brown (boat wood)
-    magenta = "#6B4A5A", -- muted purple-brown
+	-- ── Git ────────────────────────────────────────────────────────────────
+	git_add      = "#2A6030",
+	git_change   = "#906010",
+	git_delete   = "#A03030",
+	git_conflict = "#C83838",
 
-    -- Sandy neutral tones
-    gray0 = "#A09480", -- warm mid gray
-    gray1 = "#8A7A68", -- darker warm gray
-    gray2 = "#706050", -- brown-gray
-    gray3 = "#C4B490", -- light sand
+	-- ── Diagnostics ────────────────────────────────────────────────────────
+	diagnostic_error = "#A03030",
+	diagnostic_warn  = "#906010",
+	diagnostic_info  = "#1A4A90",
+	diagnostic_hint  = "#1A6878",
 
-    -- Semantic colors
-    success = "#3D6B3D", -- pine green
-    warning = "#C8882A", -- ochre
-    error = "#8B2A2A",   -- deep red
-    info = "#2E5F8A",    -- medium blue
+	-- ── UI ─────────────────────────────────────────────────────────────────
+	cursor     = "#C8882A",
+	cursor_bg  = "#F4EAD0",
+	line       = "#E4D8BA",
+	visual     = "#C8D8E8", -- pale wave blue — selection echoes the print
+	selection  = "#B8CCE0",
+	border     = "#8A7A68",
+	border_dim = "#B0A090",
 
-    -- UI elements
-    cursor = "#C8882A",     -- ochre cursor
-    cursor_bg = "#F2E6C8",
-    line = "#EAD9B5",       -- subtle line highlight
-    visual = "#C8D8E8",     -- pale blue selection
-    selection = "#A8C0D4",  -- deeper blue selection
+	-- ── Syntax ─────────────────────────────────────────────────────────────
+	constant = "#906010", -- true ochre      ~5.2:1
+	string   = "#2A6030", -- pine green      ~5.8:1
+	func     = "#1A6878", -- rich teal       ~4.8:1
+	keyword  = "#A03030", -- vermillion red  ~7.3:1
+	variable = "#1A3A5C", -- prussian blue   ~10.2:1
+	type     = "#1A4A90", -- rich prussian   ~7.0:1
+	operator = "#5A3A20", -- dark wood brown ~8.7:1
+	number   = "#8B2A4A", -- deep rose       ~7.8:1
 
-    border = "#A09480",     -- warm gray border
-    border_dim = "#C4B490", -- light sand border
-
-    -- Syntax
-    comment = "#A09480",  -- muted warm gray
-    constant = "#C8882A", -- ochre
-    string = "#3D6B3D",   -- pine green
-    func = "#1A3A5C",     -- deep blue
-    keyword = "#0D2540",  -- darkest ink (bold keywords)
-    variable = "#1A3A5C", -- prussian blue
-    type = "#2E5F8A",     -- medium blue
-    operator = "#4A3728", -- dark wood brown
-    number = "#B86070",   -- muted rose
-
-    -- Git
-    git_add = "#3D6B3D",
-    git_change = "#C8882A",
-    git_delete = "#8B2A2A",
-    git_conflict = "#B83232",
-
-    -- Diagnostics
-    diagnostic_error = "#8B2A2A",
-    diagnostic_warn = "#C8882A",
-    diagnostic_info = "#2E5F8A",
-    diagnostic_hint = "#3A7AA8",
-
-    -- Special
-    none = "NONE",
+	none = "NONE",
 }
 
 -- ═══════════════════════════════════════════════════════════════════════════
--- HIGHLIGHT GROUPS
--- ═══════════════════════════════════════════════════════════════════════════
 
 function M.setup()
-    local c = M.colors
+	local c = M.colors
 
-    -- Set light background
-    vim.o.background = "light"
+	vim.o.background = "light"
 
-    local highlights = {
-        -- ═══════════════════════════════════════════════════════════════════
-        -- EDITOR
-        -- ═══════════════════════════════════════════════════════════════════
-        Normal = { fg = c.fg, bg = c.none },
-        NormalFloat = { fg = c.fg, bg = c.none },
-        NormalNC = { fg = c.fg_dim, bg = c.none },
+	local highlights = {
+		-- ── Editor ─────────────────────────────────────────────────────────
+		Normal      = { fg = c.fg, bg = c.none },
+		NormalFloat = { fg = c.fg, bg = c.bg2  },
+		NormalNC    = { fg = c.fg_dim, bg = c.none },
 
-        -- Cursor
-        Cursor = { fg = c.cursor_bg, bg = c.cursor },
-        CursorLine = { bg = c.line },
-        CursorColumn = { bg = c.line },
-        ColorColumn = { bg = c.bg2 },
+		Cursor       = { fg = c.cursor_bg, bg = c.cursor },
+		CursorLine   = { bg = c.line },
+		CursorColumn = { bg = c.line },
+		ColorColumn  = { bg = c.bg2 },
 
-        -- Line numbers
-        LineNr = { fg = c.gray0 },
-        CursorLineNr = { fg = c.orange, bold = true },
-        SignColumn = { fg = c.gray0, bg = c.none },
+		LineNr       = { fg = c.gray1 },
+		CursorLineNr = { fg = c.amber, bold = true },
+		SignColumn   = { fg = c.gray1, bg = c.none },
 
-        -- Visual mode
-        Visual = { bg = c.visual },
-        VisualNOS = { bg = c.visual },
+		Visual    = { bg = c.visual },
+		VisualNOS = { bg = c.visual },
 
-        -- Search
-        Search = { fg = c.bg1, bg = c.blue },
-        IncSearch = { fg = c.bg1, bg = c.aqua },
-        CurSearch = { fg = c.bg1, bg = c.orange },
+		Search    = { fg = c.bg1,  bg = c.blue   },
+		IncSearch = { fg = c.bg1,  bg = c.teal   },
+		CurSearch = { fg = c.bg1,  bg = c.amber  },
 
-        -- Popup menu
-        Pmenu = { fg = c.fg, bg = c.bg3 },
-        PmenuSel = { fg = c.bg1, bg = c.blue, bold = true },
-        PmenuSbar = { bg = c.bg4 },
-        PmenuThumb = { bg = c.aqua },
+		Pmenu      = { fg = c.fg,        bg = c.bg2 },
+		PmenuSel   = { fg = c.bg1,       bg = c.blue, bold = true },
+		PmenuSbar  = { bg = c.bg3 },
+		PmenuThumb = { bg = c.amber },
 
-        -- Statusline
-        StatusLine = { fg = c.fg, bg = c.bg3 },
-        StatusLineNC = { fg = c.gray0, bg = c.bg2 },
+		StatusLine   = { fg = c.fg,    bg = c.bg3 },
+		StatusLineNC = { fg = c.gray1, bg = c.bg2 },
 
-        -- Tabline
-        TabLine = { fg = c.gray1, bg = c.bg3 },
-        TabLineSel = { fg = c.bg1, bg = c.blue, bold = true },
-        TabLineFill = { bg = c.bg2 },
+		TabLine     = { fg = c.gray2,  bg = c.bg3 },
+		TabLineSel  = { fg = c.bg1,    bg = c.blue, bold = true },
+		TabLineFill = { bg = c.bg2 },
 
-        -- Windows
-        VertSplit = { fg = c.border_dim },
-        WinSeparator = { fg = c.border_dim },
-        FloatBorder = { fg = c.border, bg = c.bg2 },
+		VertSplit    = { fg = c.border_dim },
+		WinSeparator = { fg = c.border_dim },
+		FloatBorder  = { fg = c.border, bg = c.bg2 },
 
-        -- Folds
-        Folded = { fg = c.gray1, bg = c.bg3 },
-        FoldColumn = { fg = c.gray0, bg = c.bg2 },
+		Folded     = { fg = c.gray2, bg = c.bg3 },
+		FoldColumn = { fg = c.gray1, bg = c.bg2 },
 
-        -- Diff
-        DiffAdd = { bg = "#D0E0D0" },
-        DiffChange = { bg = "#E8DCC8" },
-        DiffDelete = { bg = "#E8C8C8" },
-        DiffText = { fg = c.fg_bright, bg = "#C8D8E8", bold = true },
+		DiffAdd    = { bg = "#D0E0D0" },
+		DiffChange = { bg = "#E8DCC8" },
+		DiffDelete = { bg = "#E8C8C8" },
+		DiffText   = { fg = c.fg_bright, bg = c.visual, bold = true },
 
-        -- Spell
-        SpellBad = { sp = c.error, undercurl = true },
-        SpellCap = { sp = c.warning, undercurl = true },
-        SpellLocal = { sp = c.info, undercurl = true },
-        SpellRare = { sp = c.purple, undercurl = true },
+		SpellBad   = { sp = c.error,   undercurl = true },
+		SpellCap   = { sp = c.warning, undercurl = true },
+		SpellLocal = { sp = c.info,    undercurl = true },
+		SpellRare  = { sp = c.indigo,  undercurl = true },
 
-        -- Messages
-        ErrorMsg = { fg = c.error, bold = true },
-        WarningMsg = { fg = c.warning, bold = true },
-        ModeMsg = { fg = c.green, bold = true },
-        MoreMsg = { fg = c.success, bold = true },
-        Question = { fg = c.blue },
+		ErrorMsg   = { fg = c.error,   bold = true },
+		WarningMsg = { fg = c.warning, bold = true },
+		ModeMsg    = { fg = c.green,   bold = true },
+		MoreMsg    = { fg = c.success, bold = true },
+		Question   = { fg = c.teal    },
 
-        -- Misc
-        NonText = { fg = c.gray3 },
-        SnacksPickerGitStatusUntracked = { fg = c.fg_muted, bg = c.none },
+		NonText = { fg = c.gray1 },
+		SnacksPickerGitStatusUntracked = { fg = c.fg_muted, bg = c.none },
 
-        -- ═══════════════════════════════════════════════════════════════════
-        -- SYNTAX
-        -- ═══════════════════════════════════════════════════════════════════
-        Comment = { fg = c.comment, italic = true },
+		-- ── Syntax ─────────────────────────────────────────────────────────
+		Comment = { fg = c.comment, italic = true },
 
-        Constant = { fg = c.constant },
-        String = { fg = c.string },
-        Character = { fg = c.string },
-        Number = { fg = c.number },
-        Boolean = { fg = c.constant },
-        Float = { fg = c.number },
+		Constant  = { fg = c.constant },
+		String    = { fg = c.string   },
+		Character = { fg = c.string   },
+		Number    = { fg = c.number   },
+		Boolean   = { fg = c.constant },
+		Float     = { fg = c.number   },
 
-        Identifier = { fg = c.variable },
-        Function = { fg = c.func, bold = true },
+		Identifier = { fg = c.variable },
+		Function   = { fg = c.func, bold = true },
 
-        Statement = { fg = c.keyword, bold = true },
-        Conditional = { fg = c.keyword },
-        Repeat = { fg = c.keyword },
-        Label = { fg = c.keyword },
-        Operator = { fg = c.operator },
-        Keyword = { fg = c.keyword },
-        Exception = { fg = c.red_bright },
+		Statement   = { fg = c.keyword, bold = true },
+		Conditional = { fg = c.keyword },
+		Repeat      = { fg = c.keyword },
+		Label       = { fg = c.keyword },
+		Operator    = { fg = c.operator },
+		Keyword     = { fg = c.keyword },
+		Exception   = { fg = c.red_bright },
 
-        PreProc = { fg = c.red },
-        Include = { fg = c.purple },
-        Define = { fg = c.purple },
-        Macro = { fg = c.purple },
-        PreCondit = { fg = c.purple },
+		PreProc   = { fg = c.indigo },
+		Include   = { fg = c.indigo },
+		Define    = { fg = c.indigo },
+		Macro     = { fg = c.indigo },
+		PreCondit = { fg = c.indigo },
 
-        Type = { fg = c.type },
-        StorageClass = { fg = c.keyword },
-        Structure = { fg = c.type },
-        Typedef = { fg = c.type },
+		Type         = { fg = c.type    },
+		StorageClass = { fg = c.keyword },
+		Structure    = { fg = c.type    },
+		Typedef      = { fg = c.type    },
 
-        Special = { fg = c.orange },
-        SpecialChar = { fg = c.pink },
-        Tag = { fg = c.orange },
-        Delimiter = { fg = c.fg_muted },
-        SpecialComment = { fg = c.pink, italic = true },
-        Debug = { fg = c.red_bright },
+		Special        = { fg = c.amber   },
+		SpecialChar    = { fg = c.rose    },
+		Tag            = { fg = c.amber   },
+		Delimiter      = { fg = c.fg_muted },
+		SpecialComment = { fg = c.rose, italic = true },
+		Debug          = { fg = c.red_bright },
 
-        Underlined = { underline = true },
-        Ignore = { fg = c.gray0 },
-        Error = { fg = c.error, bold = true },
-        Todo = { fg = c.orange, bg = c.bg3, bold = true },
+		Underlined = { underline = true },
+		Ignore     = { fg = c.gray1 },
+		Error      = { fg = c.error, bold = true },
+		Todo       = { fg = c.amber, bg = c.bg3, bold = true },
 
-        -- ═══════════════════════════════════════════════════════════════════
-        -- LSP
-        -- ═══════════════════════════════════════════════════════════════════
-        DiagnosticError = { fg = c.diagnostic_error },
-        DiagnosticWarn = { fg = c.diagnostic_warn },
-        DiagnosticInfo = { fg = c.diagnostic_info },
-        DiagnosticHint = { fg = c.diagnostic_hint },
+		-- ── LSP ────────────────────────────────────────────────────────────
+		DiagnosticError = { fg = c.diagnostic_error },
+		DiagnosticWarn  = { fg = c.diagnostic_warn  },
+		DiagnosticInfo  = { fg = c.diagnostic_info  },
+		DiagnosticHint  = { fg = c.diagnostic_hint  },
 
-        DiagnosticUnderlineError = { sp = c.diagnostic_error, undercurl = true },
-        DiagnosticUnderlineWarn = { sp = c.diagnostic_warn, undercurl = true },
-        DiagnosticUnderlineInfo = { sp = c.diagnostic_info, undercurl = true },
-        DiagnosticUnderlineHint = { sp = c.diagnostic_hint, undercurl = true },
+		DiagnosticUnderlineError = { sp = c.diagnostic_error, undercurl = true },
+		DiagnosticUnderlineWarn  = { sp = c.diagnostic_warn,  undercurl = true },
+		DiagnosticUnderlineInfo  = { sp = c.diagnostic_info,  undercurl = true },
+		DiagnosticUnderlineHint  = { sp = c.diagnostic_hint,  undercurl = true },
 
-        -- LSP Semantic
-        ["@lsp.type.class"] = { fg = c.type },
-        ["@lsp.type.decorator"] = { fg = c.purple },
-        ["@lsp.type.enum"] = { fg = c.type },
-        ["@lsp.type.enumMember"] = { fg = c.constant },
-        ["@lsp.type.function"] = { fg = c.func, bold = true },
-        ["@lsp.type.interface"] = { fg = c.type },
-        ["@lsp.type.macro"] = { fg = c.purple },
-        ["@lsp.type.method"] = { fg = c.func },
-        ["@lsp.type.namespace"] = { fg = c.type },
-        ["@lsp.type.parameter"] = { fg = c.variable },
-        ["@lsp.type.property"] = { fg = c.variable },
-        ["@lsp.type.struct"] = { fg = c.type },
-        ["@lsp.type.type"] = { fg = c.type },
-        ["@lsp.type.typeParameter"] = { fg = c.type },
-        ["@lsp.type.variable"] = { fg = c.variable },
+		["@lsp.type.class"]         = { fg = c.type     },
+		["@lsp.type.decorator"]     = { fg = c.indigo   },
+		["@lsp.type.enum"]          = { fg = c.type     },
+		["@lsp.type.enumMember"]    = { fg = c.constant },
+		["@lsp.type.function"]      = { fg = c.func, bold = true },
+		["@lsp.type.interface"]     = { fg = c.type     },
+		["@lsp.type.macro"]         = { fg = c.indigo   },
+		["@lsp.type.method"]        = { fg = c.func     },
+		["@lsp.type.namespace"]     = { fg = c.type     },
+		["@lsp.type.parameter"]     = { fg = c.variable },
+		["@lsp.type.property"]      = { fg = c.variable },
+		["@lsp.type.struct"]        = { fg = c.type     },
+		["@lsp.type.type"]          = { fg = c.type     },
+		["@lsp.type.typeParameter"] = { fg = c.type     },
+		["@lsp.type.variable"]      = { fg = c.variable },
 
-        -- ═══════════════════════════════════════════════════════════════════
-        -- TREESITTER
-        -- ═══════════════════════════════════════════════════════════════════
-        ["@variable"] = { fg = c.variable },
-        ["@variable.builtin"] = { fg = c.red },
-        ["@variable.parameter"] = { fg = c.variable },
-        ["@variable.member"] = { fg = c.variable },
+		-- ── Treesitter ─────────────────────────────────────────────────────
+		["@variable"]           = { fg = c.variable },
+		["@variable.builtin"]   = { fg = c.red      },
+		["@variable.parameter"] = { fg = c.variable },
+		["@variable.member"]    = { fg = c.variable },
 
-        ["@constant"] = { fg = c.constant },
-        ["@constant.builtin"] = { fg = c.constant },
-        ["@constant.macro"] = { fg = c.purple },
+		["@constant"]         = { fg = c.constant },
+		["@constant.builtin"] = { fg = c.constant },
+		["@constant.macro"]   = { fg = c.indigo   },
 
-        ["@string"] = { fg = c.string },
-        ["@string.escape"] = { fg = c.orange },
-        ["@string.regexp"] = { fg = c.gold },
+		["@string"]        = { fg = c.string  },
+		["@string.escape"] = { fg = c.amber   },
+		["@string.regexp"] = { fg = c.amber   },
 
-        ["@character"] = { fg = c.string },
-        ["@number"] = { fg = c.number },
-        ["@boolean"] = { fg = c.constant },
-        ["@float"] = { fg = c.number },
+		["@character"] = { fg = c.string  },
+		["@number"]    = { fg = c.number  },
+		["@boolean"]   = { fg = c.constant },
+		["@float"]     = { fg = c.number  },
 
-        ["@function"] = { fg = c.func, bold = true },
-        ["@function.builtin"] = { fg = c.aqua },
-        ["@function.macro"] = { fg = c.purple },
-        ["@function.call"] = { fg = c.func },
-        ["@method"] = { fg = c.func },
-        ["@method.call"] = { fg = c.func },
-        ["@constructor"] = { fg = c.type },
+		["@function"]         = { fg = c.func, bold = true },
+		["@function.builtin"] = { fg = c.teal   },
+		["@function.macro"]   = { fg = c.indigo },
+		["@function.call"]    = { fg = c.func   },
+		["@method"]           = { fg = c.func   },
+		["@method.call"]      = { fg = c.func   },
+		["@constructor"]      = { fg = c.type   },
 
-        ["@keyword"] = { fg = c.keyword, bold = true },
-        ["@keyword.function"] = { fg = c.keyword },
-        ["@keyword.operator"] = { fg = c.operator },
-        ["@keyword.return"] = { fg = c.keyword },
-        ["@keyword.conditional"] = { fg = c.keyword },
-        ["@keyword.repeat"] = { fg = c.keyword },
-        ["@keyword.exception"] = { fg = c.red_bright },
+		["@keyword"]             = { fg = c.keyword, bold = true },
+		["@keyword.function"]    = { fg = c.keyword  },
+		["@keyword.operator"]    = { fg = c.operator },
+		["@keyword.return"]      = { fg = c.red_bright },
+		["@keyword.conditional"] = { fg = c.keyword  },
+		["@keyword.repeat"]      = { fg = c.keyword  },
+		["@keyword.exception"]   = { fg = c.red_bright },
 
-        ["@operator"] = { fg = c.operator },
-        ["@type"] = { fg = c.type },
-        ["@type.builtin"] = { fg = c.type },
-        ["@type.definition"] = { fg = c.type },
+		["@operator"] = { fg = c.operator },
 
-        ["@punctuation.delimiter"] = { fg = c.fg_muted },
-        ["@punctuation.bracket"] = { fg = c.gray2 },
-        ["@punctuation.special"] = { fg = c.orange },
+		["@type"]            = { fg = c.type },
+		["@type.builtin"]    = { fg = c.type },
+		["@type.definition"] = { fg = c.type },
 
-        ["@comment"] = { fg = c.comment, italic = true },
-        ["@comment.todo"] = { fg = c.orange, bg = c.bg3, bold = true },
-        ["@comment.warning"] = { fg = c.warning, bold = true },
-        ["@comment.note"] = { fg = c.info, bold = true },
-        ["@comment.error"] = { fg = c.error, bold = true },
+		["@punctuation.delimiter"] = { fg = c.fg_muted },
+		["@punctuation.bracket"]   = { fg = c.gray2   },
+		["@punctuation.special"]   = { fg = c.amber   },
 
-        ["@tag"] = { fg = c.orange },
-        ["@tag.attribute"] = { fg = c.purple },
-        ["@tag.delimiter"] = { fg = c.fg_muted },
+		["@comment"]         = { fg = c.comment, italic = true },
+		["@comment.todo"]    = { fg = c.amber,   bg = c.bg3, bold = true },
+		["@comment.warning"] = { fg = c.warning, bold = true },
+		["@comment.note"]    = { fg = c.info,    bold = true },
+		["@comment.error"]   = { fg = c.error,   bold = true },
 
-        -- ═══════════════════════════════════════════════════════════════════
-        -- GIT
-        -- ═══════════════════════════════════════════════════════════════════
-        GitSignsAdd = { fg = c.git_add },
-        GitSignsChange = { fg = c.git_change },
-        GitSignsDelete = { fg = c.git_delete },
+		["@tag"]           = { fg = c.amber   },
+		["@tag.attribute"] = { fg = c.indigo  },
+		["@tag.delimiter"] = { fg = c.fg_muted },
 
-        -- ═══════════════════════════════════════════════════════════════════
-        -- PLUGINS
-        -- ═══════════════════════════════════════════════════════════════════
+		-- ── Git ────────────────────────────────────────────────────────────
+		GitSignsAdd    = { fg = c.git_add    },
+		GitSignsChange = { fg = c.git_change },
+		GitSignsDelete = { fg = c.git_delete },
 
-        -- Telescope
-        TelescopeBorder = { fg = c.border },
-        TelescopePromptBorder = { fg = c.blue },
-        TelescopeResultsBorder = { fg = c.border_dim },
-        TelescopePreviewBorder = { fg = c.border_dim },
-        TelescopeSelection = { fg = c.bg1, bg = c.blue, bold = true },
-        TelescopeMatching = { fg = c.orange, bold = true },
+		-- ── Telescope ──────────────────────────────────────────────────────
+		TelescopeBorder        = { fg = c.border     },
+		TelescopePromptBorder  = { fg = c.blue       },
+		TelescopeResultsBorder = { fg = c.border_dim },
+		TelescopePreviewBorder = { fg = c.border_dim },
+		TelescopeSelection     = { fg = c.bg1, bg = c.blue, bold = true },
+		TelescopeMatching      = { fg = c.amber, bold = true },
 
-        -- NeoTree
-        NeoTreeNormal = { fg = c.fg, bg = c.bg0 },
-        NeoTreeNormalNC = { fg = c.fg, bg = c.bg0 },
-        NeoTreeRootName = { fg = c.blue, bold = true },
-        NeoTreeFileName = { fg = c.fg },
-        NeoTreeFileNameOpened = { fg = c.orange },
-        NeoTreeGitAdded = { fg = c.git_add },
-        NeoTreeGitModified = { fg = c.git_change },
-        NeoTreeGitDeleted = { fg = c.git_delete },
-        NeoTreeGitConflict = { fg = c.git_conflict },
-        NeoTreeIndentMarker = { fg = c.gray0 },
+		-- ── Neo-tree ───────────────────────────────────────────────────────
+		NeoTreeNormal         = { fg = c.fg,    bg = c.bg0 },
+		NeoTreeNormalNC       = { fg = c.fg,    bg = c.bg0 },
+		NeoTreeRootName       = { fg = c.blue,  bold = true },
+		NeoTreeFileName       = { fg = c.fg    },
+		NeoTreeFileNameOpened = { fg = c.amber  },
+		NeoTreeGitAdded       = { fg = c.git_add      },
+		NeoTreeGitModified    = { fg = c.git_change   },
+		NeoTreeGitDeleted     = { fg = c.git_delete   },
+		NeoTreeGitConflict    = { fg = c.git_conflict },
+		NeoTreeIndentMarker   = { fg = c.gray0        },
 
-        -- Which-key
-        WhichKey = { fg = c.orange },
-        WhichKeyGroup = { fg = c.blue },
-        WhichKeyDesc = { fg = c.fg },
-        WhichKeySeparator = { fg = c.gray0 },
-        WhichKeyFloat = { bg = c.bg3 },
+		-- ── Which-key ──────────────────────────────────────────────────────
+		WhichKey          = { fg = c.amber  },
+		WhichKeyGroup     = { fg = c.blue   },
+		WhichKeyDesc      = { fg = c.fg     },
+		WhichKeySeparator = { fg = c.gray1  },
+		WhichKeyFloat     = { bg = c.bg3    },
 
-        -- Cmp (completion)
-        CmpItemAbbrMatch = { fg = c.blue, bold = true },
-        CmpItemAbbrMatchFuzzy = { fg = c.aqua },
-        CmpItemKindFunction = { fg = c.func },
-        CmpItemKindMethod = { fg = c.func },
-        CmpItemKindVariable = { fg = c.variable },
-        CmpItemKindKeyword = { fg = c.keyword },
-        CmpItemKindText = { fg = c.fg },
-        CmpItemKindClass = { fg = c.type },
-        CmpItemKindInterface = { fg = c.type },
+		-- ── Completion ─────────────────────────────────────────────────────
+		CmpItemAbbrMatch      = { fg = c.blue, bold = true },
+		CmpItemAbbrMatchFuzzy = { fg = c.teal },
+		CmpItemKindFunction   = { fg = c.func     },
+		CmpItemKindMethod     = { fg = c.func     },
+		CmpItemKindVariable   = { fg = c.variable },
+		CmpItemKindKeyword    = { fg = c.keyword  },
+		CmpItemKindText       = { fg = c.fg       },
+		CmpItemKindClass      = { fg = c.type     },
+		CmpItemKindInterface  = { fg = c.type     },
 
-        -- Indent Blankline
-        IndentBlanklineChar = { fg = c.bg4 },
-        IndentBlanklineContextChar = { fg = c.aqua },
+		-- ── Indent blankline ───────────────────────────────────────────────
+		IndentBlanklineChar        = { fg = c.bg4   },
+		IndentBlanklineContextChar = { fg = c.teal  },
 
-        -- Dashboard
-        DashboardHeader = { fg = c.blue },
-        DashboardCenter = { fg = c.aqua },
-        DashboardShortCut = { fg = c.orange },
-        DashboardFooter = { fg = c.green, italic = true },
+		-- ── Dashboard ──────────────────────────────────────────────────────
+		DashboardHeader   = { fg = c.blue,  bold = true },
+		DashboardCenter   = { fg = c.teal   },
+		DashboardShortCut = { fg = c.amber  },
+		DashboardFooter   = { fg = c.green, italic = true },
 
-        -- Notify
-        NotifyBackground = { bg = c.bg2 },
-        NotifyERRORBorder = { fg = c.error },
-        NotifyWARNBorder = { fg = c.warning },
-        NotifyINFOBorder = { fg = c.info },
-        NotifyDEBUGBorder = { fg = c.purple },
-        NotifyTRACEBorder = { fg = c.pink },
+		-- ── Notify ─────────────────────────────────────────────────────────
+		NotifyBackground  = { bg = c.bg2   },
+		NotifyERRORBorder = { fg = c.error  },
+		NotifyWARNBorder  = { fg = c.warning },
+		NotifyINFOBorder  = { fg = c.info   },
+		NotifyDEBUGBorder = { fg = c.indigo },
+		NotifyTRACEBorder = { fg = c.rose   },
 
-        -- Flash
-        FlashLabel = { fg = c.bg1, bg = c.blue, bold = true },
-        FlashMatch = { fg = c.blue },
-        FlashCurrent = { fg = c.red, bold = true },
+		-- ── Flash ──────────────────────────────────────────────────────────
+		FlashLabel   = { fg = c.bg1,  bg = c.blue, bold = true },
+		FlashMatch   = { fg = c.blue  },
+		FlashCurrent = { fg = c.red,  bold = true },
 
-        -- Snacks
-        SnacksNotifierBorderInfo = { fg = c.info },
-        SnacksNotifierBorderWarn = { fg = c.warning },
-        SnacksNotifierBorderError = { fg = c.error },
-        SnacksNotifierBorderDebug = { fg = c.purple },
-        SnacksNotifierBorderTrace = { fg = c.pink },
-    }
+		-- ── Snacks ─────────────────────────────────────────────────────────
+		SnacksNotifierBorderInfo  = { fg = c.info   },
+		SnacksNotifierBorderWarn  = { fg = c.warning },
+		SnacksNotifierBorderError = { fg = c.error  },
+		SnacksNotifierBorderDebug = { fg = c.indigo },
+		SnacksNotifierBorderTrace = { fg = c.rose   },
+	}
 
-    for group, settings in pairs(highlights) do
-        vim.api.nvim_set_hl(0, group, settings)
-    end
+	for group, settings in pairs(highlights) do
+		vim.api.nvim_set_hl(0, group, settings)
+	end
 end
 
 return M

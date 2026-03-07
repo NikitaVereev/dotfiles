@@ -14,7 +14,7 @@ configuration {
     me-accept-entry:            "MousePrimary";
 
     font:                       "JetBrains Mono Nerd Font Bold 11";
-    icon-theme:                 "candy-icons";
+    icon-theme:                 "papirus-icon-theme";
 }
 
 @theme "current.rasi"
