@@ -33,6 +33,8 @@
 @define-color gray1    #525252;
 @define-color gray2    #6f6f6f;
 
+@define-color accent      #78a9ff;
+
 @define-color panel_bg    rgba(22, 22, 22, 0.85);
 @define-color tooltip_bg  rgba(13, 13, 13, 0.97);
 @define-color tooltip_border rgba(120, 169, 255, 0.15);

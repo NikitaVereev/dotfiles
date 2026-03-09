@@ -28,12 +28,13 @@
     "bluetooth",
     "custom/separator#line",
     "battery",
-    "tray"
+    "tray",
   ],
   "tray": {
-        "icon-size": 21,
-        "spacing": 10
-    },
+    "icon-size": 21,
+    "spacing": 10,
+    "show-passive-items": false,
+  },
 
   "clock": {
     "interval": 1,
@@ -51,7 +52,7 @@
     "format": "{icon}",
     "show-special": false,
     "on-click": "activate",
-    "spacing": 8,
+    "spacing": 6,
     "format-icons": {
       "1": "1",
       "2": "2",
@@ -213,13 +214,13 @@
   },
 
   "custom/separator#line": {
-    "format": "|",
+    "format": "·",
     "interval": "once",
     "tooltip": false,
   },
   "custom/arch": {
     "format": " ",
     "tooltip": false,
-    "on-click": "rofi -show drun"
+    "on-click": "rofi -show drun",
   },
 }

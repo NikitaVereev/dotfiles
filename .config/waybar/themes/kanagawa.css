@@ -33,6 +33,8 @@
 @define-color gray1    #8A7A68;
 @define-color gray2    #A89888;
 
+@define-color accent        #1A4A90;  /* prussian blue */
+
 /* ── Panels ──────────────────────────────────────────────────────────────── */
 @define-color panel_bg      rgba(244, 234, 208, 0.90);
 @define-color tooltip_bg    rgba(226, 212, 176, 0.97);

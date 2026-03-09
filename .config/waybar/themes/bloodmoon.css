@@ -43,6 +43,8 @@
 @define-color pink   #C07050;  /* notify trace → rust        */
 @define-color orange #E09030;  /* misc        → amber        */
 
+@define-color accent        #E03050;  /* signature crimson */
+
 /* ── Panels ──────────────────────────────────────────────────────────────── */
 @define-color panel_bg      rgba(19, 16, 16, 0.80);
 @define-color tooltip_bg    rgba(13, 10, 10, 0.96);

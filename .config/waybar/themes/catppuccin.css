@@ -39,6 +39,8 @@
 @define-color gray1    #6C7086;
 @define-color gray2    #7F849C;
 
+@define-color accent   #89B4FA;
+
 /* Module panel background (semi-transparent) */
 @define-color panel_bg rgba(30, 30, 46, 0.65);
 
