@@ -1,4 +1,4 @@
 #!/bin/bash
 
-killall -9 waybar
+pkill waybar
 waybar &
