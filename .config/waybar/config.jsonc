@@ -71,20 +71,6 @@
     },
   },
 
-  // "hyprland/window": {
-  //   "format": "{}",
-  //   "max-length": 25,
-  //   "separate-outputs": true,
-  //   "offscreen-css": true,
-  //   "offscreen-css-text": "(inactive)",
-  //   "rewrite": {
-  //     "(.*) — Mozilla Firefox": " $1",
-  //     "(.*) - fish": "> [$1]",
-  //     "(.*) - zsh": "> [$1]",
-  //     "(.*) - $term": "> [$1]",
-  //   },
-  // },
-
   "hyprland/language": {
     "format": "{}",
     "format-en": "EN",
