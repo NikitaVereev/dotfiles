@@ -56,7 +56,7 @@
     },
   },
   "clock#day": {
-    "format": "  {:%A, %d %B}",
+    "format": " {:%d %B, %A}",
     "tooltip": false,
   },
 

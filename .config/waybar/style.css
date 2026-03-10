@@ -2,54 +2,56 @@
 
 /* ── Reset ──────────────────────────────────────────────────────────────────── */
 * {
-    border: none;
-    border-radius: 0;
-    font-family: "JetBrainsMono Nerd Font";
-    font-size: 100%;
-    font-weight: 600;
-    font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
-    min-height: 0;
-    padding: 0;
-    margin: 0;
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 100%;
+  font-weight: 600;
+  font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+  min-height: 0;
+  padding: 0;
+  margin: 0;
 }
 
 /* ── Bar window ─────────────────────────────────────────────────────────────── */
 window#waybar,
 window#waybar.empty,
 window#waybar.empty #window {
-    background: transparent;
+  background: transparent;
 }
 
 /* ── Panel containers ───────────────────────────────────────────────────────── */
 .modules-left,
 .modules-center,
 .modules-right {
-    background: @panel_bg;
-    border-radius: 22px;
-    padding: 6px 14px;
+  background: @panel_bg;
+  border-radius: 22px;
+  padding: 6px 14px;
 }
 
 /* ── Workspaces ─────────────────────────────────────────────────────────────── */
 #workspaces button {
-    color: @bg5;
-    padding: 2px 10px;
-    border-radius: 10px;
-    transition: background 0.2s ease, color 0.2s ease;
+  color: @bg5;
+  padding: 2px 10px;
+  border-radius: 10px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 #workspaces button:hover {
-    color: @fg_dim;
-    background: alpha(@fg, 0.08);
+  color: @fg_dim;
+  background: alpha(@fg, 0.08);
 }
 
 #workspaces button.active {
-    background: @accent;
-    color: @bg0;
+  background: @accent;
+  color: @bg0;
 }
 
 #workspaces button.urgent {
-    background: @red;
-    color: @bg0;
+  background: @red;
+  color: @bg0;
 }
 
 /* ── Modules — shared base ──────────────────────────────────────────────────── */
@@ -63,15 +65,17 @@ window#waybar.empty #window {
 #tray,
 #custom-arch,
 #custom-notification {
-    padding: 0 8px;
-    border-radius: 8px;
-    transition: background 0.2s ease, color 0.2s ease;
+  padding: 0 8px;
+  border-radius: 8px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 /* ── Color hierarchy ────────────────────────────────────────────────────────── */
 /* Primary: time — most important, full brightness */
 #clock {
-    color: @fg;
+  color: @fg;
 }
 
 /* Secondary: status indicators — readable, not distracting */
@@ -80,18 +84,18 @@ window#waybar.empty #window {
 #bluetooth,
 #battery,
 #language {
-    color: @fg_dim;
+  color: @fg_dim;
 }
 
 /* Ambient: now-playing — background info, least emphasis */
 #mpris {
-    color: @fg_muted;
+  color: @fg_muted;
 }
 
 /* Brand: arch logo — single accent color from theme */
 #custom-arch {
-    color: @accent;
-    padding: 0 6px;
+  color: @accent;
+  padding: 0 6px;
 }
 
 /* ── Hover — interactive modules only ───────────────────────────────────────── */
@@ -101,61 +105,61 @@ window#waybar.empty #window {
 #bluetooth:hover,
 #battery:hover,
 #mpris:hover {
-    background: alpha(@fg, 0.08);
-    color: @fg;
+  background: alpha(@fg, 0.08);
+  color: @fg;
 }
 
 /* ── Battery — semantic state colors ────────────────────────────────────────── */
 #battery.warning:not(.charging) {
-    color: @yellow;
+  color: @yellow;
 }
 
 #battery.critical:not(.charging) {
-    color: @red;
+  color: @red;
 }
 
 /* ── Network — connection state ─────────────────────────────────────────────── */
 #network.disconnected {
-    color: @red;
+  color: @red;
 }
 
 /* ── Pulseaudio — muted state ───────────────────────────────────────────────── */
 #pulseaudio.muted {
-    color: @fg_muted;
+  color: @fg_muted;
 }
 
 /* ── Notification — states ──────────────────────────────────────────────────── */
 #custom-notification {
-    color: @fg_muted;
+  color: @fg_muted;
 }
 
 #custom-notification.notification,
 #custom-notification.dnd-notification,
 #custom-notification.inhibited-notification,
 #custom-notification.dnd-inhibited-notification {
-    color: @red;
+  color: @red;
 }
 
 #custom-notification.dnd-none,
 #custom-notification.dnd-inhibited-none {
-    color: @fg_muted;
-    opacity: 0.6;
+  color: @fg_muted;
+  opacity: 0.6;
 }
 
 /* ── Separator ──────────────────────────────────────────────────────────────── */
 #custom-separator.line {
-    color: alpha(@fg_dim, 0.25);
-    padding: 0 4px;
+  color: alpha(@fg_dim, 0.25);
+  padding: 0 4px;
 }
 
 /* ── Tooltip ────────────────────────────────────────────────────────────────── */
 tooltip {
-    background: @tooltip_bg;
-    border-radius: 12px;
-    padding: 10px 14px;
-    border: 1px solid @tooltip_border;
+  background: @tooltip_bg;
+  border-radius: 12px;
+  padding: 10px 14px;
+  border: 1px solid @tooltip_border;
 }
 
 tooltip label {
-    color: @fg;
+  color: @fg;
 }
