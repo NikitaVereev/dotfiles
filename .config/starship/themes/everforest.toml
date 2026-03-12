@@ -1,0 +1,76 @@
+palette         = "theme"
+add_newline     = false
+command_timeout = 1000
+format = """$directory$character"""
+right_format = """$all"""
+
+[palettes.theme]
+blue    = "#7fbbb3"
+mauve   = "#d699b6"
+green   = "#a7c080"
+yellow  = "#dbbc7f"
+peach   = "#e69875"
+red     = "#e67e80"
+overlay = "#7a8478"
+
+[character]
+success_symbol = '[❯](bold green)'
+error_symbol   = '[❯](bold red)'
+vimcmd_symbol  = '[N](bold mauve)'
+
+[directory]
+style             = "bold blue"
+truncation_length = 4
+truncate_to_repo  = true
+format            = "[$path]($style)[$read_only]($read_only_style) "
+read_only         = " 󰌾"
+
+[git_branch]
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
+[nodejs]
+symbol         = " "
+style          = "bold green"
+format         = "[$symbol$version]($style) "
+detect_files   = ["package.json", ".nvmrc", ".node-version"]
+detect_folders = ["node_modules"]
+
+[package]
+symbol = "󰏗 "
+style  = "bold peach"
+format = "[$symbol$version]($style) "
+
+[python]
+symbol       = " "
+style        = "bold yellow"
+format       = "[$symbol$version]($style) "
+detect_files = ["requirements.txt", "pyproject.toml", "setup.py", ".python-version"]
+
+[java]
+symbol       = " "
+style        = "bold red"
+format       = "[$symbol$version]($style) "
+detect_files = ["build.gradle", "build.gradle.kts", "AndroidManifest.xml"]
+
+[ruby]
+symbol       = " "
+style        = "bold peach"
+format       = "[$symbol$version]($style) "
+detect_files = ["Gemfile", "Podfile"]
+
+[time]
+disabled    = false
+style       = "bold overlay"
+format      = "[$time]($style)"
+time_format = "%H:%M"
+
+[aws]
+disabled = true
+[kubernetes]
+disabled = true
+[docker_context]
+disabled = true
+[golang]
+disabled = true
+[rust]
+disabled = true

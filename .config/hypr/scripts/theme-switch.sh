@@ -74,7 +74,15 @@ fi
 echo "$THEME" >"$CONFIG_DIR/nvim/themes/current"
 pkill -USR1 nvim 2>/dev/null || true
 
-# ── 7. Ghostty ────────────────────────────────────────────────────────────────
+# ── 7. Starship ───────────────────────────────────────────────────────────────
+
+if [[ -f "$CONFIG_DIR/starship/themes/$THEME.toml" ]]; then
+  ln -sf "$CONFIG_DIR/starship/themes/$THEME.toml" "$CONFIG_DIR/starship/themes/current.toml"
+else
+  notify-send "Theme Switcher" "Starship theme '$THEME' not found" -u low
+fi
+
+# ── 8. Ghostty ────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/ghostty/themes/$THEME" ]]; then
   sed -i "s/^theme = .*/theme = $THEME/" "$CONFIG_DIR/ghostty/config"
