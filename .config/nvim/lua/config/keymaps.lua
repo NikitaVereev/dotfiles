@@ -2,7 +2,7 @@
 -- Essential Operations
 -- ════════════════════════════════════════════════════════════════════════════
 vim.g.mapleader = " "
-vim.g.maplocalloader = " "
+vim.g.maplocalleader = " "
 -- Save
 vim.keymap.set("n", "<C-s>", "<cmd>w<cr>", { desc = "Save File" })
 vim.keymap.set({ "i", "x" }, "<C-s>", "<Esc><cmd>w<cr>", { desc = "Save File" })

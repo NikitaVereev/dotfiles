@@ -34,13 +34,13 @@ fi
 
 # ── 2. Hyprland ───────────────────────────────────────────────────────────────
 
-ln -sf "$CONFIG_DIR/hypr/themes/$THEME.conf" "$CONFIG_DIR/hypr/themes/current.conf"
+ln -sf "$THEME.conf" "$CONFIG_DIR/hypr/themes/current.conf"
 hyprctl reload
 
 # ── 3. Kitty ──────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/kitty/themes/$THEME.conf" ]]; then
-  ln -sf "$CONFIG_DIR/kitty/themes/$THEME.conf" "$CONFIG_DIR/kitty/themes/current.conf"
+  ln -sf "$THEME.conf" "$CONFIG_DIR/kitty/themes/current.conf"
   killall -SIGUSR1 kitty 2>/dev/null || true
 else
   notify-send "Theme Switcher" "Kitty theme '$THEME' not found" -u low
@@ -49,7 +49,7 @@ fi
 # ── 4. Waybar ─────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/waybar/themes/$THEME.css" ]]; then
-  ln -sf "$CONFIG_DIR/waybar/themes/$THEME.css" "$CONFIG_DIR/waybar/themes/current.css"
+  ln -sf "$THEME.css" "$CONFIG_DIR/waybar/themes/current.css"
   if command -v waybar-msg >/dev/null 2>&1; then
     waybar-msg cmd reload 2>/dev/null || true
   else
@@ -64,7 +64,7 @@ fi
 # ── 5. Rofi ───────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/rofi/themes/$THEME.rasi" ]]; then
-  ln -sf "$CONFIG_DIR/rofi/themes/$THEME.rasi" "$CONFIG_DIR/rofi/current.rasi"
+  ln -sf "themes/$THEME.rasi" "$CONFIG_DIR/rofi/current.rasi"
 else
   notify-send "Theme Switcher" "Rofi theme '$THEME' not found" -u low
 fi
@@ -77,7 +77,7 @@ pkill -USR1 nvim 2>/dev/null || true
 # ── 7. Starship ───────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/starship/themes/$THEME.toml" ]]; then
-  ln -sf "$CONFIG_DIR/starship/themes/$THEME.toml" "$CONFIG_DIR/starship/themes/current.toml"
+  ln -sf "$THEME.toml" "$CONFIG_DIR/starship/themes/current.toml"
 else
   notify-send "Theme Switcher" "Starship theme '$THEME' not found" -u low
 fi
@@ -85,7 +85,7 @@ fi
 # ── 8. SwayNC ─────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/swaync/themes/$THEME.css" ]]; then
-  ln -sf "$CONFIG_DIR/swaync/themes/$THEME.css" "$CONFIG_DIR/swaync/themes/current.css"
+  ln -sf "$THEME.css" "$CONFIG_DIR/swaync/themes/current.css"
   swaync-client --reload-css 2>/dev/null || true
 else
   notify-send "Theme Switcher" "SwayNC theme '$THEME' not found" -u low
@@ -94,7 +94,7 @@ fi
 # ── 9. Ghostty ────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/ghostty/themes/$THEME" ]]; then
-  sed -i "s/^theme = .*/theme = $THEME/" "$CONFIG_DIR/ghostty/config"
+  sed -i "s|^theme = .*|theme = $THEME|" "$CONFIG_DIR/ghostty/config"
   pkill -USR2 ghostty 2>/dev/null || true
 else
   notify-send "Theme Switcher" "Ghostty theme '$THEME' not found" -u low

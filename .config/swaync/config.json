@@ -38,6 +38,10 @@
       "state": "muted",
       "urgency": "Low",
       "app-name": "Spotify"
+    },
+    "layout-switch": {
+      "state": "transient",
+      "app-name": "layout-switch"
     }
   },
   "widgets": ["mpris", "title", "dnd", "notifications"],
