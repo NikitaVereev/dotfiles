@@ -82,7 +82,16 @@ else
   notify-send "Theme Switcher" "Starship theme '$THEME' not found" -u low
 fi
 
-# ── 8. Ghostty ────────────────────────────────────────────────────────────────
+# ── 8. SwayNC ─────────────────────────────────────────────────────────────────
+
+if [[ -f "$CONFIG_DIR/swaync/themes/$THEME.css" ]]; then
+  ln -sf "$CONFIG_DIR/swaync/themes/$THEME.css" "$CONFIG_DIR/swaync/themes/current.css"
+  swaync-client --reload-css 2>/dev/null || true
+else
+  notify-send "Theme Switcher" "SwayNC theme '$THEME' not found" -u low
+fi
+
+# ── 9. Ghostty ────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/ghostty/themes/$THEME" ]]; then
   sed -i "s/^theme = .*/theme = $THEME/" "$CONFIG_DIR/ghostty/config"

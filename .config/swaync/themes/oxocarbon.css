@@ -1,0 +1,11 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   OXOCARBON — IBM Carbon Design System — swaync color variables
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@define-color background     #161616;
+@define-color background-sec #1c1c1c;
+@define-color background-alt rgba(38, 38, 38, 0.4);
+@define-color text           #f2f4f8;
+@define-color selected       #78a9ff;
+@define-color hover          rgba(120, 169, 255, 0.4);
+@define-color urgent         #ee5396;

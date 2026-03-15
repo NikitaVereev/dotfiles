@@ -1,0 +1,11 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   EVERFOREST — Dark Medium — swaync color variables
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@define-color background     #2D353B;
+@define-color background-sec #343F44;
+@define-color background-alt rgba(61, 72, 77, 0.4);
+@define-color text           #D3C6AA;
+@define-color selected       #83C092;
+@define-color hover          rgba(131, 192, 146, 0.4);
+@define-color urgent         #E67E80;

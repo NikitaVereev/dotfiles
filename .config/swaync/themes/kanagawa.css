@@ -1,0 +1,11 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   KANAGAWA WAVE — swaync color variables
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@define-color background     #F4EAD0;
+@define-color background-sec #EDE3C6;
+@define-color background-alt rgba(228, 216, 186, 0.4);
+@define-color text           #1A3A5C;
+@define-color selected       #1A4A90;
+@define-color hover          rgba(26, 74, 144, 0.4);
+@define-color urgent         #A03030;

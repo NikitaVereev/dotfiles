@@ -1,0 +1,11 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   CATPPUCCIN MOCHA — swaync color variables
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@define-color background     #1E1E2E;
+@define-color background-sec #181825;
+@define-color background-alt rgba(49, 50, 68, 0.4);
+@define-color text           #CDD6F4;
+@define-color selected       #89B4FA;
+@define-color hover          rgba(137, 180, 250, 0.4);
+@define-color urgent         #F38BA8;

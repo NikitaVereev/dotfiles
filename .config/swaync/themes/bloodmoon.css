@@ -1,0 +1,11 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   BLOODMOON — Vivid Crimson Dark — swaync color variables
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@define-color background     #131010;
+@define-color background-sec #1E1616;
+@define-color background-alt rgba(42, 30, 30, 0.4);
+@define-color text           #F2E8E4;
+@define-color selected       #E03050;
+@define-color hover          rgba(224, 48, 80, 0.4);
+@define-color urgent         #E03050;
