@@ -19,8 +19,8 @@
   ],
   "modules-center": ["hyprland/workspaces"],
   "modules-right": [
-    "hyprland/language",
-    "custom/separator#line",
+    // "hyprland/language",
+    // "custom/separator#line",
     "pulseaudio",
     "custom/separator#line",
     "network",
@@ -86,12 +86,12 @@
     },
   },
 
-  "hyprland/language": {
-    "format": "{}",
-    "format-en": "EN",
-    "format-ru": "RU",
-    "tooltip": true,
-  },
+  // "hyprland/language": {
+  //   "format": "{}",
+  //   "format-en": "EN",
+  //   "format-ru": "RU",
+  //   "tooltip": true,
+  // },
 
   "network": {
     "format": "{icon}",
