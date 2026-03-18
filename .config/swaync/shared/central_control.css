@@ -24,7 +24,7 @@
   .notification-background
   .notification.critical {
   background-color: @background-alt;
-  border-radius: 16px;
+  border-radius: 14px;
   margin: 4px 0px;
   padding: 4px;
 }
@@ -63,7 +63,7 @@
   .notification-action {
   background: alpha(@selected, 0.6);
   color: @text;
-  border-radius: 12px;
+  border-radius: 8px;
   margin: 6px;
 }
 
@@ -91,7 +91,7 @@
 
 .control-center .notification-row .notification-background .close-button {
   background: transparent;
-  border-radius: 6px;
+  border-radius: 8px;
   color: @text;
   margin: 0px;
   padding: 4px;
@@ -111,7 +111,7 @@
 progressbar,
 progress,
 trough {
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 progressbar {
@@ -139,7 +139,7 @@ progressbar {
   background: transparent;
   color: @text;
   margin: 4px;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 4px;
 }
 
@@ -158,7 +158,7 @@ progressbar {
 
 .widget-title button {
   background: @background-alt;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 4px 16px;
 }
 
@@ -198,7 +198,7 @@ progressbar {
 
 .widget-dnd > switch slider {
   background: @text;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 /* Buttons menu */
@@ -206,7 +206,7 @@ progressbar {
   font-size: x-large;
   padding: 6px 2px;
   margin: 6px;
-  border-radius: 12px;
+  border-radius: 14px;
   background: @background-alt;
 }
 
@@ -224,7 +224,7 @@ progressbar {
 /* Music player */
 .widget-mpris {
   background: @background-alt;
-  border-radius: 16px;
+  border-radius: 14px;
   color: @text;
   margin: 20px 6px;
 }
@@ -232,14 +232,14 @@ progressbar {
 /* NOTE: Background need *opacity 1* otherwise will turn into the album art blurred  */
 .widget-mpris-player {
   background-color: @background-sec;
-  border-radius: 22px;
+  border-radius: 24px;
   padding: 6px 14px;
   margin: 6px;
 }
 
 .widget-mpris > box > button {
   color: @text;
-  border-radius: 20px;
+  border-radius: 8px;
 }
 
 .widget-mpris button {
@@ -251,7 +251,7 @@ progressbar {
 }
 
 .widget-mpris-album-art {
-  border-radius: 16px;
+  border-radius: 14px;
 }
 
 .widget-mpris-title {
@@ -274,5 +274,5 @@ picture.mpris-background {
   color: @background;
   padding: 4px;
   margin: 6px;
-  border-radius: 6px;
+  border-radius: 8px;
 }

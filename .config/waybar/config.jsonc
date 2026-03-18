@@ -1,39 +1,33 @@
 {
   "position": "top",
   "layer": "top",
-  "height": 30,
+  "height": 38,
   "exclusive": true,
   "passthrough": false,
   "spacing": 4,
   "gtk-layer-shell": true,
   "fixed-center": true,
-  "margin": "10 20 0",
+  "margin": "6 12 0 ",
   "modules-left": [
     "custom/arch",
-    "custom/separator#line",
-    "clock",
-    "custom/separator#line",
-    "clock#day",
+    "hyprland/workspaces",
     "custom/separator#line",
     "mpris",
   ],
-  "modules-center": ["hyprland/workspaces"],
   "modules-right": [
-    // "hyprland/language",
-    // "custom/separator#line",
     "pulseaudio",
-    "custom/separator#line",
     "network",
-    "custom/separator#line",
     "bluetooth",
-    "custom/separator#line",
     "battery",
     "tray",
+    "custom/separator#line",
+    "clock",
+    "custom/separator#line",
     "custom/notification",
   ],
   "tray": {
-    "icon-size": 21,
-    "spacing": 10,
+    "icon-size": 16,
+    "spacing": 16,
     "show-passive-items": false,
   },
 
@@ -95,7 +89,7 @@
 
   "network": {
     "format": "{icon}",
-    "format-wifi": "󰤥  {essid}",
+    "format-wifi": "󰤥",
     "format-ethernet": "󰌘",
     "format-disconnected": "󰌙",
     "tooltip-format": "{ifname}",
@@ -115,11 +109,11 @@
       "warning": 30,
       "critical": 15,
     },
-    "format": "{icon} {capacity}%",
+    "format": "{capacity}%",
     "format-charging": " {capacity}%",
-    "format-plugged": "{icon} {capacity}%",
+    "format-plugged": "{capacity}%",
     "format-alt-click": "click",
-    "format-full": "{icon} Full",
+    "format-full": "Full",
     "format-alt": "{icon} {time}",
     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
     "format-time": "{H}h {M}min",
@@ -129,7 +123,7 @@
 
   "custom/notification": {
     "tooltip": true,
-    "format": "<span size='16pt'>{icon}</span>",
+    "format": "{icon}",
     "format-icons": {
       "notification": "<span foreground='red'><sup></sup></span>",
       "none": "",
@@ -181,8 +175,8 @@
   },
 
   "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-bluetooth": "{icon} 󰂰 {volume}%",
+    "format": "{icon}",
+    "format-bluetooth": "{icon} 󰂰",
     "format-muted": "󰖁",
     "format-icons": {
       "headphone": "",
@@ -191,7 +185,7 @@
       "phone": "",
       "portable": "",
       "car": "",
-      "default": ["", " ", "󰕾", " "],
+      "default": ["󰕿", "󰖀", "󰕾"],
     },
     "scroll-step": 5.0,
     "ignored-sinks": ["*Easy Effects*"],
@@ -206,7 +200,7 @@
   "bluetooth": {
     "format": "󰂯",
     "format-disabled": "󰂳",
-    "format-connected": "󰂱 {num_connections}",
+    "format-connected": "󰂱",
     "tooltip-format": "{device_alias}",
     "tooltip-format-connected": "{device_enumerate}",
     "tooltip-format-enumerate-connected": " {device_alias} {device_battery_percentage}%",
@@ -215,7 +209,7 @@
   },
 
   "custom/separator#line": {
-    "format": "·",
+    "format": "│",
     "interval": "once",
     "tooltip": false,
   },
