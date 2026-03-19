@@ -61,7 +61,7 @@ build_input() {
 
 readonly CHOICE=$(build_input | rofi -dmenu \
   -i \
-  -p "󰔯  Themes" \
+  -p "󰔯  Change Theme" \
   -theme "$HOME/.config/rofi/theme-picker.rasi")
 
 if [[ -n "$CHOICE" ]]; then
