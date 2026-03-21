@@ -32,7 +32,8 @@ done
 
 # ── Theme Discovery ───────────────────────────────────────────────────────────
 
-THEMES=$(ls "$THEMES_DIR"/*.conf \
+# Use find instead of ls for better handling of non-alphanumeric filenames
+THEMES=$(find "$THEMES_DIR" -maxdepth 1 -name "*.conf" -type f \
   | sed 's|.*/||' \
   | sed 's|\.conf$||' \
   | grep -v '^current$' \
@@ -59,10 +60,14 @@ build_input() {
 
 # ── Show Picker ───────────────────────────────────────────────────────────────
 
-readonly CHOICE=$(build_input | rofi -dmenu \
+# Declare and assign separately to avoid masking return values (SC2155)
+build_input | rofi -dmenu \
   -i \
   -p "󰔯  Change Theme" \
-  -theme "$HOME/.config/rofi/theme-picker.rasi")
+  -theme "$HOME/.config/rofi/theme-picker.rasi" > /tmp/rofi-choice.txt
+
+CHOICE=$(cat /tmp/rofi-choice.txt)
+rm -f /tmp/rofi-choice.txt
 
 if [[ -n "$CHOICE" ]]; then
   "$THEME_SWITCHER" "$CHOICE"

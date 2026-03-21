@@ -115,16 +115,10 @@ jobs:
         run: |
           # Lint all shell scripts in hypr scripts directory (if they exist)
           if ls .config/hypr/scripts/*.sh 1> /dev/null 2>&1; then
-            shellcheck \
-              -e SC2015 \
-              -e SC2155 \
-              .config/hypr/scripts/*.sh || true
+            shellcheck .config/hypr/scripts/*.sh || true
           fi
           # Lint main installer
-          shellcheck \
-            -e SC2015 \
-            -e SC2155 \
-            install.sh
+          shellcheck install.sh
 
   # ── TOML ─────────────────────────────────────────────────────────────────────
   toml:
@@ -237,10 +231,7 @@ jobs:
 
       - name: Validate install.sh
         run: |
-          shellcheck \
-            -e SC2015 \
-            -e SC2155 \
-            install.sh
+          shellcheck install.sh
 
   # ── Symlink Check ────────────────────────────────────────────────────────────
   symlinks:

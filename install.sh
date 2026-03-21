@@ -23,11 +23,18 @@ log_success() { echo -e "${GREEN}[✓]${NC} $1"; }
 log_warn()    { echo -e "${YELLOW}[!]${NC} $1"; }
 log_error()   { echo -e "${RED}[✗]${NC} $1"; }
 log_step()    { echo -e "${CYAN}[STEP]${NC} $1"; }
-log_debug()   { [[ "${DEBUG:-0}" == "1" ]] && echo -e "${MAGENTA}[DEBUG]${NC} $1" || true; }
+log_debug()   { [[ "${DEBUG:-0}" == "1" ]] && echo -e "${MAGENTA}[DEBUG]${NC} $1" || :; }
 
 # ── Configuration ──────────────────────────────────────────────────────────────
-readonly DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly BACKUP_DIR="$HOME/.dotfiles.backup.$(date +%Y%m%d_%H%M%S)"
+# Get dotfiles directory (works even if script is symlinked)
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly DOTFILES_DIR
+
+# Backup directory with timestamp
+BACKUP_DIR="$HOME/.dotfiles.backup.$(date +%Y%m%d_%H%M%S)"
+readonly BACKUP_DIR
+
+# Log file
 readonly LOG_FILE="$HOME/.dotfiles.install.log"
 
 # Detect OS
@@ -45,7 +52,9 @@ detect_os() {
     fi
 }
 
-readonly OS="$(detect_os)"
+# Get OS (separate from readonly to avoid SC2155)
+OS="$(detect_os)"
+readonly OS
 
 # ── Package Lists ──────────────────────────────────────────────────────────────
 
@@ -217,7 +226,9 @@ backup_existing() {
     
     for item in "${items[@]}"; do
         if [[ -e "$HOME/$item" ]]; then
-            cp -r "$HOME/$item" "$BACKUP_DIR/$item" 2>/dev/null && ((backed_up++)) || true
+            if cp -r "$HOME/$item" "$BACKUP_DIR/$item" 2>/dev/null; then
+                ((backed_up++))
+            fi
         fi
     done
     
@@ -562,19 +573,23 @@ setup_default_theme() {
 # ── System Services ────────────────────────────────────────────────────────────
 enable_services() {
     log_step "Enabling system services..."
-    
+
     case "$OS" in
         arch|fedora|debian)
             # NetworkManager
             if systemctl list-unit-files 2>/dev/null | grep -q NetworkManager; then
-                sudo systemctl enable NetworkManager 2>/dev/null && log_success "NetworkManager enabled" || true
+                if sudo systemctl enable NetworkManager 2>/dev/null; then
+                    log_success "NetworkManager enabled"
+                fi
             fi
-            
+
             # Bluetooth
             if systemctl list-unit-files 2>/dev/null | grep -q bluetooth; then
-                sudo systemctl enable bluetooth 2>/dev/null && log_success "Bluetooth enabled" || true
+                if sudo systemctl enable bluetooth 2>/dev/null; then
+                    log_success "Bluetooth enabled"
+                fi
             fi
-            
+
             # PipeWire (if available)
             if systemctl list-unit-files 2>/dev/null | grep -q pipewire; then
                 sudo systemctl enable pipewire 2>/dev/null || true
