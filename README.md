@@ -22,18 +22,18 @@ Personal Linux configuration for **Hyprland (Wayland)** on **Arch Linux**.
 
 ## 🛠 Stack
 
-| Category | Tools |
-|----------|-------|
-| **WM** | Hyprland, Hyprlock, Hyprpaper |
-| **Bar** | Waybar |
-| **Notifications** | SwayNC |
-| **Terminal** | Ghostty, Kitty |
-| **Shell** | Zsh + Oh My Zsh + Starship + Atuin + Zoxide |
-| **Editor** | Neovim (Lazy.nvim) |
-| **Launcher** | Rofi |
-| **File Manager** | Yazi, Thunar, Ranger |
-| **Multiplexer** | Tmux (TPM) |
-| **System Info** | Fastfetch |
+| Category          | Tools                                       |
+| ----------------- | ------------------------------------------- |
+| **WM**            | Hyprland, Hyprlock, Hyprpaper               |
+| **Bar**           | Waybar                                      |
+| **Notifications** | SwayNC                                      |
+| **Terminal**      | Ghostty, Kitty                              |
+| **Shell**         | Zsh + Oh My Zsh + Starship + Atuin + Zoxide |
+| **Editor**        | Neovim (Lazy.nvim)                          |
+| **Launcher**      | Rofi                                        |
+| **File Manager**  | Yazi, Thunar, Ranger                        |
+| **Multiplexer**   | Tmux (TPM)                                  |
+| **System Info**   | Fastfetch                                   |
 
 ---
 
@@ -53,10 +53,10 @@ sudo pacman -S hyprland hyprlock hyprpaper hyprshot
 sudo pacman -S waybar swaync
 
 # Terminal Emulators
-sudo pacman -S kitty tmux
+sudo pacman -S kitty tmux ghostty
 
 # Shell & Utilities
-sudo pacman -S zsh starship zoxide fzf fd ripgrep
+sudo pacman -S zsh starship zoxide fzf fd ripgrep atuin
 
 # Launcher
 sudo pacman -S rofi
@@ -65,7 +65,7 @@ sudo pacman -S rofi
 sudo pacman -S yazi ffmpegthumbnailer thunar ranger
 
 # System Tools
-sudo pacman -S fastfetch cliphist swww imagemagick
+sudo pacman -S fastfetch cliphist swww imagemagick wl-clip-persist
 
 # Fonts
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-jetbrains-mono-nerd ttf-font-awesome
@@ -89,27 +89,14 @@ sudo pacman -S base-devel git cargo nodejs npm python python-pip go rust
 sudo pacman -S stow jq lazygit htop
 ```
 
-#### 2. AUR (requires yay or paru)
+#### 2. External Installers (run during install.sh)
 
-```bash
-# Terminal
-yay -S ghostty
-
-# Shell History
-yay -S atuin
-
-# Clipboard
-yay -S wl-clip-persist
-```
-
-#### 3. External Installers (run during install.sh)
-
-| Tool | Method | Description |
-|------|--------|-------------|
-| **Oh My Zsh** | curl script | Zsh framework |
-| **FZF** | git clone + install | Fuzzy finder |
-| **TPM** | git clone | Tmux Plugin Manager |
-| **Neovim Plugins** | Lazy.nvim | Auto-installed on first run |
+| Tool               | Method              | Description                 |
+| ------------------ | ------------------- | --------------------------- |
+| **Oh My Zsh**      | curl script         | Zsh framework               |
+| **FZF**            | git clone + install | Fuzzy finder                |
+| **TPM**            | git clone           | Tmux Plugin Manager         |
+| **Neovim Plugins** | Lazy.nvim           | Auto-installed on first run |
 
 ---
 
@@ -144,16 +131,19 @@ stow .config/nvim
 ### Post-Installation Steps
 
 1. **Reboot** to apply all changes:
+
    ```bash
    sudo reboot
    ```
 
 2. **Install Neovim plugins** (automatic on first launch):
+
    ```bash
    nvim
    ```
 
 3. **Install Tmux plugins** (inside tmux):
+
    ```
    Ctrl+A + I  (installs TPM plugins)
    ```
@@ -209,13 +199,13 @@ stow .config/nvim
 
 5 synchronized themes across all components:
 
-| Theme | Status |
-|-------|--------|
-| **oxocarbon** | Default |
-| catppuccin | Available |
-| everforest | Available |
-| kanagawa | Available |
-| bloodmoon | Available |
+| Theme         | Status    |
+| ------------- | --------- |
+| **oxocarbon** | Default   |
+| catppuccin    | Available |
+| everforest    | Available |
+| kanagawa      | Available |
+| bloodmoon     | Available |
 
 ### Switch Theme
 
@@ -228,47 +218,47 @@ stow .config/nvim
 
 ### Hyprland (Mod1 = Win/Super)
 
-| Keys | Action |
-|------|--------|
-| `Mod1 + Enter` | Open terminal |
-| `Mod1 + C` | Close window |
-| `Mod1 + H/J/K/L` | Navigate windows |
-| `Mod1 + Shift + H/J/K/L` | Move windows |
-| `Mod1 + 1-9` | Switch workspaces |
-| `Mod1 + Space` | Switch keyboard layout |
-| `Mod1 + Shift + T` | Theme selector |
-| `Mod1 + A` | Notification center |
-| `Mod1 + F12` | Screenshot (full screen) |
-| `Print` | Screenshot (region) |
-| `Mod1 + Shift + V` | Clipboard manager |
-| `Alt + Tab` | Previous workspace |
+| Keys                     | Action                   |
+| ------------------------ | ------------------------ |
+| `Mod1 + Enter`           | Open terminal            |
+| `Mod1 + C`               | Close window             |
+| `Mod1 + H/J/K/L`         | Navigate windows         |
+| `Mod1 + Shift + H/J/K/L` | Move windows             |
+| `Mod1 + 1-9`             | Switch workspaces        |
+| `Mod1 + Space`           | Switch keyboard layout   |
+| `Mod1 + Shift + T`       | Theme selector           |
+| `Mod1 + A`               | Notification center      |
+| `Mod1 + F12`             | Screenshot (full screen) |
+| `Print`                  | Screenshot (region)      |
+| `Mod1 + Shift + V`       | Clipboard manager        |
+| `Alt + Tab`              | Previous workspace       |
 
 ### Neovim (Leader = Space)
 
-| Keys | Action |
-|------|--------|
-| `Space + e` | Toggle explorer |
-| `Space + f` | Find file |
-| `Space + /` | Grep search |
-| `Space + b` | Buffer list |
-| `Space + g` | Git operations |
-| `Space + l` | LSP actions |
-| `Space + d` | Diagnostics |
-| `Space + q` | Quit |
-| `K` | Hover documentation |
-| `Ctrl + H/J/K/L` | Window navigation |
+| Keys             | Action              |
+| ---------------- | ------------------- |
+| `Space + e`      | Toggle explorer     |
+| `Space + f`      | Find file           |
+| `Space + /`      | Grep search         |
+| `Space + b`      | Buffer list         |
+| `Space + g`      | Git operations      |
+| `Space + l`      | LSP actions         |
+| `Space + d`      | Diagnostics         |
+| `Space + q`      | Quit                |
+| `K`              | Hover documentation |
+| `Ctrl + H/J/K/L` | Window navigation   |
 
 ### Tmux (Prefix = Ctrl+A)
 
-| Keys | Action |
-|------|--------|
-| `Ctrl+A + \|` | Vertical split |
-| `Ctrl+A + -` | Horizontal split |
-| `Ctrl+A + H/J/K/L` | Pane navigation |
-| `Ctrl+A + W` | Session menu |
-| `Ctrl+A + G` | LazyGit popup |
-| `Ctrl+A + Tab` | Scratch pad |
-| `Ctrl+A + I` | Install plugins (TPM) |
+| Keys               | Action                |
+| ------------------ | --------------------- |
+| `Ctrl+A + \|`      | Vertical split        |
+| `Ctrl+A + -`       | Horizontal split      |
+| `Ctrl+A + H/J/K/L` | Pane navigation       |
+| `Ctrl+A + W`       | Session menu          |
+| `Ctrl+A + G`       | LazyGit popup         |
+| `Ctrl+A + Tab`     | Scratch pad           |
+| `Ctrl+A + I`       | Install plugins (TPM) |
 
 ---
 
@@ -280,16 +270,16 @@ Plugins are auto-installed on first launch.
 
 ### Supported Languages (LSP)
 
-| Language | LSP Server |
-|----------|------------|
-| Lua | lua_ls |
-| Go | gopls |
-| Rust | rust-analyzer |
-| TypeScript/JavaScript | ts_ls |
-| Python | pyright |
-| Bash | bashls |
-| CSS/HTML/JSON/YAML | cssls, html, jsonls, yamlls |
-| Zig | zls |
+| Language              | LSP Server                  |
+| --------------------- | --------------------------- |
+| Lua                   | lua_ls                      |
+| Go                    | gopls                       |
+| Rust                  | rust-analyzer               |
+| TypeScript/JavaScript | ts_ls                       |
+| Python                | pyright                     |
+| Bash                  | bashls                      |
+| CSS/HTML/JSON/YAML    | cssls, html, jsonls, yamlls |
+| Zig                   | zls                         |
 
 ### LSP Tools (via Mason)
 
@@ -302,22 +292,16 @@ Install/update via `:Mason` in Neovim.
 
 ## 📜 Scripts
 
-| Script | Purpose |
-|--------|---------|
-| `install.sh` | Automated installation |
-| `.config/hypr/scripts/theme-select.sh` | Theme selector (rofi) |
-| `.config/hypr/scripts/theme-switch.sh` | Theme switcher logic |
+| Script                                  | Purpose                  |
+| --------------------------------------- | ------------------------ |
+| `install.sh`                            | Automated installation   |
+| `.config/hypr/scripts/theme-select.sh`  | Theme selector (rofi)    |
+| `.config/hypr/scripts/theme-switch.sh`  | Theme switcher logic     |
 | `.config/hypr/scripts/layout-switch.sh` | Keyboard layout switcher |
-| `.config/hypr/scripts/volume.sh` | Volume control (pamixer) |
-| `.config/waybar/scripts/launch.sh` | Waybar launcher |
-| `.config/tmux/scripts/tmux-menu.sh` | Tmux session menu |
-| `.config/tmux/scripts/tmux-scratch.sh` | Tmux scratch pad |
-
----
-
-## 📄 License
-
-MIT License
+| `.config/hypr/scripts/volume.sh`        | Volume control (pamixer) |
+| `.config/waybar/scripts/launch.sh`      | Waybar launcher          |
+| `.config/tmux/scripts/tmux-menu.sh`     | Tmux session menu        |
+| `.config/tmux/scripts/tmux-scratch.sh`  | Tmux scratch pad         |
 
 ---
 
@@ -345,7 +329,3 @@ MIT License
 ## 📸 Screenshots
 
 Coming soon...
-
----
-
-**Made with ❤️ by [yourusername]**
