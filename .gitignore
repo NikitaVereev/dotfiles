@@ -1,4 +1,8 @@
-# Test files
+# ═══════════════════════════════════════════════════════════════
+# Dotfiles .gitignore
+# ═══════════════════════════════════════════════════════════════
+
+# ── Test & Debug ───────────────────────────────────────────────
 tt.*
 .tests
 foo.*
@@ -6,9 +10,10 @@ debug
 .repro
 data
 
-# Logs
+# ── Logs ───────────────────────────────────────────────────────
 *.log
 
+# ── Editor ─────────────────────────────────────────────────────
 # Vim tags
 doc/tags
 
@@ -17,22 +22,33 @@ doc/tags
 *.swo
 *~
 
-# System
+# ── System ─────────────────────────────────────────────────────
 .DS_Store
+Thumbs.db
 
-# Plugins (auto-install)
+# ── Plugins (auto-install via Lazy.nvim / TPM) ─────────────────
 .config/nvim/plugin/
 .config/tmux/plugins/
 
+# ── Tmux ───────────────────────────────────────────────────────
 # Tmux resurrect backups
 .config/tmux/resurrect/
 
-# Hyprland local
+# ── Local Configuration (machine-specific) ─────────────────────
+# Hyprland monitor configuration (per-machine)
 .config/hypr/modules/monitors.conf
 
-# Current theme
+# Current theme symlinks (auto-generated)
 .config/hypr/themes/current.conf
 .config/kitty/themes/current.conf
 .config/nvim/themes/current
 .config/rofi/current.rasi
 .config/waybar/themes/current.css
+.config/swaync/themes/current.css
+.config/starship/themes/current.toml
+
+# ── Cache ──────────────────────────────────────────────────────
+.cache/
+
+# ── Lazy.nvim lock file (optional - commit if you want pinned versions) ─
+# .config/nvim/lazy-lock.json

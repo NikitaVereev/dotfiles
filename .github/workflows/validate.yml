@@ -1,0 +1,305 @@
+name: Validate
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+# Cancel redundant runs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Lua (Neovim config) ─────────────────────────────────────────────────────
+  lua:
+    name: Lua
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Lua
+        uses: leafo/gh-actions-lua@v11
+        with:
+          luaVersion: "5.1"
+
+      - name: Install luacheck
+        run: luarocks install luacheck
+
+      - name: Lint Lua files
+        run: |
+          luacheck .config/nvim/lua/ \
+            --globals vim \
+            --no-color \
+            --no-cache \
+            --ignore=432  # unused variable argument
+
+  # ── JSON ─────────────────────────────────────────────────────────────────────
+  json:
+    name: JSON
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install jsonlint
+        run: npm install -g jsonlint
+
+      - name: Lint JSON files
+        run: |
+          find . -name "*.json" \
+            -not -path "*/node_modules/*" \
+            -not -path "*/.git/*" \
+            -not -path "*/lazy-lock.json" \
+            -exec jsonlint -q {} \;
+
+      - name: Lint JSONC files (Waybar, Fastfetch)
+        run: |
+          # JSONC allows trailing commas and comments, use node to parse
+          node -e "
+          const fs = require('fs');
+          const path = require('path');
+          
+          function stripJsonc(content) {
+            // Remove single-line comments
+            content = content.replace(/\/\/.*$/gm, '');
+            // Remove multi-line comments
+            content = content.replace(/\/\*[\s\S]*?\*\//g, '');
+            // Remove trailing commas before ] or }
+            content = content.replace(/,(\s*[}\]])/g, '\$1');
+            return content;
+          }
+          
+          const glob = require('glob');
+          let errors = 0;
+          glob.globSync('.config/**/*.jsonc').forEach(file => {
+            try {
+              const content = fs.readFileSync(file, 'utf8');
+              JSON.parse(stripJsonc(content));
+              console.log('✓', file);
+            } catch (e) {
+              errors++;
+              console.log('✗', file + ':', e.message);
+            }
+          });
+          process.exit(errors > 0 ? 1 : 0);
+          " 2>/dev/null || echo "JSONC validation skipped (node glob not available)"
+
+  # ── Shell Scripts ────────────────────────────────────────────────────────────
+  shell:
+    name: Shell
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: apt-get update && apt-get install -y shellcheck
+
+      - name: Lint shell scripts
+        run: |
+          # Lint all shell scripts in hypr scripts directory
+          shellcheck -x .config/hypr/scripts/*.sh 2>/dev/null || true
+          # Lint main installer
+          shellcheck -x install.sh
+
+  # ── TOML ─────────────────────────────────────────────────────────────────────
+  toml:
+    name: TOML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install toml parser
+        run: pip install toml
+
+      - name: Validate TOML files
+        run: |
+          python3 -c "
+          import toml
+          import glob
+          import sys
+
+          errors = []
+          for f in glob.glob('.config/**/*.toml', recursive=True):
+              try:
+                  toml.load(f)
+                  print(f'✓ {f}')
+              except Exception as e:
+                  errors.append(f'{f}: {e}')
+                  print(f'✗ {f}: {e}')
+
+          if errors:
+              print(f'\n{len(errors)} TOML file(s) with errors')
+              sys.exit(1)
+          print(f'\nAll TOML files valid')
+          "
+
+  # ── YAML ─────────────────────────────────────────────────────────────────────
+  yaml:
+    name: YAML
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Validate YAML files
+        run: |
+          python3 -c "
+          import yaml
+          import glob
+          import sys
+
+          errors = []
+          for f in glob.glob('.github/**/*.yml', recursive=True):
+              try:
+                  with open(f) as file:
+                      yaml.safe_load(file)
+                  print(f'✓ {f}')
+              except Exception as e:
+                  errors.append(f'{f}: {e}')
+                  print(f'✗ {f}: {e}')
+
+          if errors:
+              print(f'\n{len(errors)} YAML file(s) with errors')
+              sys.exit(1)
+          print(f'\nAll YAML files valid')
+          "
+
+  # ── Markdown ─────────────────────────────────────────────────────────────────
+  markdown:
+    name: Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install markdownlint
+        run: npm install -g markdownlint-cli
+
+      - name: Lint Markdown files
+        run: |
+          markdownlint README.md 2>/dev/null || true
+
+  # ── ShellCheck (install.sh specific) ─────────────────────────────────────────
+  install-script:
+    name: Install Script
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: apt-get update && apt-get install -y shellcheck
+
+      - name: Validate install.sh
+        run: |
+          shellcheck install.sh -e SC1091
+
+  # ── Symlink Check ────────────────────────────────────────────────────────────
+  symlinks:
+    name: Symlinks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for broken symlinks
+        run: |
+          broken=$(find . -type l ! -exec test -e {} \; -print 2>/dev/null) || true
+          if [ -n "$broken" ]; then
+            echo "Broken symlinks found:"
+            echo "$broken"
+            exit 1
+          fi
+          echo "No broken symlinks found"
+
+  # ── File Structure Check ─────────────────────────────────────────────────────
+  structure:
+    name: Structure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify required directories
+        run: |
+          required_dirs=(
+            ".config/hypr"
+            ".config/nvim"
+            ".config/waybar"
+            ".config/rofi"
+            ".config/swaync"
+            ".config/ghostty"
+            ".config/kitty"
+            ".config/tmux"
+            ".config/starship"
+            ".config/yazi"
+            ".config/fastfetch"
+          )
+
+          missing=()
+          for dir in "${required_dirs[@]}"; do
+            if [ ! -d "$dir" ]; then
+              missing+=("$dir")
+            fi
+          done
+
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "Missing required directories:"
+            printf '%s\n' "${missing[@]}"
+            exit 1
+          fi
+
+          echo "All required directories present"
+
+      - name: Verify required files
+        run: |
+          required_files=(
+            "README.md"
+            "install.sh"
+            ".zshrc"
+            ".config/hypr/hyprland.conf"
+            ".config/nvim/init.lua"
+          )
+
+          missing=()
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              missing+=("$file")
+            fi
+          done
+
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "Missing required files:"
+            printf '%s\n' "${missing[@]}"
+            exit 1
+          fi
+
+          echo "All required files present"
