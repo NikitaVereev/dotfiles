@@ -23,7 +23,11 @@ log_success() { echo -e "${GREEN}[✓]${NC} $1"; }
 log_warn()    { echo -e "${YELLOW}[!]${NC} $1"; }
 log_error()   { echo -e "${RED}[✗]${NC} $1"; }
 log_step()    { echo -e "${CYAN}[STEP]${NC} $1"; }
-log_debug()   { [[ "${DEBUG:-0}" == "1" ]] && echo -e "${MAGENTA}[DEBUG]${NC} $1" || :; }
+log_debug()   {
+    if [[ "${DEBUG:-0}" == "1" ]]; then
+        echo -e "${MAGENTA}[DEBUG]${NC} $1"
+    fi
+}
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 # Get dotfiles directory (works even if script is symlinked)
