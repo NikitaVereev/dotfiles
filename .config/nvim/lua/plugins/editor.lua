@@ -69,4 +69,60 @@ return {
 		event = "BufReadPre",
 		opts = {},
 	},
+
+	-- ════════════════════════════════════════════════════════════════════════════
+	-- Which-key (keybinding popup)
+	-- ════════════════════════════════════════════════════════════════════════════
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			plugins = { spelling = true },
+			spec = {
+				{ "<leader>c", group = "code", mode = { "n", "v" } },
+				{ "<leader>l", group = "lsp" },
+				{ "<leader>b", group = "buffer" },
+				{ "<leader>f", group = "file/find" },
+				{ "<leader>g", group = "git" },
+				{ "<leader>q", group = "quit" },
+			},
+		},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Keymaps",
+			},
+		},
+	},
+
+	-- ════════════════════════════════════════════════════════════════════════════
+	-- Todo-comments (highlight TODO, FIXME, etc.)
+	-- ════════════════════════════════════════════════════════════════════════════
+	{
+		"folke/todo-comments.nvim",
+		event = "BufReadPre",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {
+			signs = false,
+			sign_priority = 8,
+			keywords = {
+				FIX = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT" } },
+				TODO = { icon = "󰗡 ", color = "info" },
+				HACK = { icon = " ", color = "warning" },
+				WARN = { icon = " ", color = "warning", alt = { "WARNING" } },
+				PERF = { icon = "󰅒 ", color = "default", alt = { "PERFORMANCE" } },
+				NOTE = { icon = "󰍨 ", color = "hint", alt = { "INFO" } },
+			},
+		},
+		keys = {
+			{ "]t", function() require("todo-comments").jump_next() end, desc = "Next Todo" },
+			{ "[t", function() require("todo-comments").jump_prev() end, desc = "Prev Todo" },
+			{ "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+			{ "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+			{ "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo (Telescope)" },
+		},
+	},
 }

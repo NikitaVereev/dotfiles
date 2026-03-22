@@ -1,0 +1,122 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Yazi Keymap Configuration
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ── Manager ────────────────────────────────────────────────────────────────────
+[manager]
+
+keymap = [
+	# Navigation
+	{ on = "<Esc>", run = "escape",             desc = "Exit visual mode, close search" },
+	{ on = "q",     run = "quit",               desc = "Quit Yazi" },
+	{ on = "Q",     run = "quit --no-cwd-file", desc = "Quit without writing cwd" },
+
+	# Movement
+	{ on = "k", run = "arrow -1", desc = "Move up" },
+	{ on = "j", run = "arrow 1",  desc = "Move down" },
+	{ on = "h", run = "leave",    desc = "Go to parent directory" },
+	{ on = "l", run = "enter",    desc = "Enter directory" },
+
+	# Quick navigation
+	{ on = "g", run = "arrow top", desc = "Go to top" },
+	{ on = "G", run = "arrow bot", desc = "Go to bottom" },
+
+	# Search
+	{ on = "/", run = "search fd", desc = "Search files" },
+	{ on = "?", run = "search ripgrep", desc = "Search content" },
+	{ on = "<C-f>", run = "search none", desc = "Clear search" },
+
+	# Filter
+	{ on = "f", run = "filter", desc = "Filter files" },
+
+	# Selection
+	{ on = "<Space>", run = "toggle", desc = "Toggle selection" },
+	{ on = "v",       run = "visual_mode", desc = "Enter visual mode" },
+	{ on = "V",       run = "visual_mode --unset", desc = "Enter visual mode (unset)" },
+	{ on = "<C-a>",   run = "select_all --state=true", desc = "Select all" },
+	{ on = "<C-r>",   run = "select_all --state=none", desc = "Deselect all" },
+
+	# Operations
+	{ on = "o",         run = "open",                        desc = "Open with default app" },
+	{ on = "O",         run = "open --interactive",          desc = "Open with..." },
+	{ on = "<Enter>",   run = "open",                        desc = "Open" },
+	{ on = "e",         run = "edit",                        desc = "Edit in Neovim" },
+	{ on = "y",         run = "yank",                        desc = "Copy selected" },
+	{ on = "x",         run = "yank --cut",                  desc = "Cut selected" },
+	{ on = "p",         run = "paste",                       desc = "Paste" },
+	{ on = "P",         run = "paste --interactive",         desc = "Paste (interactive)" },
+	{ on = "d",         run = "remove",                      desc = "Delete selected" },
+	{ on = "D",         run = "remove --permanently",        desc = "Permanently delete" },
+	{ on = "a",         run = "create",                      desc = "Create new file/dir" },
+	{ on = "r",         run = "rename --cursor=before_ext",  desc = "Rename" },
+	{ on = ";",         run = "shell --interactive",         desc = "Run shell command" },
+	{ on": ":",         run = "shell --block --interactive", desc = "Run shell command (blocking)" },
+
+	# Archive
+	{ on = "z", run = "archive", desc = "Compress archive" },
+	{ on = "Z", run = "extract", desc = "Extract archive" },
+
+	# View
+	{ on = "t", run = "peek preview", desc = "Preview file" },
+	{ on = "<Tab>", run = "peek extract", desc = "Extract preview" },
+
+	# Help
+	{ on = "~", run = "help", desc = "Show help" },
+
+	# Hidden files toggle
+	{ on = ".", run = "hidden toggle", desc = "Toggle hidden files" },
+
+	# Linemode
+	{ on = "m", run = "linemode", desc = "Change linemode" },
+
+	# Sort
+	{ on = "s", run = "sort", desc = "Sort files" },
+
+	# CD with picker
+	{ on = "c", run = "cd --interactive", desc = "Change directory" },
+]
+
+# ── Tasks ──────────────────────────────────────────────────────────────────────
+[tasks]
+
+keymap = [
+	{ on = "<Esc>", run = "close", desc = "Close task manager" },
+	{ on = "q",     run = "close", desc = "Close task manager" },
+	{ on = "x",     run = "close", desc = "Cancel task" },
+]
+
+# ── Select ─────────────────────────────────────────────────────────────────────
+[select]
+
+keymap = [
+	{ on = "<Esc>",  run = "close", desc = "Cancel selection" },
+	{ on = "<Enter>", run = "close", desc = "Confirm selection" },
+	{ on = "q",      run = "close", desc = "Cancel selection" },
+]
+
+# ── Input ──────────────────────────────────────────────────────────────────────
+[input]
+
+keymap = [
+	{ on = "<Esc>",   run = "close", desc = "Cancel input" },
+	{ on = "<Enter>", run = "close", desc = "Confirm input" },
+	{ on = "<C-c>",   run = "close", desc = "Cancel input" },
+]
+
+# ── Completion ─────────────────────────────────────────────────────────────────
+[completion]
+
+keymap = [
+	{ on = "<C-c>",   run = "close", desc = "Cancel completion" },
+	{ on = "<Enter>", run = "close", desc = "Confirm completion" },
+	{ on = "<Tab>",   run = "next", desc = "Next option" },
+	{ on = "<S-Tab>", run = "prev", desc = "Previous option" },
+]
+
+# ── Help ───────────────────────────────────────────────────────────────────────
+[help]
+
+keymap = [
+	{ on = "<Esc>", run = "escape", desc = "Clear search" },
+	{ on = "q",     run = "close",  desc = "Close help" },
+]

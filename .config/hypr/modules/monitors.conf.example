@@ -1,0 +1,56 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Hyprland Monitor Configuration — EXAMPLE FILE
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# COPY this file to monitors.conf and adjust for your setup:
+#   cp monitors.conf.example monitors.conf
+#
+# To find your monitor name and available resolutions:
+#   hyprctl monitors
+#   wlr-randr
+#
+# Syntax:
+#   monitor=NAME,RESOLUTION@REFRESH,POSITION,SCALE,OPTIONS
+#
+# Examples:
+#   monitor=HDMI-A-1,1920x1080@60,0x0,1
+#   monitor=DP-2,2560x1440@144,1920x0,1
+#   monitor=eDP-1,1920x1080@60,0x1080,1
+#
+# Common options:
+#   bitdepth,10        — 10-bit color (if supported)
+#   cm,wide            — Color management
+#   vrr,1              — Enable VRR (FreeSync/G-Sync)
+#   transform,1        — Rotation (0=normal, 1=90°, 2=180°, 3=270°)
+#   mirror,MONITOR     — Mirror another monitor
+#
+# Special values:
+#   highrr             — Use highest available refresh rate
+#   highres            — Use highest available resolution
+#   auto               — Auto-position monitors
+#
+# ───────────────────────────────────────────────────────────────────────────────
+
+# Example 1: Single ultrawide monitor (21:9)
+# monitor = DP-2,3440x1440@165,0x0,1,bitdepth,10,cm,wide
+
+# Example 2: Dual monitor setup
+# monitor = DP-2,2560x1440@144,0x0,1
+# monitor = HDMI-A-1,1920x1080@60,2560x0,1
+
+# Example 3: Laptop + external monitor
+# monitor = eDP-1,1920x1080@60,0x1080,1
+# monitor = DP-1,2560x1440@144,0x0,1
+
+# Example 4: Auto configuration (let Hyprland decide)
+monitor = ,highrr,auto,1
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Workspace assignments (optional)
+# ───────────────────────────────────────────────────────────────────────────────
+# Bind workspaces to specific monitors
+#
+# bind = SUPER,1,workspace,1
+# bind = SUPER,2,workspace,2
+# bind = SUPER SHIFT,1,movetoworkspace,1
+# bind = SUPER SHIFT,2,movetoworkspace,2

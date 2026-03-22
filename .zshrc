@@ -6,6 +6,23 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+# ── History ──────────────────────────────────────────────────────────────────
+HISTFILE=~/.local/share/zsh/history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+
+# ── Options ──────────────────────────────────────────────────────────────────
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt EXTENDED_GLOB
+
+# ── Completion ───────────────────────────────────────────────────────────────
+autoload -Uz compinit && compinit
+
 # NVM
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"

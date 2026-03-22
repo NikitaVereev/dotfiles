@@ -9,97 +9,140 @@ set -euo pipefail
 
 readonly THEME="${1:-}"
 readonly CONFIG_DIR="$HOME/.config"
+readonly SCRIPT_NAME="Theme Switcher"
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+log_info() {
+  echo "[INFO] $1"
+}
+
+log_error() {
+  notify-send "$SCRIPT_NAME" "$1" -u critical
+  echo "[ERROR] $1" >&2
+}
+
+log_warn() {
+  echo "[WARN] $1" >&2
+}
 
 # ── Validation ────────────────────────────────────────────────────────────────
 
 if [[ -z "$THEME" ]]; then
-  notify-send "Theme Switcher" "No theme specified!" -u critical
+  log_error "No theme specified!"
+  echo "Usage: $0 <theme-name>"
   exit 1
 fi
 
 if [[ ! -f "$CONFIG_DIR/hypr/themes/$THEME.conf" ]]; then
-  notify-send "Theme Switcher" "Theme '$THEME' not found!" -u critical
+  log_error "Theme '$THEME' not found in $CONFIG_DIR/hypr/themes/"
   exit 1
 fi
 
 # ── 1. Wallpaper ──────────────────────────────────────────────────────────────
 
 if [[ -f "$HOME/Pictures/wallpapers/$THEME.png" ]]; then
-  swww img "$HOME/Pictures/wallpapers/$THEME.png" \
+  if ! swww img "$HOME/Pictures/wallpapers/$THEME.png" \
     --transition-type grow \
-    --transition-duration 1.5 || true
+    --transition-duration 1.5 2>/dev/null; then
+    log_warn "Failed to apply wallpaper"
+  fi
 else
-  notify-send "Theme Switcher" "Wallpaper '$THEME.png' not found" -u low
+  log_warn "Wallpaper '$THEME.png' not found in ~/Pictures/wallpapers/"
 fi
 
 # ── 2. Hyprland ───────────────────────────────────────────────────────────────
 
-ln -sf "$THEME.conf" "$CONFIG_DIR/hypr/themes/current.conf"
-hyprctl reload
+if ! ln -sf "$THEME.conf" "$CONFIG_DIR/hypr/themes/current.conf" 2>/dev/null; then
+  log_error "Failed to create Hyprland theme symlink"
+  exit 1
+fi
+
+if ! hyprctl reload 2>/dev/null; then
+  log_warn "Failed to reload Hyprland"
+fi
 
 # ── 3. Kitty ──────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/kitty/themes/$THEME.conf" ]]; then
-  ln -sf "$THEME.conf" "$CONFIG_DIR/kitty/themes/current.conf"
-  killall -SIGUSR1 kitty 2>/dev/null || true
+  if ! ln -sf "$THEME.conf" "$CONFIG_DIR/kitty/themes/current.conf" 2>/dev/null; then
+    log_warn "Failed to create Kitty theme symlink"
+  else
+    killall -SIGUSR1 kitty 2>/dev/null || true
+  fi
 else
-  notify-send "Theme Switcher" "Kitty theme '$THEME' not found" -u low
+  log_warn "Kitty theme '$THEME' not found"
 fi
 
 # ── 4. Waybar ─────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/waybar/themes/$THEME.css" ]]; then
-  ln -sf "$THEME.css" "$CONFIG_DIR/waybar/themes/current.css"
-  if command -v waybar-msg >/dev/null 2>&1; then
-    waybar-msg cmd reload 2>/dev/null || true
+  if ! ln -sf "$THEME.css" "$CONFIG_DIR/waybar/themes/current.css" 2>/dev/null; then
+    log_warn "Failed to create Waybar theme symlink"
   else
-    killall waybar 2>/dev/null || true
-    sleep 0.2
-    waybar &>/dev/null &
+    if command -v waybar-msg >/dev/null 2>&1; then
+      waybar-msg cmd reload 2>/dev/null || true
+    else
+      killall waybar 2>/dev/null || true
+      sleep 0.2
+      waybar &>/dev/null &
+    fi
   fi
 else
-  notify-send "Theme Switcher" "Waybar theme '$THEME' not found" -u low
+  log_warn "Waybar theme '$THEME' not found"
 fi
 
 # ── 5. Rofi ───────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/rofi/themes/$THEME.rasi" ]]; then
-  ln -sf "themes/$THEME.rasi" "$CONFIG_DIR/rofi/current.rasi"
+  if ! ln -sf "themes/$THEME.rasi" "$CONFIG_DIR/rofi/current.rasi" 2>/dev/null; then
+    log_warn "Failed to create Rofi theme symlink"
+  fi
 else
-  notify-send "Theme Switcher" "Rofi theme '$THEME' not found" -u low
+  log_warn "Rofi theme '$THEME' not found"
 fi
 
 # ── 6. Neovim ─────────────────────────────────────────────────────────────────
 
-echo "$THEME" >"$CONFIG_DIR/nvim/themes/current"
-pkill -USR1 nvim 2>/dev/null || true
+if ! echo "$THEME" > "$CONFIG_DIR/nvim/themes/current" 2>/dev/null; then
+  log_warn "Failed to write Neovim theme config"
+else
+  pkill -USR1 nvim 2>/dev/null || true
+fi
 
 # ── 7. Starship ───────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/starship/themes/$THEME.toml" ]]; then
-  ln -sf "$THEME.toml" "$CONFIG_DIR/starship/themes/current.toml"
+  if ! ln -sf "$THEME.toml" "$CONFIG_DIR/starship/themes/current.toml" 2>/dev/null; then
+    log_warn "Failed to create Starship theme symlink"
+  fi
 else
-  notify-send "Theme Switcher" "Starship theme '$THEME' not found" -u low
+  log_warn "Starship theme '$THEME' not found"
 fi
 
 # ── 8. SwayNC ─────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/swaync/themes/$THEME.css" ]]; then
-  ln -sf "$THEME.css" "$CONFIG_DIR/swaync/themes/current.css"
-  swaync-client --reload-css 2>/dev/null || true
+  if ! ln -sf "$THEME.css" "$CONFIG_DIR/swaync/themes/current.css" 2>/dev/null; then
+    log_warn "Failed to create SwayNC theme symlink"
+  else
+    swaync-client --reload-css 2>/dev/null || true
+  fi
 else
-  notify-send "Theme Switcher" "SwayNC theme '$THEME' not found" -u low
+  log_warn "SwayNC theme '$THEME' not found"
 fi
 
 # ── 9. Ghostty ────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/ghostty/themes/$THEME" ]]; then
-  sed -i "s|^theme = .*|theme = $THEME|" "$CONFIG_DIR/ghostty/config"
-  pkill -USR2 ghostty 2>/dev/null || true
+  if ! sed -i "s|^theme = .*|theme = $THEME|" "$CONFIG_DIR/ghostty/config" 2>/dev/null; then
+    log_warn "Failed to update Ghostty theme"
+  else
+    pkill -USR2 ghostty 2>/dev/null || true
+  fi
 else
-  notify-send "Theme Switcher" "Ghostty theme '$THEME' not found" -u low
+  log_warn "Ghostty theme '$THEME' not found"
 fi
 
 # ── Done ──────────────────────────────────────────────────────────────────────
 
-notify-send "Theme Switcher" "'$THEME' applied" -i preferences-desktop-theme
+notify-send "$SCRIPT_NAME" "Theme '$THEME' applied successfully" -i preferences-desktop-theme
