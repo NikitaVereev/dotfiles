@@ -13,8 +13,11 @@ return {
 	opts = {
 		bigfile = { enabled = true },
 		dashboard = {
-			enabled = true,
+			-- Enable minimal mode for faster startup (set env var MINIMAL_DASHBOARD=1)
+			-- or use vim.g.minimal_dashboard = true in your local config
+			enabled = not (vim.env.MINIMAL_DASHBOARD == "1" or vim.g.minimal_dashboard),
 			preset = {
+				-- ASCII art header (disabled in minimal mode)
 				header = [[
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⣷⣶⣆⣀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿⣶⣾⣿⠿⠿⠛⠻⣟⢿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⠿⠻⢿⣿⣿⠿⢶⣶⣶⣾⣿⣿⣿⣿⣿⣿⠿⠛⠋⠉⠉⣄⠀⠀⠀⠈⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀

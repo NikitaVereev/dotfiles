@@ -1,23 +1,21 @@
+-- luacheck: globals vim Snacks
 -- Luacheck configuration for Neovim
-globals = {
-	"vim", -- Neovim global
-}
 
+-- Allow globals
+globals = { "vim", "Snacks" }
+
+-- Disable line length check
 max_line_length = false
 
-read_globals = {
-	"vim",
-}
+-- Allow reading globals
+read_globals = { "vim", "Snacks" }
 
+-- Ignore specific warnings
 ignore = {
-	"631", -- Line is too long (if you prefer longer lines)
-	"212", -- Unused argument (common in callbacks)
-	"213", -- Unused loop variable
-	"122",
+    "631", -- Line is too long
+    "212", -- Unused argument
+    "213", -- Unused loop variable
+    "122", -- Shadowing variable
+    "542", -- Unused variable (cargo_check in lazy.lua)
 }
 
-files["*_spec.lua"] = {
-	std = "+busted",
-}
-
-self = false

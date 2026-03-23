@@ -17,14 +17,18 @@ return {
 					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
 				end
 
-				-- Navigation (snacks.lua)
+				-- ═══════════════════════════════════════════════════════════════
+				-- Navigation — Provided by snacks.nvim (see plugins/snacks.lua)
+				-- These are intentionally disabled here to avoid conflicts:
+				--   gd, gD, gi, gr, gy → snacks.picker.lsp_*
+				-- ═══════════════════════════════════════════════════════════════
 				-- map("n", "gd", vim.lsp.buf.definition, "Go to definition")
 				-- map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
 				-- map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
 				-- map("n", "gr", vim.lsp.buf.references, "Go to references")
 				-- map("n", "gt", vim.lsp.buf.type_definition, "Go to type definition")
 
-				-- Information
+				-- Information (custom implementation with border/size config)
 				-- map("n", "K", vim.lsp.buf.hover, "Hover documentation")
 				map("n", "K", function()
 					vim.lsp.buf.hover({

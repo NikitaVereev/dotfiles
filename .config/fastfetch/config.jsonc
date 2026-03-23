@@ -1,114 +1,99 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
-
   "logo": {
-    "type": "auto",
+    "type": "auto"
   },
-
   "modules": [
-    // заголовок
     {
       "type": "title",
-      "format": "{#title}󰣇  {1} on {2}{#keys}",
+      "format": "{#title}󰣇  {1} on {2}{#keys}"
     },
-
     {
       "type": "separator",
-      "string": "────────────────────────────",
+      "string": "────────────────────────────"
     },
-
-    // System
     {
       "type": "custom",
-      "key": "{#keys}System",
+      "key": "{#keys}System"
     },
     {
       "type": "os",
-      "key": "󰇅 OS      {#keys}",
+      "key": "󰇅 OS      {#keys}"
     },
     {
       "type": "host",
-      "key": "󰌢 Host    {#keys}",
+      "key": "󰌢 Host    {#keys}"
     },
     {
       "type": "kernel",
-      "key": "󰍛 Kernel  {#keys}",
+      "key": "󰍛 Kernel  {#keys}"
     },
     {
       "type": "shell",
-      "key": " Shell   {#keys}",
+      "key": " Shell   {#keys}"
     },
     {
       "type": "uptime",
       "key": " Uptime  {#keys}",
-      "format": "{2}h {3}m",
+      "format": "{2}h {3}m"
     },
     {
       "type": "packages",
       "key": " Packages{#keys}",
-      "format": "{} (pacman)",
+      "format": "{} (pacman)"
     },
-
     {
       "type": "separator",
-      "string": "────────────────────────────",
+      "string": "────────────────────────────"
     },
-
-    // Desktop
     {
       "type": "custom",
-      "key": "{#keys}Desktop",
+      "key": "{#keys}Desktop"
     },
     {
       "type": "display",
-      "key": "󰍹 Display {#keys}",
+      "key": "󰍹 Display {#keys}"
     },
     {
       "type": "de",
-      "key": "󰧨 DE      {#keys}",
+      "key": "󰧨 DE      {#keys}"
     },
     {
       "type": "wm",
-      "key": "󰨇 WM      {#keys}",
+      "key": "󰨇 WM      {#keys}"
     },
     {
       "type": "icons",
-      "key": "󰆍 Icons   {#keys}",
+      "key": "󰆍 Icons   {#keys}"
     },
     {
       "type": "terminal",
-      "key": "󰆍 Terminal{#keys}",
+      "key": "󰆍 Terminal{#keys}"
     },
-
     {
       "type": "separator",
-      "string": "────────────────────────────",
+      "string": "────────────────────────────"
     },
-
-    // Hardware
     {
       "type": "custom",
-      "key": "{#keys}Hardware",
+      "key": "{#keys}Hardware"
     },
     {
       "type": "cpu",
-      "key": " CPU     {#keys}",
+      "key": " CPU     {#keys}"
     },
     {
       "type": "memory",
-      "key": " Memory  {#keys}",
+      "key": " Memory  {#keys}"
     },
-
     {
       "type": "separator",
-      "string": "────────────────────────────",
+      "string": "────────────────────────────"
     },
-
-    // Colors
     {
       "type": "custom",
-      "key": "{#keys}Colors",
+      "key": "{#keys}Colors"
     },
-    "colors",
-  ],
+    "colors"
+  ]
 }

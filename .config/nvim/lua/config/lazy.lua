@@ -17,18 +17,36 @@ require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 
+-- ════════════════════════════════════════════════════════════════════════════
 -- Bootstrap tree-sitter-cli if cargo is available
+-- NOTE: This is optional - tree-sitter can also be installed via system package
+-- ════════════════════════════════════════════════════════════════════════════
 if vim.fn.executable("tree-sitter") == 0 and vim.fn.executable("cargo") == 1 then
-	vim.notify("Installing tree-sitter-cli via cargo...", vim.log.levels.INFO)
-	vim.fn.jobstart({ "cargo", "install", "--locked", "tree-sitter-cli" }, {
-		on_exit = function(_, code)
-			if code == 0 then
-				vim.notify("tree-sitter-cli installed successfully!", vim.log.levels.INFO)
-			else
-				vim.notify("Failed to install tree-sitter-cli", vim.log.levels.WARN)
-			end
-		end,
-	})
+	-- Check if cargo is working first
+	if vim.fn.system({ "cargo", "--version" }) ~= "" and vim.v.shell_error ~= 0 then
+		vim.notify("Cargo is not working properly, skipping tree-sitter installation", vim.log.levels.WARN)
+	else
+		vim.notify("Installing tree-sitter-cli via cargo (this may take a minute)...", vim.log.levels.INFO)
+		vim.fn.jobstart({ "cargo", "install", "--locked", "tree-sitter-cli" }, {
+			on_exit = function(_, code)
+				if code == 0 then
+					vim.notify("✓ tree-sitter-cli installed successfully!", vim.log.levels.INFO)
+				else
+					vim.notify(
+						"⚠ Failed to install tree-sitter-cli (exit code: " .. code .. "). " ..
+						"You can install it manually: cargo install tree-sitter-cli",
+						vim.log.levels.WARN
+					)
+				end
+			end,
+			on_stderr = function(_, data)
+				-- Log cargo output for debugging
+				if data and #data > 0 then
+					vim.notify("tree-sitter: " .. table.concat(data, " "), vim.log.levels.DEBUG)
+				end
+			end,
+		})
+	end
 end
 
 require("lazy").setup({ import = "plugins" }, {
