@@ -94,6 +94,8 @@ fi
 
 # JSON/JSONC/TOML
 section "JSON/JSONC/TOML"
+
+# JSONC files (with comments)
 for f in .config/waybar/config.jsonc .config/fastfetch/config.jsonc; do
     [[ -f "$f" ]] || continue
     if output=$(python3 -c "
@@ -117,28 +119,31 @@ except Exception as e:
     fi
 done
 
-for f in .config/swaync/config.json .config/yazi/yazi.toml; do
+# Pure JSON files (strict)
+for f in .config/swaync/config.json .config/nvim/lazy-lock.json; do
     [[ -f "$f" ]] || continue
-    if [[ "$f" == *.toml ]]; then
-        if output=$(python3 -c "import tomllib;tomllib.load(open('$f','rb'))" 2>&1); then
-            pass "$f"
-        else
-            fail "$f"
-            error_detail "Invalid TOML:"
-            echo "$output" | while IFS= read -r line; do
-                [[ -n "$line" ]] && error_detail "$line"
-            done
-        fi
+    if output=$(python3 -m json.tool "$f" 2>&1); then
+        pass "$f"
     else
-        if output=$(python3 -m json.tool "$f" 2>&1); then
-            pass "$f"
-        else
-            fail "$f"
-            error_detail "Invalid JSON:"
-            echo "$output" | while IFS= read -r line; do
-                [[ -n "$line" ]] && error_detail "$line"
-            done
-        fi
+        fail "$f"
+        error_detail "Invalid JSON:"
+        echo "$output" | while IFS= read -r line; do
+            [[ -n "$line" ]] && error_detail "$line"
+        done
+    fi
+done
+
+# TOML files
+for f in .config/yazi/yazi.toml; do
+    [[ -f "$f" ]] || continue
+    if output=$(python3 -c "import tomllib;tomllib.load(open('$f','rb'))" 2>&1); then
+        pass "$f"
+    else
+        fail "$f"
+        error_detail "Invalid TOML:"
+        echo "$output" | while IFS= read -r line; do
+            [[ -n "$line" ]] && error_detail "$line"
+        done
     fi
 done
 

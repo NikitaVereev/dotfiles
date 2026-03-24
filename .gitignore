@@ -50,8 +50,6 @@ Thumbs.db
 # ── Cache ──────────────────────────────────────────────────────
 .cache/
 
-# ── Texts ──────────────────────────────────────────────────────
-text.txt
 
 # ── Lazy.nvim lock file (optional - commit if you want pinned versions) ─
 # .config/nvim/lazy-lock.json
