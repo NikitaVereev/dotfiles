@@ -1,0 +1,69 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# EditorConfig - https://editorconfig.org
+# ═══════════════════════════════════════════════════════════════════════════════
+# Helps maintain consistent coding styles across editors and IDEs
+# ═══════════════════════════════════════════════════════════════════════════════
+
+root = true
+
+# Default settings
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = tab
+indent_size = 4
+
+# Bash scripts
+[*.sh]
+indent_style = space
+indent_size = 4
+
+# Makefile
+[Makefile]
+indent_style = tab
+
+# JSON
+[*.json]
+indent_style = space
+indent_size = 2
+
+# JSONC (JSON with comments)
+[*.jsonc]
+indent_style = space
+indent_size = 2
+
+# Lua (Neovim)
+[*.lua]
+indent_style = space
+indent_size = 4
+
+# TOML
+[*.toml]
+indent_style = space
+indent_size = 2
+
+# YAML
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+
+# Markdown
+[*.md]
+trim_trailing_whitespace = false
+
+# Hyprland configs
+[*.conf]
+indent_style = space
+indent_size = 4
+
+# Rofi
+[*.rasi]
+indent_style = space
+indent_size = 4
+
+# CSS
+[*.css]
+indent_style = space
+indent_size = 2

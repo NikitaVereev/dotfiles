@@ -1,0 +1,49 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Git Attributes
+# ═══════════════════════════════════════════════════════════════════════════════
+# Controls how Git handles file attributes (EOL, executable, binary)
+# Docs: https://git-scm.com/docs/gitattributes
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ── Shell Scripts (executable) ─────────────────────────────────────────────────
+*.sh                    text eol=lf executable
+install.sh              text eol=lf executable
+scripts/*.sh            text eol=lf executable
+
+# ── Config Files (LF line endings) ─────────────────────────────────────────────
+*.conf                  text eol=lf
+*.css                   text eol=lf
+*.toml                  text eol=lf
+*.json                  text eol=lf
+*.jsonc                 text eol=lf
+*.rasi                  text eol=lf
+*.lua                   text eol=lf
+*.zsh                   text eol=lf
+
+# ── Markdown ───────────────────────────────────────────────────────────────────
+*.md                    text eol=lf
+
+# ── Makefile ───────────────────────────────────────────────────────────────────
+Makefile                text eol=lf
+
+# ── Dotfiles ───────────────────────────────────────────────────────────────────
+.zshrc                  text eol=lf
+.gitignore              text eol=lf
+.editorconfig           text eol=lf
+.gitattributes          text eol=lf
+.prettierrc             text eol=lf
+
+# ── Binary Files ───────────────────────────────────────────────────────────────
+*.png                   binary
+*.jpg                   binary
+*.jpeg                  binary
+*.gif                   binary
+*.svg                   binary
+*.woff                  binary
+*.woff2                 binary
+*.ico                   binary
+*.pdf                   binary
+
+# ── Export Ignore (exclude from archives) ──────────────────────────────────────
+.gitattributes          export-ignore
+.gitignore              export-ignore
