@@ -1,36 +1,15 @@
 {
   "position": "top",
   "layer": "top",
-  "height": 38,
-  "exclusive": true,
-  "passthrough": false,
-  "spacing": 4,
-  "gtk-layer-shell": true,
-  "fixed-center": true,
-  "margin": "6 12 0 ",
-  "modules-left": [
-    "custom/arch",
-    "hyprland/workspaces",
-    "custom/separator#line",
-    "mpris",
-  ],
-  "modules-right": [
-    "pulseaudio",
-    "network",
-    "bluetooth",
-    "battery",
-    "tray",
-    "custom/separator#line",
-    "clock",
-    "custom/separator#line",
-    "custom/notification",
-  ],
+  "reload_style_on_change": true,
+  "margin": "10 12 0 12",
+  "modules-left": ["custom/arch", "clock", "custom/pacman", "tray"],
+  "modules-center": ["hyprland/workspaces"],
+  "modules-right": ["pulseaudio", "bluetooth", "network", "battery", "custom/notification"],
   "tray": {
-    "icon-size": 16,
-    "spacing": 16,
-    "show-passive-items": false,
+    "icon-size": 14,
+    "spacing": 10
   },
-
   "clock": {
     "interval": 1,
     "format": "{:%H:%M}",
@@ -41,138 +20,54 @@
       "on-scroll": 1,
       "format": {
         "months": "<b>{}</b>",
-        "today": "<b><u>{}</u></b>",
-      },
+        "today": "<b><u>{}</u></b>"
+      }
     },
     "actions": {
       "on-scroll-up": "shift_up",
       "on-scroll-down": "shift_down",
-      "on-click-right": "mode",
-    },
+      "on-click-right": "mode"
+    }
   },
-  "clock#day": {
-    "format": "  {:%A, %d %B}",
-    "tooltip": false,
-  },
-
   "hyprland/workspaces": {
-    "active-only": false,
-    "all-outputs": true,
     "format": "{icon}",
-    "show-special": false,
-    "on-click": "activate",
-    "spacing": 6,
     "format-icons": {
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
+      "active": "",
+      "default": "",
+      "empty": ""
     },
     "persistent-workspaces": {
-      "*": 5,
-    },
+      "*": [1, 2, 3, 4, 5]
+    }
   },
-
-  // "hyprland/language": {
-  //   "format": "{}",
-  //   "format-en": "EN",
-  //   "format-ru": "RU",
-  //   "tooltip": true,
-  // },
-
   "network": {
-    "format": "{icon}",
-    "format-wifi": "󰤥",
-    "format-ethernet": "󰌘",
-    "format-disconnected": "󰌙",
-    "tooltip-format": "{ifname}",
-    "tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
-    "tooltip-format-ethernet": "{ifname} {ipaddr}",
-    "tooltip-format-disconnected": "Disconnected",
-    "max-length": 25,
-    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format-wifi": "",
+    "format-ethernet": "",
+    "format-disconnected": "",
+    "tooltip-format-disconnected": "Error",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+    "tooltip-format-ethernet": "{ifname} 🖧 ",
+    "on-click": "kitty nmtui"
   },
   "battery": {
-    "align": 0,
-    "rotate": 0,
-    "full-at": 100,
-    "design-capacity": false,
+    "interval": 30,
     "states": {
       "good": 95,
       "warning": 30,
-      "critical": 15,
+      "critical": 20
     },
-    "format": "{capacity}%",
-    "format-charging": " {capacity}%",
-    "format-plugged": "{capacity}%",
-    "format-alt-click": "click",
-    "format-full": "Full",
-    "format-alt": "{icon} {time}",
-    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
-    "format-time": "{H}h {M}min",
-    "tooltip": true,
-    "tooltip-format": "{timeTo} {power}w",
+    "format": "{capacity}% {icon}",
+    "format-charging": "{capacity}% 󰂄",
+    "format-plugged": "{capacity}% 󰂄 ",
+    "format-alt": "{time} {icon}",
+    "format-icons": ["󰁻", "󰁼", "󰁾", "󰂀", "󰂂", "󰁹"]
   },
-
   "custom/notification": {
-    "tooltip": true,
-    "format": "{icon}",
-    "format-icons": {
-      "notification": "<span foreground='red'><sup></sup></span>",
-      "none": "",
-      "dnd-notification": "<span foreground='red'><sup></sup></span>",
-      "dnd-none": "",
-      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
-      "inhibited-none": "",
-      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
-      "dnd-inhibited-none": "",
-    },
-    "return-type": "json",
-    "exec-if": "which swaync-client",
-    "exec": "swaync-client -swb",
+    "tooltip": false,
+    "format": "",
     "on-click": "swaync-client -t -sw",
-    "on-click-right": "swaync-client -d -sw",
-    "escape": true,
+    "escape": true
   },
-
-  "mpris": {
-    "interval": 1,
-    "format": "{player_icon} <i>{dynamic}</i>",
-    "format-paused": "{status_icon} <i>{artist} {title}</i>",
-    "on-click-middle": "playerctl play-pause",
-    "on-click": "playerctl previous",
-    "on-click-right": "playerctl next",
-    "scroll-step": 5.0,
-    "on-scroll-up": "$HOME/.config/hypr/scripts/volume.sh --inc",
-    "on-scroll-down": "$HOME/.config/hypr/scripts/volume.sh --dec",
-    "smooth-scrolling-threshold": 1,
-    "tooltip": true,
-    "tooltip-format": "{status_icon} {dynamic}\nLeft Click: previous\nMid Click: Pause\nRight Click: Next",
-    "player-icons": {
-      "chromium": "",
-      "default": "",
-      "firefox": "",
-      "kdeconnect": "",
-      "mopidy": "",
-      "mpv": "󰐹",
-      "spotify": "",
-      "vlc": "󰕼",
-    },
-    "status-icons": {
-      "paused": "󰐎",
-      "playing": "",
-      "stopped": "",
-    },
-    "dynamic-order": ["artist", "title"],
-    "max-length": 25,
-  },
-
   "pulseaudio": {
     "format": "{icon}",
     "format-bluetooth": "{icon} 󰂰",
@@ -184,7 +79,7 @@
       "phone": "",
       "portable": "",
       "car": "",
-      "default": ["󰕿", "󰖀", "󰕾"],
+      "default": ["󰕿", "󰖀", "󰕾"]
     },
     "scroll-step": 5.0,
     "ignored-sinks": ["*Easy Effects*"],
@@ -193,28 +88,32 @@
     "on-scroll-up": "$HOME/.config/hypr/scripts/volume.sh --inc",
     "on-scroll-down": "$HOME/.config/hypr/scripts/volume.sh --dec",
     "tooltip-format": "{icon} {desc} | {volume}%",
-    "smooth-scrolling-threshold": 1,
+    "smooth-scrolling-threshold": 1
   },
-
   "bluetooth": {
-    "format": "󰂯",
-    "format-disabled": "󰂳",
-    "format-connected": "󰂱",
-    "tooltip-format": "{device_alias}",
-    "tooltip-format-connected": "{device_enumerate}",
-    "tooltip-format-enumerate-connected": " {device_alias} {device_battery_percentage}%",
-    "tooltip": true,
-    "on-click": "blueman-manager",
-  },
-
-  "custom/separator#line": {
-    "format": "│",
-    "interval": "once",
-    "tooltip": false,
+    "format-on": "󰂯",
+    "format-off": "BT-off",
+    "format-disabled": "󰂲",
+    "format-connected-battery": "{device_battery_percentage}% 󰂯",
+    "format-alt": "{device_alias} 󰂯",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\n{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\n{device_address}\n{device_battery_percentage}%",
+    "on-click-right": "blueman-manager"
   },
   "custom/arch": {
-    "format": " ",
+    "format": "",
     "tooltip": false,
-    "on-click": "rofi -show drun",
+    "on-click": "rofi -show drun"
   },
+  "custom/pacman": {
+    "format": "󰅢 {}",
+    "interval": 30,
+    "exec": "checkupdates | wc -l",
+    "exec-if": "exit 0",
+    "on-click": "kitty sh -c 'sudo pacman -Syu; echo Done - Press enter to exit; read'; pkill -SIGRTMIN+8 waybar",
+    "signal": 8,
+    "tooltip": false
+  }
 }
