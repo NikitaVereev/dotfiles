@@ -41,7 +41,7 @@ fi
 # ── 1. Wallpaper ──────────────────────────────────────────────────────────────
 
 if [[ -f "$HOME/Pictures/wallpapers/$THEME.png" ]]; then
-  if ! swww img "$HOME/Pictures/wallpapers/$THEME.png" \
+  if ! awww img "$HOME/Pictures/wallpapers/$THEME.png" \
     --transition-type grow \
     --transition-duration 1.5 2>/dev/null; then
     log_warn "Failed to apply wallpaper"
