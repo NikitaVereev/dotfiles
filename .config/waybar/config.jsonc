@@ -1,25 +1,34 @@
 {
   // ═══════════════════════════════════════════════════════════════════════════════
   // Waybar Configuration
+  // Icons: Font Awesome (nf-fa)
   // ═══════════════════════════════════════════════════════════════════════════════
-  
+
   "position": "top",
   "layer": "top",
   "height": 32,
   "margin": "8 12 0 12",
-  
+
   // ── Modules Layout ────────────────────────────────────────────────────────────
-  "modules-left": ["custom/arch", "clock", "custom/pacman", "tray"],
+  "modules-left": ["custom/arch", "clock", "custom/pacman"],
   "modules-center": ["hyprland/workspaces"],
-  "modules-right": ["pulseaudio", "network", "bluetooth", "battery", "custom/notification"],
-  
-  // ── Tray ──────────────────────────────────────────────────────────────────────
-  "tray": {
-    "icon-size": 14,
-    "spacing": 8
+  "modules-right": [
+    "hyprland/language",
+    "pulseaudio",
+    "network",
+    "bluetooth",
+    "battery",
+    "custom/power"
+  ],
+
+  // ── Keyboard Layout ──────────────────────────────────────────────────────────
+  "hyprland/language": {
+    "format": "{short}",
+    "tooltip-format": "Keyboard: {layout}",
+    "on-click": "hyprctl switchxkblayout all next"
   },
-  
-  // ── Clock (Apple-style: Month Day · Time) ────────────────────────────────────
+
+  // ── Clock ────────────────────────────────────────────────────────────────────
   "clock": {
     "interval": 1,
     "format": "{:%b %d · %H:%M}",
@@ -38,8 +47,8 @@
       "on-scroll-down": "shift_down"
     }
   },
-  
-  // ── Workspaces (Hyprland) ────────────────────────────────────────────────────
+
+  // ── Workspaces ───────────────────────────────────────────────────────────────
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
@@ -53,15 +62,12 @@
     "on-click": "activate",
     "all-outputs": true
   },
-  
-  // ── PulseAudio (Volume: percentage + icon) ───────────────────────────────────
+
+  // ── PulseAudio ───────────────────────────────────────────────────────────────
   "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-bluetooth": "{icon} {volume}%",
-    "format-muted": "󰖁",
-    "format-icons": {
-      "default": ["󰕿", "󰖀", "󰕾"]
-    },
+    "format": " {volume}%",
+    "format-bluetooth": " {volume}%",
+    "format-muted": "",
     "scroll-step": 5,
     "on-click": "$HOME/.config/hypr/scripts/volume.sh --toggle",
     "on-click-right": "pavucontrol",
@@ -69,31 +75,31 @@
     "on-scroll-down": "$HOME/.config/hypr/scripts/volume.sh --dec",
     "tooltip-format": "{desc}\n{volume}%"
   },
-  
+
   // ── Network ──────────────────────────────────────────────────────────────────
   "network": {
     "format-wifi": "",
-    "format-ethernet": "󰈀",
-    "format-disconnected": "󰤭",
+    "format-ethernet": "",
+    "format-disconnected": "",
     "tooltip-format-wifi": "{essid} · {signalStrength}%",
     "tooltip-format-ethernet": "{ifname} · {ipaddr}",
     "tooltip-format-disconnected": "Disconnected",
     "on-click": "kitty nmtui"
   },
-  
-  // ── Bluetooth (icon only, no battery percentage) ─────────────────────────────
+
+  // ── Bluetooth ────────────────────────────────────────────────────────────────
   "bluetooth": {
     "format": "",
     "format-off": "",
     "format-disabled": "",
-    "format-connected": "󰂯",
+    "format-connected": "",
     "tooltip-format": "{controller_alias}\n{num_connections} connected",
     "tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}",
     "on-click-right": "blueman-manager"
   },
-  
-  // ── Battery (always show with icon) ──────────────────────────────────────────
+
+  // ── Battery ──────────────────────────────────────────────────────────────────
   "battery": {
     "interval": 60,
     "states": {
@@ -102,20 +108,20 @@
       "critical": 15
     },
     "format": "{icon} {capacity}%",
-    "format-charging": "󰂄 {capacity}%",
-    "format-plugged": " {capacity}%",
+    "format-charging": "{icon} {capacity}%",
+    "format-plugged": "{icon} {capacity}%",
     "format-full": "{icon} {capacity}%",
-    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "format-icons": ["", "", "", "", ""],
     "tooltip": true
   },
-  
+
   // ── Arch Launcher ────────────────────────────────────────────────────────────
   "custom/arch": {
     "format": "",
     "tooltip": false,
     "on-click": "rofi -show drun"
   },
-  
+
   // ── Pacman Updates ───────────────────────────────────────────────────────────
   "custom/pacman": {
     "format": "󰅢 {}",
@@ -124,12 +130,11 @@
     "on-click": "kitty sh -c 'sudo pacman -Syu; echo; echo \"Done! Press Enter\"; read'",
     "tooltip-format": "{} updates available"
   },
-  
-  // ── Notification Center (fixed icon) ─────────────────────────────────────────
-  "custom/notification": {
+
+  // ── Power Menu ───────────────────────────────────────────────────────────────
+  "custom/power": {
+    "format": "",
     "tooltip": false,
-    "format": "",
-    "on-click": "swaync-client -t -sw",
-    "escape": true
+    "on-click": "wlogout"
   }
 }
