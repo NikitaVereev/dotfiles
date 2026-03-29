@@ -5,9 +5,10 @@
   "margin-right": 12,
   "margin-left": 12,
   "margin-top": 4,
-  "modules-left": ["custom/hypr", "hyprland/window"],
+  "modules-left": ["custom/hypr", "custom/window"],
   "modules-center": ["group/center3", "hyprland/workspaces", "group/center2"],
   "modules-right": ["group/right1"],
+
   "group/center2": {
     "orientation": "inherit",
     "modules": ["clock", "custom/update"]
@@ -57,24 +58,11 @@
     }
   },
 
-  "hyprland/window": {
+  "custom/window": {
+    "exec": "~/.config/waybar/scripts/window.sh",
+    "return-type": "json",
     "format": "{}",
-    "max-length": 40,
-    "separate-outputs": false,
-    "rewrite": {
-      ".*[Ss]potify.*": " Spotify",
-      ".*[Ff]irefox.*": "󰈹 Firefox",
-      ".*[Ll]ibre[Ww]olf.*": "󰈹 LibreWolf",
-      ".*[Nn]vim.*": " Neovim",
-      ".*[Ss]team.*": " Steam",
-      ".*[Cc]hromium.*": " Chromium",
-      ".*[Cc]hrome.*": " Chrome",
-      ".*[Dd]iscord.*": " Discord",
-      ".*[Tt]elegram.*": " Telegram",
-      ".*[Pp][Dd][Ff].*": "󰈙 PDF",
-      "^~.*": "󰄛 Terminal",
-      "^/.*": "󰄛 Terminal"
-    }
+    "signal": 8
   },
 
   "custom/hypr": {
@@ -84,22 +72,22 @@
   },
 
   "cpu": {
-    "interval": 2,
+    "interval": 5,
     "format": "{icon} ",
     "format-icons": ["󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"],
     "on-click": "kitty htop"
   },
 
   "memory": {
-    "interval": 2,
+    "interval": 5,
     "format": "{icon} ",
     "format-icons": ["󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"],
     "on-click": "kitty htop"
   },
 
   "clock": {
-    "format": " {:%I:%M %p • %a, %d/%m}",
-    "format-alt": "{:%A, %d %B %Y}   ",
+    "format": "{:%H:%M · %a, %d/%m}",
+    "format-alt": "{:%A, %d %B %Y}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
   },
 
@@ -107,13 +95,12 @@
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
     "format": "{icon}",
     "format-wifi": "{icon}",
-    "format-ethernet": "<span size='11500'>󰌘</span>",
-    "format-disconnected": "<span size='11500'>󰤮</span>",
-    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
-    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "format-ethernet": "󰌘",
+    "format-disconnected": "󰤭",
+    "tooltip-format-wifi": "{essid}\\n{signalStrength}% · {frequency}GHz",
+    "tooltip-format-ethernet": "{ifname}",
     "tooltip-format-disconnected": "Disconnected",
-    "interval": 3,
-    "spacing": 1,
+    "interval": 15,
     "on-click": "kitty nmtui"
   },
 
@@ -126,10 +113,11 @@
     "format-full": "󰂅",
     "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
     "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
-    "interval": 5,
+    "interval": 10,
     "states": {
-      "warning": 20,
-      "critical": 10
+      "good": 95,
+      "warning": 40,
+      "critical": 20
     }
   },
 
@@ -143,29 +131,15 @@
   },
 
   "pulseaudio": {
-    "format": "<span size='11500'>{icon}</span> {volume}%",
+    "format": "{icon} {volume}%",
     "on-click": "pavucontrol",
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,
-    "format-muted": "",
+    "format-muted": "󰝟",
     "format-icons": {
-      "default": ["", "", ""]
+      "default": ["󰕾", "󰖀", "󰕾"]
     }
-  },
-
-  "group/tray-expander": {
-    "orientation": "inherit",
-    "drawer": {
-      "transition-duration": 600,
-      "children-class": "tray-group-item"
-    },
-    "modules": ["custom/expand-icon", "tray"]
-  },
-
-  "custom/expand-icon": {
-    "format": "",
-    "tooltip": false
   },
 
   "tray": {
@@ -179,6 +153,7 @@
     "on-click-middle": "playerctl play-pause",
     "on-click": "playerctl previous",
     "on-click-right": "playerctl next",
+    "ignored-players": ["Chromium", "Firefox"],
     "player-icons": {
       "chromium": "",
       "default": "",
