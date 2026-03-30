@@ -17,7 +17,7 @@ sudo reboot
 |-----------|-------------|
 | WM | Hyprland, Hyprlock, Hyprpaper |
 | Панель | Waybar |
-| Терминал | Ghostty, Kitty |
+| Терминал | Kitty |
 | Shell | Zsh + Oh My Zsh + Starship + Atuin |
 | Редактор | Neovim (Lazy.nvim) |
 | Лаунчер | Rofi |
@@ -87,7 +87,6 @@ make lint      # Проверка кода
     ├── starship/       # Промпт
     ├── tmux/           # Tmux
     ├── kitty/          # Kitty
-    ├── ghostty/        # Ghostty
     ├── yazi/           # Yazi
     └── fastfetch/      # Fastfetch
 ```

@@ -131,18 +131,6 @@ else
   log_warn "SwayNC theme '$THEME' not found"
 fi
 
-# ── 9. Ghostty ────────────────────────────────────────────────────────────────
-
-if [[ -f "$CONFIG_DIR/ghostty/themes/$THEME" ]]; then
-  if ! sed -i "s|^theme = .*|theme = $THEME|" "$CONFIG_DIR/ghostty/config" 2>/dev/null; then
-    log_warn "Failed to update Ghostty theme"
-  else
-    pkill -USR2 ghostty 2>/dev/null || true
-  fi
-else
-  log_warn "Ghostty theme '$THEME' not found"
-fi
-
 # ── Done ──────────────────────────────────────────────────────────────────────
 
 notify-send "$SCRIPT_NAME" "Theme '$THEME' applied successfully" -i preferences-desktop-theme

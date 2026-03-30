@@ -32,7 +32,7 @@ ARCH_PKGS=(hyprland hyprlock hyprpaper waybar swaync kitty tmux zsh starship
     brightnessctl playerctl polkit-kde-agent zsh-autosuggestions
     zsh-syntax-highlighting base-devel git cargo nodejs npm python go rust
     stow jq lazygit htop)
-AUR_PKGS=(ghostty atuin)
+AUR_PKGS=(atuin)
 DEB_PKGS=(git curl wget stow jq htop zsh tmux kitty starship zoxide rofi
     waybar swaync yazi ranger thunar fastfetch imagemagick pipewire
     wireplumber pavucontrol network-manager blueman brightnessctl
@@ -91,7 +91,7 @@ backup() {
     local backup_dir
     backup_dir="$HOME/.dotfiles.backup.$(date +%Y%m%d_%H%M%S)"
     local items=(.config/hypr .config/nvim .config/waybar .config/rofi
-        .config/swaync .config/ghostty .config/kitty .config/tmux
+        .config/swaync .config/kitty .config/tmux
         .config/starship .zshrc)
     mkdir -p "$backup_dir"
     for item in "${items[@]}"; do
@@ -104,7 +104,7 @@ backup() {
 create_symlinks() {
     local files=(.zshrc)
     local dirs=(.config/hypr .config/nvim .config/waybar .config/rofi
-        .config/swaync .config/ghostty .config/kitty .config/tmux
+        .config/swaync .config/kitty .config/tmux
         .config/starship .config/yazi .config/fastfetch .config/wireplumber)
 
     for f in "${files[@]}"; do

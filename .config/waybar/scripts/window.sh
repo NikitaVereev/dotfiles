@@ -26,10 +26,6 @@ case "$title_lower" in
         icon=""
         appname="Firefox"
         ;;
-    *ghostty* | *com.mitchell*)
-        icon=""
-        appname="Ghostty"
-        ;;
     *kitty*)
         icon="󰄛"
         appname="Kitty"
