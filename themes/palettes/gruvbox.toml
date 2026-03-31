@@ -1,0 +1,56 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Gruvbox Dark Medium Palette
+# Source: https://github.com/morhetz/gruvbox
+# Official Gruvbox color scheme
+# ═══════════════════════════════════════════════════════════════════════════════
+
+[meta]
+name = "Gruvbox Dark Medium"
+author = "Pavel Pertsev (morhetz)"
+variant = "dark"
+brightness = "medium"
+
+# ── Base Colors ───────────────────────────────────────────────────────────────
+[colors.base]
+bg0_hard = "#1d2021"  # darkest background
+bg0      = "#282828"  # default background
+bg1      = "#3c3836"  # alternative background
+bg2      = "#504945"  # dark raised
+bg3      = "#665c54"  # dark hard
+bg4      = "#7c6f64"  # dark soft
+
+fg0      = "#fbf1c7"  # brightest foreground
+fg1      = "#ebdbb2"  # bright foreground
+fg2      = "#d5c4a1"  # normal foreground
+fg3      = "#bdae93"  # gray foreground
+fg4      = "#a89984"  # dark foreground
+
+# ── Accent Colors ──────────────────────────────────────────────────────────────
+[colors.accent]
+red    = "#cc241d"
+green  = "#98971a"
+yellow = "#d79921"
+blue   = "#458588"
+purple = "#b16286"
+aqua   = "#689d6a"
+orange = "#d65d0e"
+
+# ── Faded Colors ───────────────────────────────────────────────────────────────
+[colors.faded]
+red    = "#9d0006"
+green  = "#79740e"
+yellow = "#b57614"
+blue   = "#076678"
+purple = "#8f3f71"
+aqua   = "#427b58"
+orange = "#af3a03"
+
+# ── UI Colors (derived for interface elements) ─────────────────────────────────
+[colors.ui]
+cursor_fg      = "#282828"
+cursor_bg      = "#ebdbb2"
+selection      = "#665c54"
+border         = "#928374"
+border_active  = "#98971a"
+visual         = "#504945"
+comment        = "#928374"

@@ -185,10 +185,12 @@ window#waybar.empty #window {
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.01em;
+  color: @fg;
 }
 
 #battery {
   margin: 0 4px;
+  color: @fg;
 }
 
 #battery.warning {
@@ -216,6 +218,7 @@ window#waybar.empty #window {
 #battery {
   margin: 0 4px;
   padding: 0 2px;
+  color: @fg;
 }
 
 #pulseaudio.muted {
@@ -224,10 +227,49 @@ window#waybar.empty #window {
 
 #tray {
   margin: 0 4px;
+  color: @fg;
 }
 
 #tray > * {
   padding: 0 3px;
+}
+
+/* ─────────────────────────────────────────────
+   MPRIS (Music player)
+───────────────────────────────────────────── */
+#mpris {
+  color: @fg;
+}
+
+/* ─────────────────────────────────────────────
+   SEPARATORS
+───────────────────────────────────────────── */
+#custom-separator#dot,
+#custom-separator#blank {
+  color: @fg;
+}
+
+/* ─────────────────────────────────────────────
+   LANGUAGE
+───────────────────────────────────────────── */
+#language {
+  color: @fg;
+  margin: 0 4px;
+}
+
+/* ─────────────────────────────────────────────
+   GROUPS
+───────────────────────────────────────────── */
+#group-center3,
+#group_center3,
+#center3,
+#group-center2,
+#group_center2,
+#center2,
+#group-right1,
+#group_right1,
+#right1 {
+  color: @fg;
 }
 
 /* ─────────────────────────────────────────────
