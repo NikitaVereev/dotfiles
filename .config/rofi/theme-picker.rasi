@@ -39,21 +39,21 @@ inputbar {
     spacing:                    16px;
     margin:                     0px;
     padding:                    22px 28px;
-    background-color:           transparent;
+    background-color:           @background-alt;
     border:                     0px 0px 1px 0px;
-    border-color:               rgba(205, 214, 244, 0.07);
+    border-color:               @border-color;
     border-radius:              0px;
     orientation:                horizontal;
     children:                   ["dummy", "prompt", "entry"];
 }
 
-/*****----- Spacer — pushes content to the right -----*****/
+/*****----- Spacer -----*****/
 dummy {
     expand:                     true;
     background-color:           transparent;
 }
 
-/*****----- Prompt — floating label -----*****/
+/*****----- Prompt -----*****/
 prompt {
     enabled:                    true;
     padding:                    0px;
@@ -65,7 +65,7 @@ prompt {
     border-radius:              0px;
 }
 
-/*****----- Search Entry — proper input field -----*****/
+/*****----- Entry -----*****/
 entry {
     enabled:                    true;
     expand:                     false;
@@ -73,8 +73,8 @@ entry {
     padding:                    13px 20px;
     border-radius:              12px;
     border:                     1px;
-    border-color:               rgba(205, 214, 244, 0.10);
-    background-color:           rgba(49, 50, 68, 0.65);
+    border-color:               @border-color;
+    background-color:           @background-alt;
     text-color:                 @foreground;
     cursor:                     text;
     placeholder:                "  filter...";
@@ -118,27 +118,27 @@ element {
     padding:                    10px;
     border:                     1px;
     border-radius:              14px;
-    border-color:               rgba(205, 214, 244, 0.06);
-    background-color:           rgba(49, 50, 68, 0.30);
+    border-color:               @border-color;
+    background-color:           @background-alt;
     text-color:                 @foreground-dim;
     cursor:                     pointer;
     orientation:                vertical;
 }
 
 element normal.normal {
-    background-color:           rgba(49, 50, 68, 0.30);
+    background-color:           @background-alt;
     text-color:                 @foreground-dim;
 }
 
 element selected.normal {
-    background-color:           rgba(49, 50, 68, 0.85);
+    background-color:           @element-selected;
     text-color:                 @foreground;
-    border-color:               rgba(205, 214, 244, 0.20);
+    border-color:               @selected;
 }
 
 /*****----- Wallpaper Preview -----*****/
 element-icon {
-    background-color:           @background-alt;
+    background-color:           @background;
     text-color:                 inherit;
     size:                       160px;
     border-radius:              8px;
@@ -161,6 +161,7 @@ element-text {
 message {
     background-color:           transparent;
 }
+
 textbox {
     padding:                    15px;
     border-radius:              14px;
@@ -169,6 +170,7 @@ textbox {
     vertical-align:             0.5;
     horizontal-align:           0.0;
 }
+
 error-message {
     padding:                    15px;
     border-radius:              14px;

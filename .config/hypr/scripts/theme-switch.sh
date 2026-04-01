@@ -1,7 +1,7 @@
 #!/bin/bash
 # =============================================================================
 # Theme Switcher
-# Unified theme switching for Hyprland, Kitty, Ghostty, Waybar, Rofi, Neovim
+# Unified theme switching for Hyprland, Kitty, Waybar, Neovim, Starship, SwayNC
 # Usage: theme-switch.sh <theme-name>
 # =============================================================================
 
@@ -91,17 +91,7 @@ else
   log_warn "Waybar theme '$THEME' not found"
 fi
 
-# ── 5. Rofi ───────────────────────────────────────────────────────────────────
-
-if [[ -f "$CONFIG_DIR/rofi/themes/$THEME.rasi" ]]; then
-  if ! ln -sf "themes/$THEME.rasi" "$CONFIG_DIR/rofi/current.rasi" 2>/dev/null; then
-    log_warn "Failed to create Rofi theme symlink"
-  fi
-else
-  log_warn "Rofi theme '$THEME' not found"
-fi
-
-# ── 6. Neovim ─────────────────────────────────────────────────────────────────
+# ── 5. Neovim ─────────────────────────────────────────────────────────────────
 
 if ! echo "$THEME" > "$CONFIG_DIR/nvim/themes/current" 2>/dev/null; then
   log_warn "Failed to write Neovim theme config"
@@ -109,7 +99,7 @@ else
   pkill -USR1 nvim 2>/dev/null || true
 fi
 
-# ── 7. Starship ───────────────────────────────────────────────────────────────
+# ── 6. Starship ───────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/starship/themes/$THEME.toml" ]]; then
   if ! ln -sf "$THEME.toml" "$CONFIG_DIR/starship/themes/current.toml" 2>/dev/null; then
@@ -119,7 +109,7 @@ else
   log_warn "Starship theme '$THEME' not found"
 fi
 
-# ── 8. SwayNC ─────────────────────────────────────────────────────────────────
+# ── 7. SwayNC ─────────────────────────────────────────────────────────────────
 
 if [[ -f "$CONFIG_DIR/swaync/themes/$THEME.css" ]]; then
   if ! ln -sf "$THEME.css" "$CONFIG_DIR/swaync/themes/current.css" 2>/dev/null; then

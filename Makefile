@@ -4,7 +4,7 @@
 # Usage: make <target>
 # ═══════════════════════════════════════════════════════════════════════════════
 
-.PHONY: help install uninstall backup restore update sync lint pre-commit clean check
+.PHONY: help install uninstall backup restore update sync lint pre-commit clean check check-symlinks theme-check nvim-plugins nvim-clean tmux-plugins
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 DOTFILES_DIR := $(shell pwd)
@@ -71,7 +71,12 @@ clean: ## Clean cache and temporary files
 	@find . -name "*~" -delete 2>/dev/null || true
 	@echo -e "$(GREEN)✓$(NC) Cleaned"
 
-check: ## Check symlink status
+check: ## Check theme application (usage: make check THEME=gruvbox)
+	@./scripts/check-themes.sh $(THEME)
+
+theme-check: check ## Alias for check
+
+check-symlinks: ## Check symlink status (old check command)
 	@echo "Checking symlinks..."
 	@for i in .zshrc .config/hypr .config/nvim .config/waybar; do \
 		if [[ -L "$(HOME)/$$i" ]]; then \

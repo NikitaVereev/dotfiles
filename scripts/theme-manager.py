@@ -24,12 +24,11 @@ CONFIG_DIR = DOTFILES_DIR / ".config"
 HOME_DIR = Path.home()
 
 # Mapping of template files to their output locations
-# For some apps we write to named files (gruvbox.conf), for others to current.conf
+# For some apps we write to named files (gruvbox.*), for others to current.*
 TEMPLATE_MAPPING = {
     "hyprland.conf.j2": ".config/hypr/themes/current.conf",
     "waybar.css.j2": ".config/waybar/themes/current.css",  # symlink handles this
     "kitty.conf.j2": ".config/kitty/themes/current.conf",  # symlink handles this
-    "nvim.lua.j2": ".config/nvim/lua/themes/current.lua",
     "rofi.rasi.j2": ".config/rofi/themes/current.rasi",
     "swaync.css.j2": ".config/swaync/themes/current.css",  # symlink handles this
     "starship.toml.j2": ".config/starship/themes/current.toml",  # symlink handles this
@@ -37,8 +36,9 @@ TEMPLATE_MAPPING = {
     "yazi.toml.j2": ".config/yazi/themes/current.toml",
 }
 
-# Apps that need named theme files (not current.conf)
+# Apps that need named theme files (not current.*)
 NAMED_THEME_FILES = {
+    "nvim": {"lua": "gruvbox.lua"},
     "waybar": {"css": "gruvbox.css"},
     "kitty": {"conf": "gruvbox.conf"},
     "swaync": {"css": "gruvbox.css"},
@@ -326,7 +326,7 @@ def apply_kitty(theme_name: str) -> bool:
 
 
 def apply_nvim(theme_name: str) -> bool:
-    """Notify Neovim to reload theme via SIGUSR1."""
+    """Notify Neovim to reload theme via SIGUSR1 and set vim.g.colors_name."""
     try:
         # Find nvim processes and send SIGUSR1
         result = subprocess.run(["pgrep", "-x", "nvim"], capture_output=True, text=True)
@@ -338,6 +338,14 @@ def apply_nvim(theme_name: str) -> bool:
     except Exception:
         pass
     return False
+
+
+def set_nvim_theme(theme_name: str) -> None:
+    """Set vim.g.colors_name for Neovim theme switching."""
+    # Create a file that Neovim can read to get the theme name
+    theme_file = HOME_DIR / ".config" / "nvim" / "themes" / "current_theme"
+    theme_file.parent.mkdir(parents=True, exist_ok=True)
+    theme_file.write_text(theme_name)
 
 
 def apply_swaync() -> bool:
@@ -401,19 +409,9 @@ def apply_all_dynamic(theme_name: str) -> dict:
     except Exception:
         results["kitty"] = False
     
-    # Neovim - send SIGUSR1 to reload theme
-    try:
-        result = subprocess.run(["pgrep", "-x", "nvim"], capture_output=True, text=True)
-        if result.stdout.strip():
-            pids = result.stdout.strip().split('\n')
-            for pid in pids:
-                subprocess.run(["kill", "-USR1", pid], check=True, capture_output=True)
-            results["nvim"] = True
-            log_ok("Neovim: Theme reloaded (SIGUSR1)")
-        else:
-            results["nvim"] = False
-    except Exception:
-        results["nvim"] = False
+    # Neovim - theme is applied via plugin (gruvbox-material)
+    # No dynamic reload needed, theme will be applied on next Neovim start
+    results["nvim"] = False  # Plugin handles this
     
     # SwayNC
     if apply_swaync():
@@ -468,6 +466,10 @@ def create_application_symlinks(theme_name: str) -> None:
             "kitty": ("conf", "gruvbox.conf"),
             "swaync": ("css", "gruvbox.css"),
             "starship": ("toml", "gruvbox.toml"),
+            "rofi": ("rasi", "gruvbox.rasi"),
+            "tmux": ("conf", "gruvbox.conf"),
+            "yazi": ("toml", "gruvbox.toml"),
+            # nvim uses plugin theme (ellisonleao/gruvbox.nvim)
         }
     }
     
@@ -518,6 +520,10 @@ def generate_named_theme_files(theme_name: str, context: dict) -> None:
         "kitty": ("conf", "gruvbox.conf", "kitty.conf.j2"),
         "swaync": ("css", "gruvbox.css", "swaync.css.j2"),
         "starship": ("toml", "gruvbox.toml", "starship.toml.j2"),
+        "rofi": ("rasi", "gruvbox.rasi", "rofi.rasi.j2"),
+        "tmux": ("conf", "gruvbox.conf", "tmux.conf.j2"),
+        "yazi": ("toml", "gruvbox.toml", "yazi.toml.j2"),
+        # nvim uses plugin theme (ellisonleao/gruvbox.nvim)
     }
     
     for app, (ext, filename, template) in named_files.items():
@@ -586,6 +592,12 @@ def main() -> int:
         log_info("GTK: Installing and applying theme...")
         install_gtk_theme(theme_name)
         apply_gtk_settings(theme_name)
+
+        # Set Neovim theme name
+        print()
+        log_info("Neovim: Setting theme name...")
+        set_nvim_theme(theme_name)
+        log_ok(f"Neovim: vim.g.colors_name = {theme_name}")
 
         # Apply themes dynamically to running applications
         print()
