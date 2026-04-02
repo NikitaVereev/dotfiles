@@ -1,0 +1,57 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Catppuccin Mocha Palette
+# Source: https://github.com/catppuccin/catppuccin
+# Official Catppuccin color scheme
+# ═══════════════════════════════════════════════════════════════════════════════
+
+[meta]
+name = "Catppuccin Mocha"
+author = "Catppuccin"
+variant = "dark"
+brightness = "medium"
+
+# ── Base Colors ───────────────────────────────────────────────────────────────
+[colors.base]
+bg0_hard = "#11111b"  # crust
+bg0 = "#1e1e2e"  # base
+bg1 = "#181825"  # mantle
+bg2 = "#313244"  # surface0
+bg3 = "#45475a"  # surface1
+bg4 = "#585b70"  # surface2
+
+fg0 = "#cdd6f4"  # text
+fg1 = "#cdd6f4"  # text
+fg2 = "#bac2de"  # subtext1
+fg3 = "#a6adc8"  # subtext0
+fg4 = "#7f849c"  # overlay2
+
+# ── Accent Colors ──────────────────────────────────────────────────────────────
+[colors.accent]
+red     = "#f38ba8"
+green   = "#a6e3a1"
+yellow  = "#f9e2af"
+blue    = "#89b4fa"
+purple  = "#cba6f7"
+aqua    = "#94e2d5"
+orange  = "#fab387"
+pink    = "#f5c2e7"
+
+# ── Faded Colors ───────────────────────────────────────────────────────────────
+[colors.faded]
+red     = "#f38ba8"
+green   = "#a6e3a1"
+yellow  = "#f9e2af"
+blue    = "#89b4fa"
+purple  = "#cba6f7"
+aqua    = "#94e2d5"
+orange  = "#fab387"
+
+# ── UI Colors ──────────────────────────────────────────────────────────────────
+[colors.ui]
+cursor_fg      = "#1e1e2e"
+cursor_bg      = "#cdd6f4"
+selection      = "#45475a"
+border         = "#6c7086"
+border_active  = "#89b4fa"
+comment        = "#6c7086"
+visual         = "#313244"

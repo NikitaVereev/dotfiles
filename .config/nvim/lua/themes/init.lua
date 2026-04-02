@@ -44,26 +44,35 @@ function M.load(theme_name)
 	-- Map theme name to colorscheme name
 	local colorscheme_name = M.theme_map[theme_name] or theme_name
 
-	-- Clear module cache for local themes
+	-- Clear module cache
 	package.loaded["themes." .. theme_name] = nil
 
-	-- Try to load local theme first
-	local local_theme_ok, local_theme = pcall(require, "themes." .. theme_name)
+	-- Check if local theme file exists (explicit check)
+	local local_theme_path = vim.fn.stdpath("config") .. "/lua/themes/" .. theme_name .. ".lua"
+	local local_theme_exists = vim.loop.fs_stat(local_theme_path) ~= nil
 
-	if local_theme_ok and local_theme.setup then
-		-- Use local theme
-		vim.cmd("highlight clear")
-		local_theme.setup()
-		vim.g.colors_name = theme_name
-	else
-		-- Use plugin colorscheme
-		local ok = pcall(vim.cmd, "colorscheme " .. colorscheme_name)
-		if not ok then
-			vim.notify("Theme '" .. theme_name .. "' not found, falling back to " .. M.default, vim.log.levels.WARN)
-			vim.cmd("colorscheme " .. (M.theme_map[M.default] or M.default))
+	-- Try to load local theme first (only if file exists)
+	if local_theme_exists then
+		local local_theme_ok, local_theme = pcall(require, "themes." .. theme_name)
+
+		if local_theme_ok and type(local_theme) == "table" and local_theme.setup then
+			-- Use local theme
+			vim.cmd("highlight clear")
+			local_theme.setup()
+			vim.g.colors_name = theme_name
+			vim.notify("Theme: " .. theme_name .. " (local)", vim.log.levels.INFO)
+			return
+		else
+			-- Local theme failed, fall through to plugin
+			vim.notify("Local theme failed, using plugin: " .. colorscheme_name, vim.log.levels.WARN)
 		end
-		vim.g.colors_name = theme_name
 	end
+
+	-- Use plugin colorscheme - force reload
+	vim.cmd("highlight clear")
+	vim.cmd("colorscheme " .. colorscheme_name)
+	vim.g.colors_name = theme_name
+	vim.notify("Theme: " .. colorscheme_name .. " (plugin)", vim.log.levels.INFO)
 end
 
 --- Set theme and apply

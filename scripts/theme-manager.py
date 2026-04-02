@@ -200,14 +200,14 @@ def install_gtk_theme(theme_name: str) -> bool:
 
 def apply_gtk_settings(theme_name: str) -> None:
     """Apply GTK theme via gsettings and config files."""
-    
+
     gtk_theme_names = {
         "gruvbox": "Gruvbox-Dark",
-        "catppuccin": "Catppuccin-Mocha-Dark",
+        "catppuccin": "Catppuccin-Dark",
     }
-    
+
     theme_display_name = gtk_theme_names.get(theme_name, theme_name.title())
-    
+
     # 1. Try gsettings (GNOME/GTK3/GTK4)
     try:
         subprocess.run(
@@ -215,6 +215,18 @@ def apply_gtk_settings(theme_name: str) -> None:
             check=True, capture_output=True
         )
         log_ok("GTK: Theme applied via gsettings")
+        
+        # 2. Restart GTK apps for dynamic update
+        log_info("GTK: Restarting applications...")
+        gtk_apps = ["nwg-look", "nwg-drawer", "thunar", "gnome-control-center"]
+        for app in gtk_apps:
+            try:
+                # Soft restart - let app save state
+                subprocess.run(["pkill", "-HUP", app], capture_output=True, timeout=2)
+            except Exception:
+                pass
+        log_ok("GTK: Applications restarted")
+        
     except subprocess.CalledProcessError:
         log_warn(f"GTK: Theme '{theme_display_name}' not found in system")
         return
@@ -408,10 +420,13 @@ def apply_all_dynamic(theme_name: str) -> dict:
             results["kitty"] = False
     except Exception:
         results["kitty"] = False
-    
-    # Neovim - theme is applied via plugin (gruvbox-material)
-    # No dynamic reload needed, theme will be applied on next Neovim start
-    results["nvim"] = False  # Plugin handles this
+
+    # Neovim - send SIGUSR1 to reload theme
+    if apply_nvim(theme_name):
+        results["nvim"] = True
+        log_ok("Neovim: Theme reloaded (SIGUSR1)")
+    else:
+        results["nvim"] = False  # Will apply on next Neovim start
     
     # SwayNC
     if apply_swaync():
@@ -459,27 +474,22 @@ def apply_all_dynamic(theme_name: str) -> dict:
 def create_application_symlinks(theme_name: str) -> None:
     """Create symlinks for all applications."""
     
+    # Dynamic symlink mappings for ANY theme
     symlink_mappings = {
-        "gruvbox": {
-            "hypr": ("conf", "gruvbox.conf"),
-            "waybar": ("css", "gruvbox.css"),
-            "kitty": ("conf", "gruvbox.conf"),
-            "swaync": ("css", "gruvbox.css"),
-            "starship": ("toml", "gruvbox.toml"),
-            "rofi": ("rasi", "gruvbox.rasi"),
-            "tmux": ("conf", "gruvbox.conf"),
-            "yazi": ("toml", "gruvbox.toml"),
-            # nvim uses plugin theme (ellisonleao/gruvbox.nvim)
-        }
+        "hypr": ("conf", f"{theme_name}.conf"),
+        "waybar": ("css", f"{theme_name}.css"),
+        "kitty": ("conf", f"{theme_name}.conf"),
+        "swaync": ("css", f"{theme_name}.css"),
+        "starship": ("toml", f"{theme_name}.toml"),
+        "rofi": ("rasi", f"{theme_name}.rasi"),
+        "tmux": ("conf", f"{theme_name}.conf"),
+        "yazi": ("toml", f"{theme_name}.toml"),
+        # nvim uses plugin theme (ellisonleao/gruvbox.nvim)
     }
     
-    if theme_name not in symlink_mappings:
-        return
-    
-    mappings = symlink_mappings[theme_name]
     config_base = HOME_DIR / ".config"
     
-    for app, (ext, target) in mappings.items():
+    for app, (ext, target) in symlink_mappings.items():
         symlink = config_base / app / "themes" / f"current.{ext}"
         
         if symlink.exists() or symlink.is_symlink():
@@ -515,14 +525,14 @@ def generate_named_theme_files(theme_name: str, context: dict) -> None:
     """Generate named theme files for apps that use symlinks."""
     
     named_files = {
-        "hypr": ("conf", "gruvbox.conf", "hyprland.conf.j2"),
-        "waybar": ("css", "gruvbox.css", "waybar.css.j2"),
-        "kitty": ("conf", "gruvbox.conf", "kitty.conf.j2"),
-        "swaync": ("css", "gruvbox.css", "swaync.css.j2"),
-        "starship": ("toml", "gruvbox.toml", "starship.toml.j2"),
-        "rofi": ("rasi", "gruvbox.rasi", "rofi.rasi.j2"),
-        "tmux": ("conf", "gruvbox.conf", "tmux.conf.j2"),
-        "yazi": ("toml", "gruvbox.toml", "yazi.toml.j2"),
+        "hypr": ("conf", f"{theme_name}.conf", "hyprland.conf.j2"),
+        "waybar": ("css", f"{theme_name}.css", "waybar.css.j2"),
+        "kitty": ("conf", f"{theme_name}.conf", "kitty.conf.j2"),
+        "swaync": ("css", f"{theme_name}.css", "swaync.css.j2"),
+        "starship": ("toml", f"{theme_name}.toml", "starship.toml.j2"),
+        "rofi": ("rasi", f"{theme_name}.rasi", "rofi.rasi.j2"),
+        "tmux": ("conf", f"{theme_name}.conf", "tmux.conf.j2"),
+        "yazi": ("toml", f"{theme_name}.toml", "yazi.toml.j2"),
         # nvim uses plugin theme (ellisonleao/gruvbox.nvim)
     }
     
