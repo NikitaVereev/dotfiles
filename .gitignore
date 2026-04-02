@@ -41,7 +41,6 @@ Thumbs.db
 # Current theme symlinks (auto-generated)
 .config/hypr/themes/current.conf
 .config/kitty/themes/current.conf
-.config/nvim/themes/current
 .config/rofi/current.rasi
 .config/waybar/themes/current.css
 .config/swaync/themes/current.css
