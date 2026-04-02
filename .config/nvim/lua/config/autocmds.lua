@@ -115,6 +115,8 @@ vim.api.nvim_create_autocmd("Signal", {
 	pattern = "SIGUSR1",
 	callback = function()
 		vim.schedule(function()
+			-- Clear module cache before loading
+			package.loaded['themes'] = nil
 			require("themes").load()
 		end)
 	end,
