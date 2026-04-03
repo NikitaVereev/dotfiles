@@ -45,6 +45,11 @@ NAMED_THEME_FILES = {
     "starship": {"toml": "gruvbox.toml"},
 }
 
+# Wallpaper configuration
+WALLPAPERS_DIR = DOTFILES_DIR / "wallpapers"
+ORIGINALS_DIR = WALLPAPERS_DIR / "original"
+GENERATED_DIR = WALLPAPERS_DIR / "generated"
+
 # Colors for terminal output
 COLORS = {
     "cyan": "\033[0;36m",
@@ -148,54 +153,10 @@ def create_symlink(theme_name: str) -> None:
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# GTK Theme Management
+# GTK Theme Application
 # ═══════════════════════════════════════════════════════════════════════════════
-
-
-def install_gtk_theme(theme_name: str) -> bool:
-    """Install GTK theme for the selected theme."""
-    
-    gtk_themes = {
-        "gruvbox": {
-            "name": "Gruvbox-Dark",
-            "url": "https://github.com/jakeworthington/gruvbox-gtk-theme/archive/refs/heads/main.tar.gz",
-            "extract_dir": "gruvbox-gtk-theme-main",
-        }
-    }
-
-    if theme_name not in gtk_themes:
-        return False
-
-    theme_info = gtk_themes[theme_name]
-    themes_dir = HOME_DIR / ".themes"
-    theme_path = themes_dir / theme_info["name"]
-
-    if theme_path.exists():
-        return True
-
-    themes_dir.mkdir(parents=True, exist_ok=True)
-
-    import tempfile
-    import tarfile
-    import urllib.request
-
-    with tempfile.TemporaryDirectory() as tmpdir:
-        tar_path = Path(tmpdir) / f"{theme_name}.tar.gz"
-        extract_path = Path(tmpdir) / "extract"
-
-        try:
-            urllib.request.urlretrieve(theme_info["url"], tar_path)
-            with tarfile.open(tar_path, "r:gz") as tar:
-                tar.extractall(extract_path)
-
-            source_dir = extract_path / theme_info["extract_dir"]
-            if source_dir.exists():
-                subprocess.run(["mv", str(source_dir), str(theme_path)], check=True, capture_output=True)
-                return True
-        except Exception:
-            pass
-    
-    return False
+# NOTE: GTK themes must be installed manually. See README.md for instructions.
+# This module only applies already-installed themes via gsettings and config files.
 
 
 def apply_gtk_settings(theme_name: str) -> None:
@@ -358,6 +319,97 @@ def set_nvim_theme(theme_name: str) -> None:
     theme_file = HOME_DIR / ".config" / "nvim" / "themes" / "current_theme"
     theme_file.parent.mkdir(parents=True, exist_ok=True)
     theme_file.write_text(theme_name)
+
+
+def generate_wallpapers(theme_name: str, palette: dict) -> None:
+    """Generate wallpapers for theme using gowall."""
+    if not ORIGINALS_DIR.exists():
+        log_warn(f"Wallpapers: Originals directory not found ({ORIGINALS_DIR})")
+        return
+    
+    # Check if gowall is available
+    has_gowall = subprocess.run(["which", "gowall"], capture_output=True).returncode == 0
+    
+    if not has_gowall:
+        log_warn("Wallpapers: gowall not found. Install with: yay -S gowall")
+        return
+    
+    # Create generated directory for theme
+    theme_gen_dir = GENERATED_DIR / theme_name
+    theme_gen_dir.mkdir(parents=True, exist_ok=True)
+    
+    log_info(f"Wallpapers: Generating for {theme_name}...")
+    
+    # Map theme names to gowall built-in themes
+    gowall_theme_map = {
+        "gruvbox": "gruvbox",
+        "catppuccin": "catppuccin",
+        "everforest": "everforest",
+        "kanagawa": "kanagawa",
+        "oxocarbon": "material",  # closest match
+    }
+    
+    gowall_theme = gowall_theme_map.get(theme_name, theme_name)
+    
+    # Process each original wallpaper
+    count = 0
+    for img in ORIGINALS_DIR.rglob("*"):
+        if img.suffix.lower() not in ['.jpg', '.jpeg', '.png', '.gif']:
+            continue
+        
+        # Generate output filename
+        output_name = f"{img.stem}_{theme_name}{img.suffix}"
+        output_path = theme_gen_dir / output_name
+        
+        # Skip if already exists and source is not newer
+        if output_path.exists() and img.stat().st_mtime < output_path.stat().st_mtime:
+            continue
+        
+        # Generate with gowall convert --theme --output
+        try:
+            subprocess.run([
+                "gowall", "convert",
+                "--theme", gowall_theme,
+                "--output", str(output_path),
+                str(img)
+            ], check=True, capture_output=True, timeout=60)
+            
+            count += 1
+            log_ok(f"  Generated: {output_name}")
+            
+        except subprocess.CalledProcessError as e:
+            log_warn(f"  Failed: {img.name} ({e.stderr.decode().strip() if e.stderr else 'unknown error'})")
+        except subprocess.TimeoutExpired:
+            log_warn(f"  Timeout: {img.name}")
+        except Exception as e:
+            log_warn(f"  Error: {img.name} ({e})")
+    
+    if count > 0:
+        log_ok(f"Wallpapers: {count} generated for {theme_name}")
+        # Apply current wallpaper with new theme
+        apply_current_wallpaper(theme_name)
+    else:
+        log_info(f"Wallpapers: No new wallpapers to generate for {theme_name}")
+        # Still try to apply current wallpaper with new theme
+        apply_current_wallpaper(theme_name)
+
+
+def apply_current_wallpaper(theme_name: str) -> None:
+    """Apply current saved wallpaper with new theme."""
+    wallpaper_script = DOTFILES_DIR / "scripts" / "wallpaper-selector.sh"
+    
+    if not wallpaper_script.exists():
+        log_warn("Wallpapers: wallpaper-selector.sh not found")
+        return
+    
+    try:
+        subprocess.run([
+            str(wallpaper_script),
+            "--apply-current"
+        ], check=True, capture_output=True, timeout=10)
+    except Exception:
+        # Silently fail - not critical
+        pass
 
 
 def apply_swaync() -> bool:
@@ -593,14 +645,17 @@ def main() -> int:
         generate_named_theme_files(theme_name, context)
         log_ok("Named theme files created (gruvbox.*)")
 
+        # Generate wallpapers for theme
+        print()
+        generate_wallpapers(theme_name, palette)
+
         # Create application symlinks
         print()
         create_application_symlinks(theme_name)
 
-        # Install and apply GTK theme
+        # Apply GTK theme (theme must be installed manually)
         print()
-        log_info("GTK: Installing and applying theme...")
-        install_gtk_theme(theme_name)
+        log_info("GTK: Applying theme...")
         apply_gtk_settings(theme_name)
 
         # Set Neovim theme name

@@ -7,30 +7,38 @@ Hyprland (Wayland) dotfiles для Arch Linux.
 ```bash
 git clone https://github.com/NikitaVereev/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-./install.sh
-sudo reboot
+
+# Создать symlink'и (через GNU stow)
+stow -t ~ .
+
+# Или вручную:
+# ln -s ~/.dotfiles/.zshrc ~/.zshrc
+# ln -s ~/.dotfiles/.config/hypr ~/.config/hypr
+# ln -s ~/.dotfiles/.config/nvim ~/.config/nvim
+# ... и т.д.
 ```
 
 ## Стек
 
-| Компонент | Инструменты |
-|-----------|-------------|
-| WM | Hyprland, Hyprlock, Hyprpaper |
-| Панель | Waybar |
-| Терминал | Kitty |
-| Shell | Zsh + Oh My Zsh + Starship + Atuin |
-| Редактор | Neovim (Lazy.nvim) |
-| Лаунчер | Rofi |
-| Файловый | Yazi, Thunar |
-| Tmux | TPM + Resurrect |
+| Компонент | Инструменты                        |
+| --------- | ---------------------------------- |
+| WM        | Hyprland, Hyprlock, Hyprpaper      |
+| Панель    | Waybar                             |
+| Терминал  | Kitty                              |
+| Shell     | Zsh + Oh My Zsh + Starship + Atuin |
+| Редактор  | Neovim (Lazy.nvim)                 |
+| Лаунчер   | Rofi                               |
+| Файловый  | Yazi, Thunar                       |
+| Tmux      | TPM + Resurrect                    |
 
-## Управление
+## Управление темами
+
+Переключение: `Mod1 + Shift + T` (через Rofi)
+
+Или вручную:
 
 ```bash
-make help      # Помощь
-make install   # Создать symlink
-make sync      # Update + install
-make lint      # Проверка кода
+~/.dotfiles/scripts/theme-manager.py gruvbox
 ```
 
 ## Темы
@@ -43,41 +51,41 @@ make lint      # Проверка кода
 
 ### Hyprland (Mod1 = Win)
 
-| Клавиши | Действие |
-|---------|----------|
-| `Mod1 + Enter` | Терминал |
-| `Mod1 + C` | Закрыть окно |
-| `Mod1 + H/J/K/L` | Навигация |
-| `Mod1 + 1-9` | Рабочие столы |
-| `Mod1 + Shift + T` | Смена темы |
+| Клавиши            | Действие      |
+| ------------------ | ------------- |
+| `Mod1 + Enter`     | Терминал      |
+| `Mod1 + C`         | Закрыть окно  |
+| `Mod1 + H/J/K/L`   | Навигация     |
+| `Mod1 + 1-9`       | Рабочие столы |
+| `Mod1 + Shift + T` | Смена темы    |
 
 ### Neovim (Leader = Space)
 
-| Клавиши | Действие |
-|---------|----------|
-| `Space + e` | Проводник |
+| Клавиши     | Действие    |
+| ----------- | ----------- |
+| `Space + e` | Проводник   |
 | `Space + f` | Поиск файла |
-| `Space + /` | Grep |
-| `Space + b` | Буферы |
-| `Space + g` | Git |
+| `Space + /` | Grep        |
+| `Space + b` | Буферы      |
+| `Space + g` | Git         |
 
 ### Tmux (Prefix = Ctrl+A)
 
-| Клавиши | Действие |
-|---------|----------|
-| `Ctrl+A + \|` | Вертикальный сплит |
-| `Ctrl+A + -` | Горизонтальный сплит |
-| `Ctrl+A + H/J/K/L` | Навигация |
-| `Ctrl+A + I` | Плагины |
+| Клавиши            | Действие             |
+| ------------------ | -------------------- |
+| `Ctrl+A + \|`      | Вертикальный сплит   |
+| `Ctrl+A + -`       | Горизонтальный сплит |
+| `Ctrl+A + H/J/K/L` | Навигация            |
+| `Ctrl+A + I`       | Плагины              |
 
 ## Структура
 
 ```
 ~/.dotfiles/
-├── install.sh          # Установщик
-├── Makefile            # Управление
 ├── scripts/
-│   └── pre-commit-check.sh  # Проверки
+│   ├── theme-manager.py     # Менеджер тем
+│   ├── theme-selector.sh    # Выбор темы (Rofi)
+│   └── wallpaper-selector.sh # Выбор обоев (Rofi)
 └── .config/
     ├── hypr/           # Hyprland
     ├── nvim/           # Neovim
@@ -95,3 +103,23 @@ make lint      # Проверка кода
 
 1. **Tmux плагины**: Откройте tmux, нажмите `Ctrl+A + I`
 2. **Neovim плагины**: Запустите `nvim` (авто-установка)
+
+## GTK-темы
+
+GTK-темы устанавливаются вручную (скрипт не скачивает их автоматически).
+
+### Установка
+
+```bash
+# Gruvbox - https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme
+git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git ~/.themes/Gruvbox
+cd ~/.themes/Gruvbox/themes
+./install.sh
+
+# Catppuccin - https://github.com/Fausto-Korpsvart/Catppuccin-GTK-Theme
+git clone https://github.com/Fausto-Korpsvart/Catppuccin-GTK-Theme.git ~/.themes/Catppuccin
+cd ~/.themes/Catppuccin/themes
+./install.sh
+```
+
+После установки тема применится автоматически при переключении через `theme-manager.py`.

@@ -59,3 +59,10 @@ themes/palettes/current.toml
 
 # ── Lazy.nvim lock file (optional - commit if you want pinned versions) ─
 # .config/nvim/lazy-lock.json
+
+# Wallpapers (user content)
+# wallpapers/original/
+# wallpapers/cache/
+
+# Generated wallpapers (auto-generated)
+# wallpapers/generated/

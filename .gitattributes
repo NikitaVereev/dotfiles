@@ -7,7 +7,6 @@
 
 # ── Shell Scripts (executable) ─────────────────────────────────────────────────
 *.sh                    text eol=lf executable
-install.sh              text eol=lf executable
 scripts/*.sh            text eol=lf executable
 
 # ── Config Files (LF line endings) ─────────────────────────────────────────────
