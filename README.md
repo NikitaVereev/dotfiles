@@ -82,10 +82,25 @@ stow -t ~ .
 
 ```
 ~/.dotfiles/
+├── .gitignore
+├── .editorconfig
+├── .prettierrc
+├── README.md
 ├── scripts/
-│   ├── theme-manager.py     # Менеджер тем
-│   ├── theme-selector.sh    # Выбор темы (Rofi)
-│   └── wallpaper-selector.sh # Выбор обоев (Rofi)
+│   ├── theme-manager.py        # Orchestrator
+│   ├── theme-selector.sh       # Rofi → theme manager
+│   ├── wallpaper-selector.sh   # Rofi → wallpaper apply
+│   ├── check-themes.sh         # Verify theme state
+│   └── theme_lib/              # Python library
+│       ├── config.py           #   Paths + logging
+│       ├── colors.py           #   Color utilities
+│       ├── templates.py        #   Template engine
+│       ├── gtk.py              #   GTK theme apply
+│       ├── hot_reload.py       #   App signal handlers
+│       └── wallpapers.py       #   gowall wrapper
+├── themes/
+│   ├── palettes/               # Color palettes (TOML)
+│   └── templates/              # Jinja2-style templates (.j2)
 └── .config/
     ├── hypr/           # Hyprland
     ├── nvim/           # Neovim

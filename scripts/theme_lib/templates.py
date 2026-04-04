@@ -1,8 +1,12 @@
 """Template rendering for config files."""
 
 import re
-import tomllib
 from pathlib import Path
+
+try:
+    import tomllib
+except ImportError:
+    import tomli as tomllib  # pip install tomli (Python < 3.11)
 
 from theme_lib.config import PALETTES_DIR, TEMPLATES_DIR, DOTFILES_DIR, CONFIG_DIR
 

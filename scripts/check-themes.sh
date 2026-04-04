@@ -1,268 +1,163 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# Theme Check Script
-# Проверяет корректность применения тем ко всем приложениям
+# Theme Checker — verifies theme is correctly applied to all applications
 # Usage: check-themes.sh [theme-name]
 # ═══════════════════════════════════════════════════════════════════════════════
 
-set -uo pipefail
+set -euo pipefail
 
-# Colors
-C="\033[0;36m"
-G="\033[0;32m"
-R="\033[0;31m"
-Y="\033[1;33m"
-N="\033[0m"
-
-# Counters
+# ── Config ─────────────────────────────────────────────────────────────────────
+# Auto-detect dotfiles directory from this script's location
+DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+THEME="${1:-gruvbox}"
+CONFIG_DIR="$HOME/.config"
 PASS=0
 FAIL=0
 WARN=0
 
-# Theme name (default: gruvbox)
-THEME="${1:-gruvbox}"
+# ── Helpers ────────────────────────────────────────────────────────────────────
+pass()  { printf '\033[0;32m✓\033[0m %s\n' "$1"; ((PASS++)) || true; }
+fail()  { printf '\033[0;31m✗\033[0m %s\n' "$1"; ((FAIL++)) || true; }
+warn()  { printf '\033[1;33m!\033[0m %s\n' "$1"; ((WARN++)) || true; }
+section() { printf '\n\033[0;36m▶\033[0m %s\n' "$1"; }
 
-# Config directory
-CONFIG_DIR="$HOME/.config"
-DOTFILES_DIR="$HOME/.dotfiles"
-
-# Helper functions
-pass() { echo -e "${G}✓${N} $1"; ((PASS++)); }
-fail() { echo -e "${R}✗${N} $1"; ((FAIL++)); }
-warn() { echo -e "${Y}!${N} $1"; ((WARN++)); }
-section() { echo -e "\n${C}▶${N} $1"; }
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# CHECK FUNCTIONS
-# ═══════════════════════════════════════════════════════════════════════════════
-
+# ── Checks ─────────────────────────────────────────────────────────────────────
 check_symlink() {
-    local app="$1"
-    local file="$2"
-    local expected="$3"
-    
+    local app="$1" file="$2" expected="$3"
     if [[ ! -L "$file" ]]; then
-        fail "$app: $file is not a symlink"
-        return 1
+        fail "$app: not a symlink"
+        return
     fi
-    
     local target
     target=$(readlink "$file")
     if [[ "$target" == "$expected" ]]; then
         pass "$app: symlink → $target"
-        return 0
     else
         fail "$app: symlink → $target (expected: $expected)"
-        return 1
     fi
 }
 
-check_file_exists() {
-    local app="$1"
-    local file="$2"
-    
+check_file() {
+    local app="$1" file="$2"
     if [[ -f "$file" ]]; then
-        pass "$app: $file exists"
-        return 0
+        pass "$app: file exists"
     else
-        fail "$app: $file not found"
-        return 1
+        fail "$app: not found — $file"
     fi
 }
 
-check_no_unreplaced_vars() {
-    local app="$1"
-    local file="$2"
-    
-    if [[ ! -f "$file" ]]; then
-        return 1
-    fi
-    
-    if grep -qE "\{\{.*\}\}" "$file"; then
+check_no_unreplaced() {
+    local app="$1" file="$2"
+    [[ -f "$file" ]] || return
+    if grep -qE '\{\{[^}]*\}\}' "$file"; then
         local count
-        count=$(grep -oE "\{\{.*\}\}" "$file" | wc -l)
-        fail "$app: $file has $count unreplaced variables"
-        return 1
+        count=$(grep -oE '\{\{[^}]*\}\}' "$file" | wc -l)
+        fail "$app: $count unreplaced template variables"
     else
-        pass "$app: $file has no unreplaced variables"
-        return 0
+        pass "$app: no unreplaced variables"
     fi
 }
 
-check_gruvbox_colors() {
-    local app="$1"
-    local file="$2"
-    local pattern="$3"
-    
-    if [[ ! -f "$file" ]]; then
-        return 1
-    fi
-    
-    if grep -qE "$pattern" "$file"; then
-        pass "$app: $file has Gruvbox colors"
-        return 0
-    else
-        fail "$app: $file missing Gruvbox colors"
-        return 1
-    fi
-}
+# ── App definitions ────────────────────────────────────────────────────────────
+# Format: "app_name  ext  config_subdir"
+# Symlink:  ~/.config/<subdir>/themes/current.<ext> → <theme>.<ext>
+# Source:   <dotfiles>/.config/<subdir>/themes/<theme>.<ext>
+APPS=(
+    "Hyprland   conf  hypr"
+    "Waybar     css   waybar"
+    "Kitty      conf  kitty"
+    "Rofi       rasi  rofi"
+    "Starship   toml  starship"
+    "SwayNC     css   swaync"
+    "Tmux       conf  tmux"
+    "Yazi       toml  yazi"
+)
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# MAIN CHECKS
-# ═══════════════════════════════════════════════════════════════════════════════
+# ── Main ───────────────────────────────────────────────────────────────────────
+printf '\033[0;36m╔════════════════════════════════════════════╗\033[0m\n'
+printf '\033[0;36m║     Theme Check — %-16s            ║\033[0m\n' "$THEME"
+printf '\033[0;36m╚════════════════════════════════════════════╝\033[0m\n'
 
-echo -e "${C}╔════════════════════════════════════════════╗${N}"
-echo -e "${C}║     Theme Check - $THEME                   ║${N}"
-echo -e "${C}╚════════════════════════════════════════════╝${N}"
+# Check all themed apps
+for spec in "${APPS[@]}"; do
+    read -r app ext subdir <<< "$spec"
+    section "$app"
 
-# ── Hyprland ───────────────────────────────────────────────────────────────────
-section "Hyprland"
-check_symlink "Hyprland" "$CONFIG_DIR/hypr/themes/current.conf" "${THEME}.conf"
-check_file_exists "Hyprland" "$DOTFILES_DIR/.config/hypr/themes/${THEME}.conf"
-check_no_unreplaced_vars "Hyprland" "$CONFIG_DIR/hypr/themes/current.conf"
+    local_dotfiles="$DOTFILES_DIR/.config/$subdir/themes/${THEME}.${ext}"
+    local_config="$CONFIG_DIR/$subdir/themes/current.${ext}"
 
-# ── Waybar ─────────────────────────────────────────────────────────────────────
-section "Waybar"
-check_symlink "Waybar" "$CONFIG_DIR/waybar/themes/current.css" "${THEME}.css"
-check_file_exists "Waybar" "$DOTFILES_DIR/.config/waybar/themes/${THEME}.css"
-check_no_unreplaced_vars "Waybar" "$CONFIG_DIR/waybar/themes/current.css"
-check_gruvbox_colors "Waybar" "$CONFIG_DIR/waybar/themes/current.css" "bg0.*282828|fg.*ebdbb2"
-
-# ── Kitty ──────────────────────────────────────────────────────────────────────
-section "Kitty"
-check_symlink "Kitty" "$CONFIG_DIR/kitty/themes/current.conf" "${THEME}.conf"
-check_file_exists "Kitty" "$DOTFILES_DIR/.config/kitty/themes/${THEME}.conf"
-check_no_unreplaced_vars "Kitty" "$CONFIG_DIR/kitty/themes/current.conf"
-check_gruvbox_colors "Kitty" "$CONFIG_DIR/kitty/themes/current.conf" "background.*282828|foreground.*ebdbb2"
+    check_symlink  "$app" "$local_config" "${THEME}.${ext}"
+    check_file     "$app" "$local_dotfiles"
+    check_no_unreplaced "$app" "$local_config"
+done
 
 # ── Neovim ─────────────────────────────────────────────────────────────────────
 section "Neovim"
-check_file_exists "Neovim" "$CONFIG_DIR/nvim/themes/current_theme"
-if [[ -f "$CONFIG_DIR/nvim/themes/current_theme" ]]; then
-    content=$(cat "$CONFIG_DIR/nvim/themes/current_theme")
+nvim_theme_file="$CONFIG_DIR/nvim/themes/current_theme"
+if [[ -f "$nvim_theme_file" ]]; then
+    content=$(cat "$nvim_theme_file")
     if [[ "$content" == "$THEME" ]]; then
-        pass "Neovim: current_theme = $THEME"
+        pass "current_theme = $THEME"
     else
-        fail "Neovim: current_theme = $content (expected: $THEME)"
+        fail "current_theme = $content (expected: $THEME)"
     fi
-fi
-check_file_exists "Neovim" "$CONFIG_DIR/nvim/lua/plugins/colorschemes.lua"
-if grep -q "ellisonleao/gruvbox.nvim" "$CONFIG_DIR/nvim/lua/plugins/colorschemes.lua"; then
-    pass "Neovim: gruvbox.nvim plugin configured"
 else
-    warn "Neovim: gruvbox.nvim plugin not found in colorschemes.lua"
+    fail "current_theme file not found"
 fi
-
-# ── Rofi ───────────────────────────────────────────────────────────────────────
-section "Rofi"
-check_symlink "Rofi" "$CONFIG_DIR/rofi/themes/current.rasi" "${THEME}.rasi"
-check_file_exists "Rofi" "$DOTFILES_DIR/.config/rofi/themes/${THEME}.rasi"
-check_no_unreplaced_vars "Rofi" "$CONFIG_DIR/rofi/themes/current.rasi"
-check_gruvbox_colors "Rofi" "$CONFIG_DIR/rofi/themes/current.rasi" "background.*282828|foreground.*ebdbb2"
-
-# ── Starship ───────────────────────────────────────────────────────────────────
-section "Starship"
-check_symlink "Starship" "$CONFIG_DIR/starship/themes/current.toml" "${THEME}.toml"
-check_file_exists "Starship" "$DOTFILES_DIR/.config/starship/themes/${THEME}.toml"
-check_no_unreplaced_vars "Starship" "$CONFIG_DIR/starship/themes/current.toml"
-
-# ── SwayNC ─────────────────────────────────────────────────────────────────────
-section "SwayNC"
-check_symlink "SwayNC" "$CONFIG_DIR/swaync/themes/current.css" "${THEME}.css"
-check_file_exists "SwayNC" "$DOTFILES_DIR/.config/swaync/themes/${THEME}.css"
-check_no_unreplaced_vars "SwayNC" "$CONFIG_DIR/swaync/themes/current.css"
-
-# ── Tmux ───────────────────────────────────────────────────────────────────────
-section "Tmux"
-check_symlink "Tmux" "$CONFIG_DIR/tmux/themes/current.conf" "${THEME}.conf"
-check_file_exists "Tmux" "$DOTFILES_DIR/.config/tmux/themes/${THEME}.conf"
-check_no_unreplaced_vars "Tmux" "$CONFIG_DIR/tmux/themes/current.conf"
-
-# ── Yazi ───────────────────────────────────────────────────────────────────────
-section "Yazi"
-check_symlink "Yazi" "$CONFIG_DIR/yazi/themes/current.toml" "${THEME}.toml"
-check_file_exists "Yazi" "$DOTFILES_DIR/.config/yazi/themes/${THEME}.toml"
-check_no_unreplaced_vars "Yazi" "$CONFIG_DIR/yazi/themes/current.toml"
 
 # ── GTK ────────────────────────────────────────────────────────────────────────
 section "GTK"
 if command -v gsettings &>/dev/null; then
-    gtk_theme=$(gsettings get org.gnome.desktop.interface gtk-theme 2>/dev/null || echo "not set")
-    if [[ "$gtk_theme" == *"${THEME}"* ]] || [[ "$gtk_theme" == *"Gruvbox"* ]]; then
-        pass "GTK: theme = $gtk_theme"
+    gtk_theme=$(gsettings get org.gnome.desktop.interface gtk-theme 2>/dev/null | tr -d "'" || echo "not set")
+    gtk_lower="${gtk_theme,,}"
+    theme_lower="${THEME,,}"
+    if [[ "$gtk_lower" == *"${theme_lower}"* ]]; then
+        pass "GTK theme = $gtk_theme"
     else
-        warn "GTK: theme = $gtk_theme (expected: *${THEME}* or *Gruvbox*)"
+        warn "GTK theme = $gtk_theme (expected: *${THEME}*)"
     fi
 else
-    warn "GTK: gsettings not available"
+    warn "gsettings not available"
 fi
 
-check_file_exists "GTK" "$HOME/.config/gtk-3.0/settings.ini"
-if [[ -f "$HOME/.config/gtk-3.0/settings.ini" ]]; then
-    if grep -q "gtk-theme-name=${THEME}" "$HOME/.config/gtk-3.0/settings.ini" || \
-       grep -q "gtk-theme-name=Gruvbox" "$HOME/.config/gtk-3.0/settings.ini"; then
-        pass "GTK 3.0: config correct"
-    else
-        warn "GTK 3.0: theme not set to $THEME or Gruvbox"
-    fi
+gtk3_ini="$HOME/.config/gtk-3.0/settings.ini"
+if [[ -f "$gtk3_ini" ]] && grep -q "gtk-theme-name=" "$gtk3_ini"; then
+    pass "GTK 3.0 config exists"
+else
+    warn "GTK 3.0 config missing"
 fi
 
-# ── Theme Palette ──────────────────────────────────────────────────────────────
-section "Theme Palette"
-check_file_exists "Palette" "$DOTFILES_DIR/themes/palettes/${THEME}.toml"
-if [[ -f "$DOTFILES_DIR/themes/palettes/${THEME}.toml" ]]; then
-    if grep -q "gruvbox\|Gruvbox" "$DOTFILES_DIR/themes/palettes/${THEME}.toml"; then
-        pass "Palette: ${THEME}.toml is Gruvbox"
-    else
-        warn "Palette: ${THEME}.toml may not be Gruvbox"
-    fi
-fi
-
+# ── Palette ────────────────────────────────────────────────────────────────────
+section "Palette"
+check_file "Palette" "$DOTFILES_DIR/themes/palettes/${THEME}.toml"
 check_symlink "Palette" "$DOTFILES_DIR/themes/palettes/current.toml" "${THEME}.toml"
 
-# ── Theme Scripts ──────────────────────────────────────────────────────────────
-section "Theme Scripts"
-check_file_exists "Script" "$DOTFILES_DIR/scripts/theme-manager.py"
+# ── Scripts ────────────────────────────────────────────────────────────────────
+section "Scripts"
 if [[ -x "$DOTFILES_DIR/scripts/theme-manager.py" ]]; then
     pass "theme-manager.py is executable"
 else
-    warn "theme-manager.py is not executable"
+    warn "theme-manager.py not executable"
 fi
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# SUMMARY
-# ═══════════════════════════════════════════════════════════════════════════════
-
+# ── Summary ────────────────────────────────────────────────────────────────────
 echo ""
-echo -e "${C}════════════════════════════════════════${N}"
-echo -e "  ${G}Passed${N}:   $PASS"
-echo -e "  ${Y}Warnings${N}:  $WARN"
-echo -e "  ${R}Failed${N}:    $FAIL"
-echo -e "${C}════════════════════════════════════════${N}"
+printf '\033[0;36m════════════════════════════════════════\033[0m\n'
+printf '  \033[0;32mPassed\033[0m:   %d\n' "$PASS"
+printf '  \033[1;33mWarnings\033[0m:  %d\n' "$WARN"
+printf '  \033[0;31mFailed\033[0m:    %d\n' "$FAIL"
+printf '\033[0;36m════════════════════════════════════════\033[0m\n'
 
 if [[ $FAIL -gt 0 ]]; then
     echo ""
-    echo -e "${R}✗ FAILED${N} - Some checks failed!"
-    echo ""
-    echo "To fix:"
-    echo "  1. Run: ~/.dotfiles/scripts/theme-manager.py $THEME"
-    echo "  2. Re-run: ~/.dotfiles/scripts/check-themes.sh"
-    echo ""
+    printf '\033[0;31m✗ FAILED\033[0m — Fix with: theme-manager.py %s\n' "$THEME"
     exit 1
 elif [[ $WARN -gt 0 ]]; then
     echo ""
-    echo -e "${Y}⚠ PASSED (with warnings)${N}"
-    echo ""
-    echo "Optional fixes:"
-    echo "  - Review warnings above"
-    echo "  - Run: ~/.dotfiles/scripts/theme-manager.py $THEME"
-    echo ""
+    printf '\033[1;33m⚠ PASSED (with warnings)\033[0m\n'
     exit 0
 else
     echo ""
-    echo -e "${G}✓ PASSED${N} - All checks passed!"
-    echo ""
-    echo "Theme '$THEME' is correctly applied to all applications."
-    echo ""
+    printf '\033[0;32m✓ PASSED\033[0m — Theme '\''%s'\'' correctly applied\n' "$THEME"
     exit 0
 fi

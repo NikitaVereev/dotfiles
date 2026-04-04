@@ -1,151 +1,130 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# Theme Selector - Rofi Menu for Theme Selection
+# Theme Selector — Rofi menu for theme switching
 # Usage: theme-selector.sh
 # ═══════════════════════════════════════════════════════════════════════════════
 
 set -euo pipefail
 
-# Config
-DOTFILES_DIR="$HOME/.dotfiles"
+# ── Config ─────────────────────────────────────────────────────────────────────
+# Auto-detect dotfiles directory from this script's location
+DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PALETTES_DIR="$DOTFILES_DIR/themes/palettes"
 THEME_MANAGER="$DOTFILES_DIR/scripts/theme-manager.py"
 SCRIPT_NAME="Theme Selector"
 
-# Colors
-C="\033[0;36m"
-G="\033[0;32m"
-R="\033[0;31m"
-N="\033[0m"
+# ── Helpers ────────────────────────────────────────────────────────────────────
+log_info() { printf '\033[0;36m→\033[0m %s\n' "$1"; }
+log_ok()   { printf '\033[0;32m✓\033[0m %s\n' "$1"; }
+log_err()  { printf '\033[0;31m✗\033[0m %s\n' "$1"; }
 
-log_info() { echo -e "${C}→${N} $1"; }
-log_ok() { echo -e "${G}✓${N} $1"; }
-log_err() { echo -e "${R}✗${N} $1"; }
-
-# ── Get Available Themes ───────────────────────────────────────────────────────
+# ── Theme listing ──────────────────────────────────────────────────────────────
 get_themes() {
-    find "$PALETTES_DIR" -maxdepth 1 -name "*.toml" -type f \
-        | sed 's|.*/||' \
-        | sed 's|\.toml$||' \
-        | grep -v '^current$' \
-        | sort
+    # Portable: no GNU find -printf
+    for f in "$PALETTES_DIR"/*.toml; do
+        [[ -f "$f" ]] || continue
+        local base
+        base="${f##*/}"
+        base="${base%.toml}"
+        [[ "$base" != "current" ]] && echo "$base"
+    done | sort
 }
 
-# ── Get Theme Description ──────────────────────────────────────────────────────
-get_theme_description() {
-    local theme="$1"
-    local palette_file="$PALETTES_DIR/$theme.toml"
-    
+get_theme_name() {
+    # Read human-readable name from palette TOML
+    local palette_file="$PALETTES_DIR/$1.toml"
     if [[ -f "$palette_file" ]]; then
-        # Read name from TOML
-        grep '^name = ' "$palette_file" | sed 's/name = "//' | sed 's/"$//'
-    else
-        echo "$theme"
+        sed -n 's/^name = "\(.*\)"/\1/p' "$palette_file"
     fi
 }
 
-# ── Build Rofi Menu ────────────────────────────────────────────────────────────
-build_menu() {
-    local themes
-    themes=$(get_themes)
-    
-    # Get current theme
-    local current_theme=""
+get_current_theme() {
     if [[ -L "$PALETTES_DIR/current.toml" ]]; then
-        current_theme=$(readlink "$PALETTES_DIR/current.toml" | sed 's/.toml//')
+        readlink "$PALETTES_DIR/current.toml" | sed 's/\.toml$//'
     fi
-    
-    while IFS= read -r theme; do
-        local desc
-        desc=$(get_theme_description "$theme")
-        
-        # Add marker for current theme
-        if [[ "$theme" == "$current_theme" ]]; then
-            echo -e "${theme}\t${desc} ✓ (current)"
-        else
-            echo -e "${theme}\t${desc}"
-        fi
-    done <<< "$themes"
 }
 
-# ── Show Rofi Menu ─────────────────────────────────────────────────────────────
+# ── Build and show Rofi menu ───────────────────────────────────────────────────
 show_menu() {
-    local menu_items
-    menu_items=$(build_menu)
-    
-    # Create temporary file for menu
-    local tmp_file
-    tmp_file=$(mktemp)
-    
-    echo "$menu_items" > "$tmp_file"
-    
-    # Show Rofi
+    local current
+    current=$(get_current_theme)
+
+    # Build menu lines: "<theme>\t<description> [✓ (current)]"
+    local menu
+    menu=$(
+        while IFS= read -r theme; do
+            local desc
+            desc=$(get_theme_name "$theme")
+            if [[ "$theme" == "$current" ]]; then
+                printf '%s\t%s ✓ (current)\n' "$theme" "$desc"
+            else
+                printf '%s\t%s\n' "$theme" "$desc"
+            fi
+        done < <(get_themes)
+    )
+
+    # Show menu and capture selection
     local choice
-    choice=$(cat "$tmp_file" | rofi -dmenu \
-        -i \
-        -p "󰔯  Select Theme" \
-        -theme-str 'window { width: 600px; }' \
-        -theme-str 'listview { lines: 10; }' \
-        -theme-str 'element-text { horizontal-align: 0.0; }' \
-        2>/dev/null)
-    
-    rm -f "$tmp_file"
-    
-    if [[ -n "$choice" ]]; then
-        # Extract theme name (first field before tab)
-        local theme_name
-        theme_name=$(echo "$choice" | cut -f1 | tr -d ' ')
+    choice=$(
+        echo "$menu" | rofi -dmenu \
+            -i \
+            -p "󰔯  Select Theme" \
+            -theme-str 'window { width: 600px; }' \
+            -theme-str 'listview { lines: 10; }' \
+            -theme-str 'element-text { horizontal-align: 0.0; }' \
+            2>/dev/null
+    ) || return 0
 
-        if [[ -n "$theme_name" ]]; then
-            apply_theme "$theme_name"
-        fi
-    fi
-}
+    # Extract theme name (first column) and validate
+    local theme
+    theme=$(echo "$choice" | cut -f1 | tr -d ' ')
 
-# ── Apply Theme ────────────────────────────────────────────────────────────────
-apply_theme() {
-    local theme="$1"
-    
-    log_info "Applying theme: $theme"
-    
-    # Check if theme exists
-    if [[ ! -f "$PALETTES_DIR/$theme.toml" ]]; then
-        log_err "Theme '$theme' not found!"
-        notify-send "$SCRIPT_NAME" "Theme '$theme' not found!" -u critical
+    # Validate: only alphanumeric, hyphens, underscores
+    if [[ ! "$theme" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+        log_err "Invalid theme name: '$theme'"
         return 1
     fi
-    
-    # Apply theme using theme-manager.py
-    if "$THEME_MANAGER" "$theme" 2>&1; then
-        log_ok "Theme '$theme' applied successfully!"
-        notify-send "$SCRIPT_NAME" "Theme '$theme' applied successfully!" -i preferences-desktop-theme
+
+    if [[ ! -f "$PALETTES_DIR/$theme.toml" ]]; then
+        log_err "Theme '$theme' not found"
+        notify-send "$SCRIPT_NAME" "Theme '$theme' not found" -u critical
+        return 1
+    fi
+
+    apply_theme "$theme"
+}
+
+# ── Apply theme ────────────────────────────────────────────────────────────────
+apply_theme() {
+    local theme="$1"
+    log_info "Applying theme: $theme"
+
+    if "$THEME_MANAGER" "$theme"; then
+        log_ok "Theme '$theme' applied"
+        notify-send "$SCRIPT_NAME" "Theme '$theme' applied" -i preferences-desktop-theme
     else
         log_err "Failed to apply theme '$theme'"
-        notify-send "$SCRIPT_NAME" "Failed to apply theme '$theme'" -u critical
+        notify-send "$SCRIPT_NAME" "Failed to apply '$theme'" -u critical
         return 1
     fi
 }
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 main() {
-    # Check if theme-manager.py exists
     if [[ ! -x "$THEME_MANAGER" ]]; then
-        log_err "theme-manager.py not found or not executable!"
-        notify-send "$SCRIPT_NAME" "theme-manager.py not found!" -u critical
+        log_err "theme-manager.py not found or not executable"
+        notify-send "$SCRIPT_NAME" "theme-manager.py not found" -u critical
         exit 1
     fi
-    
-    # Check if themes exist
-    local theme_count
-    theme_count=$(get_themes | wc -l)
-    
-    if [[ "$theme_count" -eq 0 ]]; then
+
+    local count
+    count=$(get_themes | wc -l)
+    if [[ "$count" -eq 0 ]]; then
         log_err "No themes found in $PALETTES_DIR"
-        notify-send "$SCRIPT_NAME" "No themes found!" -u critical
+        notify-send "$SCRIPT_NAME" "No themes found" -u critical
         exit 1
     fi
-    
-    # Show menu
+
     show_menu
 }
 

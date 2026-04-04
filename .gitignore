@@ -61,8 +61,9 @@ themes/palettes/current.toml
 # .config/nvim/lazy-lock.json
 
 # Wallpapers (user content)
-# wallpapers/original/
-# wallpapers/cache/
+wallpapers/original/
+wallpapers/cache/
 
 # Generated wallpapers (auto-generated)
-# wallpapers/generated/
+wallpapers/generated/
+__pycache__/

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # =============================================================================
 # Volume Control Script (PipeWire/wireplumber)
 # Uses wpctl (modern PipeWire control tool)

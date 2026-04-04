@@ -22,9 +22,6 @@ scripts/*.sh            text eol=lf executable
 # ── Markdown ───────────────────────────────────────────────────────────────────
 *.md                    text eol=lf
 
-# ── Makefile ───────────────────────────────────────────────────────────────────
-Makefile                text eol=lf
-
 # ── Dotfiles ───────────────────────────────────────────────────────────────────
 .zshrc                  text eol=lf
 .gitignore              text eol=lf
