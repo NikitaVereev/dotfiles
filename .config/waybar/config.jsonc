@@ -22,8 +22,6 @@
   "group/right1": {
     "orientation": "inherit",
     "modules": [
-      "tray",
-      "custom/separator#dot",
       "hyprland/language",
       "pulseaudio",
       "bluetooth",
