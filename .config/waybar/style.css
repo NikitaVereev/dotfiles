@@ -211,6 +211,7 @@ window#waybar.empty #window {
    ПРАВЫЕ МОДУЛИ
 ───────────────────────────────────────────── */
 #pulseaudio,
+#custom-mic,
 #bluetooth,
 #network,
 #language,
@@ -221,8 +222,13 @@ window#waybar.empty #window {
   color: @fg;
 }
 
-#pulseaudio.muted {
+#pulseaudio.muted,
+#custom-mic.muted {
   color: alpha(@fg, 0.4);
+}
+
+#pulseaudio.bluetooth {
+  color: alpha(@fg, 0.85);
 }
 
 #tray {

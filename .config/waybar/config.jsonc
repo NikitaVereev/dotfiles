@@ -25,6 +25,7 @@
       "tray",
       "custom/separator#dot",
       "hyprland/language",
+      "custom/mic",
       "pulseaudio",
       "bluetooth",
       "network",
@@ -132,14 +133,31 @@
 
   "pulseaudio": {
     "format": "{icon} {volume}%",
+    "format-bluetooth": " {volume}%",
+    "format-usb": " {volume}%",
+    "format-hdmi": "󰍾 {volume}%",
+    "format-muted": "󰝟 {volume}%",
     "on-click": "pavucontrol",
-    "on-click-right": "pamixer -t",
-    "tooltip-format": "Playing at {volume}%",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "tooltip-format": "{icon} {desc}\n{volume}% · {format_source}",
     "scroll-step": 5,
-    "format-muted": "󰝟",
     "format-icons": {
-      "default": ["󰕾", "󰖀", "󰕾"]
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["󰕿", "󰖀", "󰕾"]
     }
+  },
+
+  "custom/mic": {
+    "exec": "~/.config/waybar/scripts/mic.sh",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+    "on-click-right": "pavucontrol",
+    "return-type": "json",
+    "interval": 2
   },
 
   "tray": {
