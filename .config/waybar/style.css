@@ -1,22 +1,5 @@
 @import "themes/current.css";
 
-* {
-  border: none;
-  border-radius: 1px;
-  min-height: 0;
-  font-family: "JetBrainsMono Nerd Font Propo";
-  font-size: 13px;
-  transition: background-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.modules-left {
-  margin-left: 8px;
-}
-
-.modules-right {
-  margin-right: 8px;
-}@import "themes/current.css";
-
 /* ─────────────────────────────────────────────
    BASE
 ───────────────────────────────────────────── */
@@ -56,7 +39,7 @@ window#waybar.empty #window {
 }
 
 /* ─────────────────────────────────────────────
-   ГРУППЫ
+   GROUPS
 ───────────────────────────────────────────── */
 #group-center3,
 #group_center3,
@@ -64,84 +47,86 @@ window#waybar.empty #window {
 #group-center2,
 #group_center2,
 #center2 {
-  font-weight: 600;
-  background: alpha(@fg, 0.07);
-  border-radius: 10px;
-  padding: 0 10px;
-  margin: 4px 3px;
-  border: 1px solid alpha(@fg, 0.06);
+  font-weight: 800;
+  background: alpha(@fg, 0.1);
+  border-radius: 12px;
+  padding: 0px 8px;
+  margin: 3.5px 2px;
+  color: @fg;
 }
 
 #group-right1,
 #group_right1,
 #right1 {
-  font-weight: 600;
+  font-weight: 800;
   background: transparent;
-  padding: 0 6px;
-  margin: 4px 2px;
+  padding: 0px 8px;
+  margin: 3.5px 2px;
+  color: @fg;
 }
 
 /* ─────────────────────────────────────────────
-   РАБОЧИЕ СТОЛЫ
+   WORKSPACES
 ───────────────────────────────────────────── */
 #workspaces {
-  padding: 0 6px;
-  border-radius: 10px;
+  padding: 0 8px;
+  border-radius: 8px;
   margin: 4px 6px;
-  background-color: alpha(@fg, 0.07);
-  border: 1px solid alpha(@fg, 0.06);
+  background-color: alpha(@fg, 0.1);
+  opacity: 0.95;
 }
 
 #workspaces button {
-  color: alpha(@fg, 0.6);
-  padding: 0 5px;
-  margin: 0 1px;
-  min-width: 10px;
-  border-radius: 8px;
+  color: @fg;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+  border-radius: 18px;
   transition:
-    background-color 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    color 0.15s ease,
-    opacity 0.15s ease;
+    background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 0.3s ease,
+    opacity 0.3s ease;
 }
 
 #workspaces button.empty {
-  color: alpha(@fg, 0.3);
+  color: @fg;
+  opacity: 0.5;
 }
 
 #workspaces button.active {
-  border-radius: 8px;
+  border-radius: 18px;
   color: @panel_bg;
-  background: alpha(@fg, 0.88);
-  margin: 3px 2px;
+  background: alpha(@fg, 0.9);
+  opacity: 1;
+  margin: 4px 5px;
   padding: 0 7px;
   transition:
-    background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    color 0.2s ease;
-}
-
-#workspaces button:hover {
-  background-color: alpha(@fg, 0.12);
-  color: @fg;
+    background-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    color 0.3s ease,
+    opacity 1s ease;
 }
 
 #workspaces button.active:hover {
   background-color: alpha(@fg, 0.95);
 }
 
+#workspaces button:hover {
+  background-color: alpha(@fg, 0.15);
+}
+
 #workspaces button.empty:hover {
-  background-color: alpha(@fg, 0.08);
-  color: alpha(@fg, 0.5);
+  background-color: alpha(@fg, 0.1);
+  opacity: 0.8;
 }
 
 /* ─────────────────────────────────────────────
-   КАСТОМНЫЕ МОДУЛИ
+   CUSTOM MODULES
 ───────────────────────────────────────────── */
 #custom-hypr {
-  background: alpha(@fg, 0.07);
-  border: 1px solid alpha(@fg, 0.06);
-  border-radius: 10px;
-  margin: 4px 4px 4px 2px;
-  padding: 0 8px;
+  background: alpha(@fg, 0.1);
+  border-radius: 8px;
+  margin: 4px 5px 4px 2px;
+  padding: 0 7px;
   color: @fg;
 }
 
@@ -150,12 +135,11 @@ window#waybar.empty #window {
 }
 
 #custom-window {
-  margin: 4px 3px;
-  padding: 0 10px;
-  border-radius: 10px;
-  background: alpha(@fg, 0.07);
-  border: 1px solid alpha(@fg, 0.06);
-  font-size: 12px;
+  margin: 3.5px 2px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: alpha(@fg, 0.1);
+  font-size: 13px;
   color: alpha(@fg, 0.8);
 }
 
@@ -168,35 +152,30 @@ window#waybar.empty #window {
   opacity: 0;
   margin: 0;
   padding: 0;
-  min-width: 0;
 }
 
 /* ─────────────────────────────────────────────
-   СИСТЕМНЫЕ МОДУЛИ
+   SYSTEM MODULES
 ───────────────────────────────────────────── */
 #cpu,
 #memory {
-  font-size: 18px;
-  padding: 1px 2px;
+  font-size: 19px;
+  padding: 2px 1px;
   color: alpha(@fg, 0.85);
 }
 
 #clock {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.01em;
   color: @fg;
 }
 
 #battery {
-  margin: 0 4px;
+  margin: 0 6px;
   color: @fg;
 }
 
-#battery.warning {
-  color: #e8a44a;
-}
-
+#battery.warning { color: #e8a44a; }
 #battery.critical {
   color: #e05c5c;
   animation: blink 1.2s ease-in-out infinite alternate;
@@ -208,7 +187,7 @@ window#waybar.empty #window {
 }
 
 /* ─────────────────────────────────────────────
-   ПРАВЫЕ МОДУЛИ
+   RIGHT MODULES
 ───────────────────────────────────────────── */
 #pulseaudio,
 #custom-mic,
@@ -236,24 +215,18 @@ window#waybar.empty #window {
   color: @fg;
 }
 
-#tray > * {
-  padding: 0 3px;
-}
+#tray > * { padding: 0 3px; }
 
 /* ─────────────────────────────────────────────
-   MPRIS (Music player)
+   MPRIS
 ───────────────────────────────────────────── */
-#mpris {
-  color: @fg;
-}
+#mpris { color: @fg; }
 
 /* ─────────────────────────────────────────────
    SEPARATORS
 ───────────────────────────────────────────── */
 #custom-separator#dot,
-#custom-separator#blank {
-  color: @fg;
-}
+#custom-separator#blank { color: @fg; }
 
 /* ─────────────────────────────────────────────
    LANGUAGE
@@ -264,22 +237,7 @@ window#waybar.empty #window {
 }
 
 /* ─────────────────────────────────────────────
-   GROUPS
-───────────────────────────────────────────── */
-#group-center3,
-#group_center3,
-#center3,
-#group-center2,
-#group_center2,
-#center2,
-#group-right1,
-#group_right1,
-#right1 {
-  color: @fg;
-}
-
-/* ─────────────────────────────────────────────
-   ТУЛТИПЫ
+   TOOLTIPS
 ───────────────────────────────────────────── */
 tooltip {
   background: alpha(@panel_bg, 0.97);
@@ -292,153 +250,4 @@ tooltip label {
   color: @fg;
   font-size: 12px;
   padding: 2px 6px;
-}
-
-window#waybar {
-  background-color: @panel_bg;
-  transition-property: background-color;
-  transition-duration: 0.5s;
-  border-radius: 12px;
-}
-
-window#waybar.empty #window {
-  background: transparent;
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
-  color: transparent;
-  padding: 0;
-  margin: 0;
-}
-
-#workspaces {
-  padding: 0 8px;
-  border-radius: 8px;
-  margin: 4px 6px;
-  background-color: alpha(@fg, 0.1);
-  opacity: 0.95;
-}
-
-#workspaces button {
-  color: @fg;
-  padding: 0 6px;
-  margin: 0 1.5px;
-  min-width: 9px;
-  border-radius: 18px;
-  transition:
-    background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    color 0.3s ease,
-    opacity 0.3s ease;
-}
-
-#workspaces button.empty {
-  color: @fg;
-  opacity: 0.5;
-}
-
-#workspaces button.active {
-  transition:
-    background-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    color 0.3s ease,
-    opacity 1s ease;
-  border-radius: 18px;
-  color: @panel_bg;
-  background: alpha(@fg, 0.9);
-  opacity: 1;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  margin-left: 5px;
-  padding-right: 5px;
-  padding-left: 5px;
-}
-
-#workspaces button.active:hover {
-  background-color: alpha(@fg, 0.95);
-}
-
-#workspaces button:hover {
-  background-color: alpha(@fg, 0.15);
-}
-
-#workspaces button.empty:hover {
-  background-color: alpha(@fg, 0.1);
-  opacity: 0.8;
-}
-
-#pulseaudio,
-#bluetooth,
-#network,
-#language,
-#custom-update {
-  margin: 0 6px;
-}
-
-#clock {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-#battery {
-  margin: 0 6px;
-}
-
-tooltip {
-  background: @panel_bg;
-  border: 1px solid alpha(@fg, 0.2);
-  border-radius: 4px 4px 11px 11px;
-}
-tooltip label {
-  color: white;
-}
-
-#custom-hypr {
-  background: alpha(@fg, 0.1);
-  border-radius: 8px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  margin-right: 5px;
-  padding-right: 7px;
-  padding-left: 7px;
-}
-
-#custom-update.hidden {
-  opacity: 0;
-  margin: 0;
-  padding: 0;
-}
-
-#cpu,
-#memory {
-  font-size: 19px;
-  padding: 2px 1px;
-}
-
-#group-right1,
-#group_right1,
-#right1 {
-  font-weight: 800;
-  background: transparent;
-  padding: 0px 8px;
-  margin: 3.5px 2px;
-}
-
-#group-center3,
-#group_center3,
-#center3,
-#group-center2,
-#group_center2,
-#center2 {
-  font-weight: 800;
-  background: alpha(@fg, 0.1);
-  border-radius: 12px;
-  padding: 0px 8px;
-  margin: 3.5px 2px;
-}
-
-#custom-window {
-  margin: 3.5px 2px;
-  padding: 0px 8px;
-  border-radius: 8px;
-  background: alpha(@fg, 0.1);
-  font-size: 13px;
 }

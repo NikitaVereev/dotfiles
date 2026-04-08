@@ -167,31 +167,34 @@ show_menu() {
     generate_thumbnails "$theme"
 
     # Build rofi input with optional icons
-    {
-        for ext in "${IMAGE_EXTS[@]}"; do
-            for img in "$src"/*"$ext"; do
-                [[ -f "$img" ]] || continue
-                local base="${img##*/}"
-                local name="${base%.*}"
-                local thumb="$CACHE_DIR/$theme/${name}.png"
+    local menu=""
+    for ext in "${IMAGE_EXTS[@]}"; do
+        for img in "$src"/*"$ext"; do
+            [[ -f "$img" ]] || continue
+            local base="${img##*/}"
+            local name="${base%.*}"
+            local thumb="$CACHE_DIR/$theme/${name}.png"
+            if [[ -f "$thumb" ]]; then
+                menu+=$(printf '%s\x00icon\x1f%s\n' "$name" "$thumb")
+            else
+                menu+=$(printf '%s\n' "$name")
+            fi
+        done
+    done
 
-                if [[ -f "$thumb" ]]; then
-                    printf '%s\x00icon\x1f%s\n' "$name" "$thumb"
-                else
-                    printf '%s\n' "$name"
-                fi
-            done
-        done
-    } | rofi -dmenu \
-        -i \
-        -p "🖼️  Select Wallpaper" \
-        -theme-str 'window { width: 800px; height: 600px; }' \
-        -theme-str 'listview { columns: 4; lines: 5; }' \
-        -theme-str 'element-icon { size: 180px; }' \
-        -theme-str 'element-text { horizontal-align: 0.5; }' \
-        2>/dev/null | while IFS= read -r choice; do
-            [[ -n "$choice" ]] && apply_wallpaper "$theme" "$choice"
-        done
+    local choice
+    choice=$(
+        printf '%s' "$menu" | rofi -dmenu \
+            -i \
+            -p "🖼️  Select Wallpaper" \
+            -theme-str 'window { width: 800px; height: 600px; }' \
+            -theme-str 'listview { columns: 4; lines: 5; }' \
+            -theme-str 'element-icon { size: 180px; }' \
+            -theme-str 'element-text { horizontal-align: 0.5; }' \
+            2>/dev/null
+    ) || return 0
+
+    [[ -n "$choice" ]] && apply_wallpaper "$theme" "$choice"
 }
 
 # ── Main ───────────────────────────────────────────────────────────────────────

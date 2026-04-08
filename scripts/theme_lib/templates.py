@@ -15,7 +15,7 @@ def render_template(template_content: str, context: dict) -> str:
     """Simple template renderer supporting {{ variable }} syntax."""
     result = template_content
     for key, value in context.items():
-        result = result.replace(f"{{{{ {key} }}}}", value)
+        result = result.replace(f"{{{{ {key} }}}}", str(value))
     return result
 
 

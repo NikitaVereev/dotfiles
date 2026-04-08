@@ -183,13 +183,13 @@
 
   "custom/separator#blank": {
     "format": " ",
-    "interval": "once",
+    "interval": 1,
     "tooltip": false
   },
 
   "custom/separator#dot": {
     "format": " ",
-    "interval": "once",
+    "interval": 1,
     "tooltip": false
   },
 

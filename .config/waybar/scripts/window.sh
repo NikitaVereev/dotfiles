@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-command -v jq &>/dev/null || { echo '{"text":"jq missing","class":"window error"}'; exit 1; }
+command -v jq &>/dev/null || { echo '{"text":"jq missing","class":"window error"}'; exit 0; }
 
 active=$(hyprctl activewindow -j 2>/dev/null) || exit 0
 

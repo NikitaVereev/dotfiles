@@ -8,8 +8,8 @@ SINK="@DEFAULT_AUDIO_SINK@"
 SOURCE="@DEFAULT_AUDIO_SOURCE@"
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
-get_vol() { wpctl get-volume "$1" | awk '{print int($2 * 100)}'; }
-is_muted() { wpctl get-volume "$1" | grep -q MUTED; }
+get_vol() { wpctl get-volume "$1" 2>/dev/null | awk '{print int($2 * 100)}' || echo 0; }
+is_muted() { wpctl get-volume "$1" 2>/dev/null | grep -q MUTED; }
 
 notify() {
     local vol="$1" muted="$2" icon_prefix="$3" title="$4"
@@ -24,7 +24,7 @@ notify() {
         icon="${icon_prefix}-low"
     fi
     notify-send -t 1500 -u low -i "$icon" "$title: ${vol}%" \
-        "$([[ "$muted" == true ]] && echo Muted || echo Unmuted)"
+        "$([[ "$muted" == true ]] && echo Muted || echo Unmuted)" || true
 }
 
 # ── Main ──────────────────────────────────────────────────────────────────────

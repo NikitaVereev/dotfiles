@@ -17,9 +17,11 @@ autoload -Uz compinit && compinit
 # Wayland
 export MOZ_ENABLE_WAYLAND=1
 
-# Plugins
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Plugins (Arch: /usr/share/zsh/plugins/; Debian/Fedora: different paths)
+[[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
+    source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \
+    source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Keybinds
 bindkey '^e' autosuggest-accept
@@ -58,8 +60,8 @@ alias cl="clear"
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-fcd() { cd "$(find . -type d -not -path '*/.*' | fzf)"; }
-fv() { nvim "$(find . -type f -not -path '*/.*' | fzf)"; }
+fcd() { cd "$(fd -t d --hidden --exclude '.*' . | fzf)"; }
+fv() { nvim "$(fd -t f --hidden --exclude '.*' . | fzf)"; }
 
 # Tools
 eval "$(zoxide init zsh)"

@@ -91,7 +91,8 @@ def main() -> int:
         log_info(f"Loading palette: {theme_name}")
         palette = load_palette(theme_name)
         context = flatten_colors(palette)
-        log_ok(f"Loaded {palette['meta']['name']}")
+        name = palette.get("meta", {}).get("name", theme_name.title())
+        log_ok(f"Loaded {name}")
 
         # Generate configs
         print()
@@ -130,7 +131,7 @@ def main() -> int:
         # Apply GTK theme (theme must be installed manually)
         print()
         log_info("GTK: Applying theme...")
-        apply_gtk_settings(theme_name)
+        apply_gtk_settings(theme_name, palette)
 
         # Set Neovim theme name
         print()

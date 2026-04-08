@@ -20,10 +20,6 @@ indent_size = 4
 indent_style = space
 indent_size = 4
 
-# Makefile
-[Makefile]
-indent_style = tab
-
 # JSON
 [*.json]
 indent_style = space

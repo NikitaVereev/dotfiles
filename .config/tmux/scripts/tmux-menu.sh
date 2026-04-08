@@ -7,7 +7,7 @@ set -euo pipefail
 		echo "▼ $session"
 		tmux list-windows -t "$session" -F '  ⦿ #S:#I #W'
 	done
-} | fzf --reverse | while IFS= read -r choice; do
+} | fzf --reverse || true | while IFS= read -r choice; do
     # Extract target: after ▼/⦿ take the second field
     target="${choice#* }"
     [[ -n "$target" ]] && tmux switch-client -t "$target"

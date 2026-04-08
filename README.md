@@ -43,7 +43,7 @@ stow -t ~ .
 
 ## Темы
 
-5 тем: **oxocarbon** (default), catppuccin, everforest, kanagawa, bloodmoon
+2 темы: **gruvbox** (default), catppuccin
 
 Переключение: `Mod1 + Shift + T`
 

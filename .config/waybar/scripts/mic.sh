@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 state=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null)
 vol_raw=$(echo "$state" | grep -oE '[0-9]+\.[0-9]+' | head -1)

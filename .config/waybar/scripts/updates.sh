@@ -17,6 +17,7 @@ count_updates() {
 # ── Cache (secure: XDG_RUNTIME_DIR, per-user, no symlink attacks) ─────────────
 CACHE_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 CACHE_FILE="$CACHE_DIR/waybar-updates"
+mkdir -p "$CACHE_DIR" 2>/dev/null || true
 
 # Re-check every 30 minutes
 if [[ -f "$CACHE_FILE" ]] && [[ $(find "$CACHE_FILE" -mmin -30) ]]; then

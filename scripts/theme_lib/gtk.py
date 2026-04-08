@@ -3,7 +3,6 @@
 import subprocess
 
 from theme_lib.config import HOME_DIR, log_info, log_ok, log_warn, log_err
-from theme_lib.templates import load_palette
 
 # Mapping of theme names → installed GTK theme names
 GTK_THEME_NAMES = {
@@ -15,7 +14,7 @@ GTK_THEME_NAMES = {
 GTK_APPS = ["nwg-look", "nwg-drawer", "thunar", "gnome-control-center"]
 
 
-def apply_gtk_settings(theme_name: str) -> None:
+def apply_gtk_settings(theme_name: str, palette: dict) -> None:
     """Apply GTK theme via gsettings, config files, and Xresources."""
 
     theme_display_name = GTK_THEME_NAMES.get(theme_name, theme_name.title())
@@ -61,10 +60,10 @@ def apply_gtk_settings(theme_name: str) -> None:
     log_ok("GTK 4.0: Config created")
 
     # ── Xresources (legacy apps) ────────────────────────────────────────
-    _apply_xresources(theme_name)
+    _apply_xresources(theme_name, palette)
 
 
-def _apply_xresources(theme_name: str) -> None:
+def _apply_xresources(theme_name: str, palette: dict) -> None:
     """Update ~/.Xresources with current theme colors and apply via xrdb."""
     xresources = HOME_DIR / ".Xresources"
     try:
@@ -81,7 +80,6 @@ def _apply_xresources(theme_name: str) -> None:
         else:
             content = ""
 
-        palette = load_palette(theme_name)
         colors = palette.get("colors", {})
         base = colors.get("base", {})
         bg = base.get("bg0", "282828").replace("#", "")
