@@ -12,7 +12,8 @@ fi
 if echo "$state" | grep -q MUTED; then
     printf '{"text":"","tooltip":"Микрофон выключен","class":"muted"}\n'
 else
-    desc=$(wpctl inspect @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | grep -m1 'description' | sed 's/.*= "\([^"]*\)"/\1/')
+    # Берём именно node.description, а не profile.description
+    desc=$(wpctl inspect @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | grep -m1 'node.description' | sed 's/.*= "\([^"]*\)"/\1/')
     [[ -z "$desc" ]] && desc="Microphone"
     printf '{"text":"","tooltip":"Mic: %s%% — %s","class":"unmuted"}\n' "$vol" "$desc"
 fi
