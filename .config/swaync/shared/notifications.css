@@ -1,141 +1,228 @@
-/* Structural styles for floating notifications.
-   Requires color variables defined in themes/current.css:
-   @background, @background-alt, @text, @selected, @hover, @urgent */
+/* ─────────────────────────────────────────────
+   FLOATING NOTIFICATIONS
+───────────────────────────────────────────── */
 
-* {
-  color: @text;
-
-  all: unset;
-  font-size: 14px;
-  font-family: "JetBrainsMono Nerd Font Propo";
-  transition: 200ms;
+.floating-notifications {
+  background: transparent;
 }
+
+.floating-notifications .notification {
+  box-shadow: none;
+}
+
+/* ── Notification Row ─────────────────────── */
 
 .notification-row {
+  background: transparent;
   outline: none;
-  margin: 0;
-  padding: 0px;
+  transition: opacity 0.2s ease-in-out;
 }
 
-.floating-notifications.background .notification-row .notification-background {
+.notification-row:focus {
+  background: none;
+}
+
+.notification-row .notification-background {
+  padding: 6px 12px;
+  background: transparent;
+}
+
+/* ── Notification Card ────────────────────── */
+
+.notification-row .notification-background .notification {
+  border-radius: 20px;
+  border: none;
+  padding: 0;
   background: alpha(@background, 0.55);
-  border: 1px solid @selected;
-  border-radius: 24px;
-  margin: 16px;
+  box-shadow:
+    0 0 0 1px alpha(@text, 0.08),
+    0 2px 8px 2px alpha(@background, 0.3);
+}
+
+.notification-row .notification-background .notification.critical {
+  box-shadow:
+    0 0 0 1px @urgent,
+    0 2px 8px 2px alpha(@urgent, 0.2);
+}
+
+/* ── Default Action (Main Content) ────────── */
+
+.notification-row .notification-background .notification .notification-default-action {
+  padding: 0;
+  margin: 0;
+  background: alpha(@background, 0.45);
+  border: none;
+  color: @text;
+  border-radius: 20px;
+}
+
+.notification-row .notification-background .notification .notification-default-action:hover {
+  background: alpha(@background, 0.55);
+}
+
+.notification-row .notification-background .notification .notification-default-action:not(:only-child) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content {
+  background: alpha(@background, 0.45);
+  border-radius: 20px;
+  padding: 8px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .image {
+  -gtk-icon-filter: none;
+  -gtk-icon-size: 64px;
+  border-radius: 100px;
+  margin: 2px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .app-icon {
+  -gtk-icon-filter: none;
+  -gtk-icon-size: 22px;
+  -gtk-icon-shadow: 0 1px 4px alpha(@background, 0.8);
+  margin: 6px;
+}
+
+/* ── Text Content ─────────────────────────── */
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box label {
+  filter: none;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary {
+  font-size: 16px;
+  font-weight: bold;
+  color: @text;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
+  font-size: 13px;
+  color: alpha(@text, 0.5);
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .body {
+  font-size: 14px;
+  color: @text;
+  margin-top: 2px;
+}
+
+/* ── Actions & Reply ──────────────────────── */
+
+.notification-row .notification-background .notification .notification-action {
+  margin: 4px;
   padding: 0;
 }
 
-.floating-notifications.background
-  .notification-row
-  .notification-background
-  .notification {
+.notification-row .notification-background .notification .notification-action > button {
+  border-radius: 16px;
+  color: @text;
+  background: alpha(@selected, 0.2);
   padding: 6px;
-  border-radius: 14px;
 }
 
-.floating-notifications.background
-  .notification-row
-  .notification-background
-  .notification.critical {
-  border: 2px solid @urgent;
-}
-
-.floating-notifications.background
-  .notification-row
-  .notification-background
-  .notification
-  .notification-content {
-  margin: 14px;
-}
-
-.floating-notifications.background
-  .notification-row
-  .notification-background
-  .notification
-  > *:last-child
-  > * {
-  min-height: 3.4em;
-}
-
-.floating-notifications.background
-  .notification-row
-  .notification-background
-  .notification
-  > *:last-child
-  > *
-  .notification-action {
-  border-radius: 8px;
-  background-color: @background-alt;
-  margin: 6px;
-  border: 1px solid transparent;
-}
-
-.floating-notifications.background
-  .notification-row
-  .notification-background
-  .notification
-  > *:last-child
-  > *
-  .notification-action:hover {
-  background-color: @hover;
-  border: 1px solid @selected;
-}
-
-.floating-notifications.background
-  .notification-row
-  .notification-background
-  .notification
-  > *:last-child
-  > *
-  .notification-action:active {
-  background-color: @selected;
+.notification-row .notification-background .notification .notification-action > button:hover {
+  background: @selected;
   color: @background;
 }
 
-.image {
-  margin: 10px 20px 10px 0px;
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply {
+  margin-top: 4px;
 }
 
-.summary {
-  font-weight: 800;
-  font-size: 1rem;
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-entry {
+  background: alpha(@background, 0.3);
+  color: @text;
+  caret-color: @text;
+  border: none;
+  border-radius: 16px;
 }
 
-.body {
-  font-size: 0.8rem;
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button {
+  margin-left: 4px;
+  background: alpha(@selected, 0.3);
+  border: none;
+  border-radius: 16px;
+  color: @text;
 }
 
-.floating-notifications.background
-  .notification-row
-  .notification-background
-  .close-button {
-  margin: 6px;
-  padding: 2px;
-  border-radius: 8px;
-  background-color: transparent;
-  border: 1px solid transparent;
-}
-
-.floating-notifications.background
-  .notification-row
-  .notification-background
-  .close-button:hover {
-  background-color: @selected;
-}
-
-.floating-notifications.background
-  .notification-row
-  .notification-background
-  .close-button:active {
-  background-color: @selected;
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button:hover {
+  background: @selected;
   color: @background;
 }
 
-.notification.critical progress {
-  background-color: @selected;
+.notification-row .notification-background .notification .notification-alt-actions {
+  background: none;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 4px;
 }
 
-.notification.low progress,
-.notification.normal progress {
-  background-color: @selected;
+/* ── Close Button ─────────────────────────── */
+
+.close-button {
+  background: alpha(@text, 0.15);
+  color: @text;
+  padding: 0;
+  border-radius: 100%;
+  margin-top: 5px;
+  margin-right: 8px;
+  box-shadow: none;
+  border: none;
+  min-width: 22px;
+  min-height: 22px;
+}
+
+.close-button:hover {
+  background: alpha(@selected, 0.6);
+}
+
+/* ── Notification Groups ──────────────────── */
+
+.notification-group {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.notification-group:focus {
+  background: none;
+}
+
+.notification-group .notification-group-close-button .close-button {
+  margin: 12px 16px;
+}
+
+.notification-group .notification-group-buttons,
+.notification-group .notification-group-headers {
+  margin: 0 14px;
+  color: @text;
+  border-radius: 16px;
+}
+
+.notification-group .notification-group-headers .notification-group-icon {
+  color: @text;
+  -gtk-icon-size: 28px;
+}
+
+.notification-group .notification-group-headers .notification-group-header {
+  color: @text;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.notification-group.collapsed {
+  background: transparent;
+}
+
+.notification-group.collapsed.not-expanded {
+  opacity: 0.45;
+}
+
+.notification-group.collapsed .notification-row:not(:last-child) {
+  filter: blur(1.5px);
+}
+
+.notification-group.collapsed .notification-row:not(:last-child) .notification-action,
+.notification-group.collapsed .notification-row:not(:last-child) .notification-default-action {
+  opacity: 0;
 }

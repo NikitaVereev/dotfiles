@@ -1,278 +1,273 @@
-/* Structural styles for the control center.
-   Requires color variables defined in themes/current.css:
-   @background, @background-alt, @background-sec, @text, @selected, @hover, @urgent */
-
-/* Avoid 'annoying' background */
-.blank-window {
-  background: transparent;
-}
-
-/* CONTROL CENTER ------------------------------------------------------------------------ */
+/* ─────────────────────────────────────────────
+   CONTROL CENTER BASE
+───────────────────────────────────────────── */
 
 .control-center {
-  background: alpha(@background, 0.55);
+  background: alpha(@background, 0.65);
   border-radius: 24px;
-  border: 1px solid @selected;
-  margin: 18px;
-  padding: 12px;
+  border: 1px solid alpha(@selected, 0.2);
+  margin: 8px;
+  padding: 10px;
 }
 
-/* Notifications  */
-.control-center .notification-row .notification-background,
-.control-center
-  .notification-row
-  .notification-background
-  .notification.critical {
-  background-color: @background-alt;
-  border-radius: 14px;
-  margin: 4px 0px;
+.control-center .control-center-list-placeholder {
+  opacity: 0.5;
+  color: alpha(@text, 0.6);
+}
+
+.control-center .control-center-list {
+  background: transparent;
+}
+
+.control-center .control-center-list .notification {
+  box-shadow:
+    0 0 0 1px alpha(@text, 0.06),
+    0 1px 3px 1px alpha(@background, 0.4),
+    0 2px 6px 2px alpha(@background, 0.2);
+}
+
+.control-center .control-center-list .notification .notification-default-action,
+.control-center .control-center-list .notification .notification-action {
+  transition: background 0.15s ease-in-out;
+}
+
+.control-center .notification-row .notification-background {
+  background: alpha(@background-alt, 0.3);
+  border-radius: 16px;
+  margin: 3px 0;
   padding: 4px;
 }
-
-.control-center
-  .notification-row
-  .notification-background
-  .notification.critical {
-  color: @urgent;
-}
-
-.control-center
-  .notification-row
-  .notification-background
-  .notification
-  .notification-content {
-  margin: 6px;
-  padding: 8px 6px 2px 2px;
-}
-
-.control-center
-  .notification-row
-  .notification-background
-  .notification
-  > *:last-child
-  > * {
-  min-height: 3.4em;
-}
-
-.control-center
-  .notification-row
-  .notification-background
-  .notification
-  > *:last-child
-  > *
-  .notification-action {
-  background: alpha(@selected, 0.6);
-  color: @text;
-  border-radius: 8px;
-  margin: 6px;
-}
-
-.control-center
-  .notification-row
-  .notification-background
-  .notification
-  > *:last-child
-  > *
-  .notification-action:hover {
-  background: @selected;
-}
-
-.control-center
-  .notification-row
-  .notification-background
-  .notification
-  > *:last-child
-  > *
-  .notification-action:active {
-  background-color: @selected;
-}
-
-/* Buttons */
 
 .control-center .notification-row .notification-background .close-button {
-  background: transparent;
-  border-radius: 8px;
+  background: alpha(@text, 0.12);
   color: @text;
-  margin: 0px;
-  padding: 4px;
+  border-radius: 100%;
+  padding: 0;
+  margin: 2px;
 }
 
 .control-center .notification-row .notification-background .close-button:hover {
-  background-color: @selected;
+  background: @selected;
+  color: @background;
 }
 
-.control-center
-  .notification-row
-  .notification-background
-  .close-button:active {
-  background-color: @selected;
-}
+/* ── WIDGETS (Shared) ─────────────────────── */
 
-progressbar,
-progress,
-trough {
-  border-radius: 8px;
-}
-
-progressbar {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Notifications expanded-group */
-
-.notification-group {
-  margin: 2px 8px 2px 8px;
-}
-.notification-group-headers {
+.widget {
+  padding: 4px 10px;
+  border-radius: 20px;
   font-weight: bold;
-  font-size: 1.25rem;
-  color: @text;
-  letter-spacing: 2px;
 }
 
-.notification-group-icon {
-  color: @text;
-}
-
-.notification-group-collapse-button,
-.notification-group-close-all-button {
-  background: transparent;
-  color: @text;
-  margin: 4px;
-  border-radius: 8px;
-  padding: 4px;
-}
-
-.notification-group-collapse-button:hover,
-.notification-group-close-all-button:hover {
-  background: @hover;
-}
-
-/* WIDGETS --------------------------------------------------------------------------- */
-
-/* Notification clear button */
+/* 1. Title Widget */
 .widget-title {
-  font-size: 1.2em;
+  font-size: 1.1em;
   margin: 6px;
+  color: @text;
 }
 
-.widget-title button {
+.widget-title > button {
+  border-radius: 16px;
   background: @background-alt;
-  border-radius: 8px;
-  padding: 4px 16px;
+  padding: 6px 20px;
+  color: @text;
+  box-shadow:
+    0 1px 2px alpha(@background, 0.3);
+  transition: transform 0.2s ease, background 0.15s ease;
 }
 
-.widget-title button:hover {
-  background-color: @hover;
+.widget-title > button:hover {
+  transform: translateY(-1px) scale(1.03);
+  background: @selected;
+  color: @background;
 }
 
-.widget-title button:active {
-  background-color: @selected;
+/* 2. Buttons Grid Widget */
+.widget-buttons-grid {
+  margin: 6px;
+  border-radius: 16px;
+  background: alpha(@background-alt, 0.5);
+  padding: 8px;
 }
 
-/* Do not disturb */
+.widget-buttons-grid flowbox {
+  padding: 0 4px;
+}
+
+.widget-buttons-grid flowbox > flowboxchild > button {
+  padding: 8px 0;
+  margin: 4px;
+  border-radius: 14px;
+  background: alpha(@background, 0.4);
+  color: @text;
+  font-size: 1.2em;
+  border: 1px solid alpha(@text, 0.08);
+  box-shadow:
+    inset 0 1px 1px alpha(@text, 0.05),
+    0 1px 2px alpha(@background, 0.2);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.widget-buttons-grid flowbox > flowboxchild > button:hover {
+  transform: translateY(-1px) scale(1.04);
+  background: alpha(@selected, 0.4);
+}
+
+.widget-buttons-grid flowbox > flowboxchild > button:checked {
+  background: @selected;
+  color: @background;
+  box-shadow:
+    inset 0 1px 2px alpha(@background, 0.3);
+}
+
+/* 3. Volume & Backlight Widgets */
+.widget-volume,
+.widget-backlight {
+  margin: 6px;
+  padding: 10px;
+  background: alpha(@background-alt, 0.5);
+  border-radius: 16px;
+  color: @text;
+  font-size: 1em;
+}
+
+.widget-volume row image,
+.widget-backlight row image {
+  -gtk-icon-size: 22px;
+}
+
+.widget-volume trough,
+.widget-backlight trough {
+  background: alpha(@text, 0.15);
+  border-radius: 10px;
+  min-height: 8px;
+  box-shadow: 0 1px 2px alpha(@background, 0.2);
+}
+
+.widget-volume progress,
+.widget-backlight progress {
+  background: @selected;
+  border-radius: 10px;
+  min-height: 8px;
+}
+
+.widget-volume slider,
+.widget-backlight slider {
+  background: @text;
+  min-height: 16px;
+  min-width: 16px;
+  border-radius: 50%;
+  margin: -4px;
+  box-shadow: 0 1px 3px alpha(@background, 0.4);
+}
+
+.widget-volume label,
+.widget-backlight label {
+  font-size: 1.1rem;
+}
+
+.per-app-volume {
+  background-color: alpha(@background, 0.4);
+  margin: 6px;
+  border-radius: 14px;
+}
+
+/* 4. MPRIS Widget */
+.widget-mpris {
+  margin: 10px 6px;
+  border-radius: 20px;
+  background: alpha(@background-alt, 0.5);
+  padding: 0;
+}
+
+.widget-mpris .widget-mpris-player {
+  border-radius: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.widget-mpris .widget-mpris-player .mpris-background {
+  filter: blur(8px);
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay {
+  padding: 14px;
+  background: alpha(@background, 0.6);
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay button:hover {
+  background: alpha(@selected, 0.3);
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
+  border-radius: 14px;
+  box-shadow: 0 2px 8px alpha(@background, 0.5);
+  -gtk-icon-size: 96px;
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: @text;
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-subtitle {
+  font-weight: normal;
+  font-size: 0.9rem;
+  color: alpha(@text, 0.8);
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button {
+  border-radius: 50%;
+  box-shadow: 0 1px 3px alpha(@background, 0.3);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:hover {
+  transform: translateY(-1px) scale(1.05);
+  background: alpha(@selected, 0.3);
+}
+
+.widget-mpris > box > button {
+  border-radius: 14px;
+  color: @text;
+}
+
+/* 5. DND Widget */
 .widget-dnd {
   margin: 6px;
-  font-size: 1.2rem;
+  color: @text;
+  font-size: 0.95em;
 }
 
 .widget-dnd > switch {
-  background: @background-alt;
-  font-size: initial;
-  border-radius: 8px;
-  box-shadow: none;
-  padding: 2px;
-}
-
-.widget-dnd > switch:hover {
-  background: @hover;
+  background: alpha(@background-alt, 0.5);
+  border-radius: 14px;
+  padding: 3px;
+  min-width: 46px;
+  min-height: 24px;
 }
 
 .widget-dnd > switch:checked {
   background: @selected;
 }
 
-.widget-dnd > switch:checked:hover {
-  background: @hover;
-}
-
 .widget-dnd > switch slider {
   background: @text;
-  border-radius: 8px;
+  border-radius: 10px;
+  min-width: 18px;
+  min-height: 18px;
+  box-shadow: 0 1px 2px alpha(@background, 0.3);
 }
 
-/* Buttons menu */
-.widget-buttons-grid {
-  font-size: x-large;
-  padding: 6px 2px;
-  margin: 6px;
+/* 6. Inhibitors Widget */
+.widget-inhibitors > label {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+.widget-inhibitors > button {
+  margin-left: 8px;
   border-radius: 14px;
-  background: @background-alt;
-}
-
-.widget-buttons-grid > flowbox > flowboxchild > button {
-  margin: 4px 10px;
-  padding: 6px 12px;
-  background: transparent;
-  border-radius: 8px;
-}
-
-.widget-buttons-grid > flowbox > flowboxchild > button:hover {
-  background: @hover;
-}
-
-/* Music player */
-.widget-mpris {
-  background: @background-alt;
-  border-radius: 14px;
-  color: @text;
-  margin: 20px 6px;
-}
-
-/* NOTE: Background need *opacity 1* otherwise will turn into the album art blurred  */
-.widget-mpris-player {
-  background-color: @background-sec;
-  border-radius: 24px;
-  padding: 6px 14px;
-  margin: 6px;
-}
-
-.widget-mpris > box > button {
-  color: @text;
-  border-radius: 8px;
-}
-
-.widget-mpris button {
-  color: alpha(@text, 0.6);
-}
-
-.widget-mpris button:hover {
-  color: @text;
-}
-
-.widget-mpris-album-art {
-  border-radius: 14px;
-}
-
-.widget-mpris-title {
-  font-weight: 700;
-  font-size: 1rem;
-}
-
-.widget-mpris-subtitle {
-  font-weight: 500;
-  font-size: 0.8rem;
-}
-
-picture.mpris-background {
-  opacity: 0;
-}
-
-/* Volume */
-.widget-volume {
-  background: @background-sec;
-  color: @background;
-  padding: 4px;
-  margin: 6px;
-  border-radius: 8px;
+  background: alpha(@background-alt, 0.5);
 }
