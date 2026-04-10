@@ -1,0 +1,70 @@
+/* ─────────────────────────────────────────────
+   SwayOSD — Theme-aware OSD Indicators
+   Uses @define-color variables from your theme
+───────────────────────────────────────────── */
+
+@import "../swaync/themes/current.css";
+
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font Propo";
+  color: @text;
+}
+
+.osd-window {
+  background: alpha(@background, 0.7);
+  border: 1px solid alpha(@selected, 0.3);
+  border-radius: 20px;
+  padding: 14px 20px;
+  min-width: 200px;
+  box-shadow:
+    0 0 0 1px alpha(@text, 0.06),
+    0 4px 12px 2px alpha(@background, 0.4);
+}
+
+.osd-label {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: alpha(@text, 0.8);
+}
+
+.osd-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: @text;
+}
+
+.osd-value.muted {
+  color: @urgent;
+  text-decoration: line-through;
+}
+
+.osd-progressbar {
+  min-height: 6px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.osd-progressbar trough {
+  background: alpha(@text, 0.15);
+  border-radius: 6px;
+  min-height: 6px;
+}
+
+.osd-progressbar progress {
+  background: @selected;
+  border-radius: 6px;
+  min-height: 6px;
+}
+
+.osd-window > box > label:first-child {
+  /* Icon */
+  margin-right: 8px;
+  font-size: 22px;
+}
+
+.osd-window.caps-lock .osd-label,
+.osd-window.caps-lock .osd-value {
+  color: @selected;
+}
