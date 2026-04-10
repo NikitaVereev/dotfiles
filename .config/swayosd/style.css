@@ -1,70 +1,65 @@
-/* ─────────────────────────────────────────────
-   SwayOSD — Theme-aware OSD Indicators
-   Uses @define-color variables from your theme
-───────────────────────────────────────────── */
+/* SwayOSD Style - Gruvbox Dark */
 
-@import "../swaync/themes/current.css";
-
-* {
-  all: unset;
-  font-family: "JetBrainsMono Nerd Font Propo";
-  color: @text;
-}
-
-.osd-window {
-  background: alpha(@background, 0.7);
-  border: 1px solid alpha(@selected, 0.3);
+window#osd {
+  background-color: rgba(40, 40, 40, 0.85);
+  border: 1px solid rgba(235, 219, 178, 0.1);
   border-radius: 20px;
-  padding: 14px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  padding: 0;
+}
+
+#container {
+  margin: 16px 20px;
   min-width: 200px;
-  box-shadow:
-    0 0 0 1px alpha(@text, 0.06),
-    0 4px 12px 2px alpha(@background, 0.4);
+  color: #ebdbb2;
+  font-family: "JetBrainsMono Nerd Font Propo", sans-serif;
+  font-size: 14px;
 }
 
-.osd-label {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  color: alpha(@text, 0.8);
-}
-
-.osd-value {
-  font-size: 24px;
-  font-weight: 800;
-  color: @text;
-}
-
-.osd-value.muted {
-  color: @urgent;
-  text-decoration: line-through;
-}
-
-.osd-progressbar {
+/* Progress Bar */
+progressbar,
+segmentedprogress {
   min-height: 6px;
   border-radius: 6px;
+  background: rgba(235, 219, 178, 0.2);
   margin-top: 10px;
 }
 
-.osd-progressbar trough {
-  background: alpha(@text, 0.15);
-  border-radius: 6px;
-  min-height: 6px;
+trough,
+segment {
+  min-height: inherit;
+  border-radius: inherit;
+  background: rgba(235, 219, 178, 0.2);
 }
 
-.osd-progressbar progress {
-  background: @selected;
-  border-radius: 6px;
-  min-height: 6px;
+progress,
+segment.active {
+  min-height: inherit;
+  border-radius: inherit;
+  background: #98971a; /* Gruvbox Yellow */
 }
 
-.osd-window > box > label:first-child {
-  /* Icon */
+segment {
+  margin-left: 3px;
+}
+
+segment:first-child {
+  margin-left: 0;
+}
+
+/* Labels */
+label {
+  color: #ebdbb2;
+  font-weight: bold;
+}
+
+label.muted {
+  color: #cc241d; /* Gruvbox Red */
+  text-decoration: line-through;
+}
+
+/* Icon */
+image {
+  color: #ebdbb2;
   margin-right: 8px;
-  font-size: 22px;
-}
-
-.osd-window.caps-lock .osd-label,
-.osd-window.caps-lock .osd-value {
-  color: @selected;
 }
