@@ -65,6 +65,7 @@ NAMED_THEME_FILES = {
     "waybar": ("css", "waybar.css.j2"),
     "kitty": ("conf", "kitty.conf.j2"),
     "swaync": ("css", "swaync.css.j2"),
+    "swayosd": ("css", "swayosd.css.j2"),
     "starship": ("toml", "starship.toml.j2"),
     "rofi": ("rasi", "rofi.rasi.j2"),
     "tmux": ("conf", "tmux.conf.j2"),

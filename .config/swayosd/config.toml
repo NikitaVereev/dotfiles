@@ -1,0 +1,10 @@
+[server]
+style = "~/.config/swayosd/style.css"
+top_margin = 0.92
+max_volume = 150
+min_brightness = 10
+show_percentage = true
+playerctl_format = "{artist} - {title}"
+keyboard_backlight = true
+
+[client]

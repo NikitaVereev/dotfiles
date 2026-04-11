@@ -1,6 +1,7 @@
 """Hot-reload / signal logic for running applications."""
 
 import subprocess
+import time
 
 from theme_lib.config import CONFIG_DIR, HOME_DIR, log_info, log_ok, log_warn
 
@@ -56,6 +57,26 @@ def apply_swaync() -> bool:
         return True
     except Exception:
         return False
+
+
+def apply_swayosd() -> bool:
+    """Restart swayosd-server to pick up new CSS styles."""
+    try:
+        subprocess.run(["pkill", "-x", "swayosd-server"], capture_output=True)
+        time.sleep(0.3)
+        subprocess.Popen(
+            ["nohup", "swayosd-server"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+        time.sleep(0.5)
+        result = subprocess.run(["pgrep", "-x", "swayosd-server"], capture_output=True)
+        if result.stdout.strip():
+            return True
+    except Exception:
+        pass
+    return False
 
 
 def apply_tmux() -> bool:
@@ -126,6 +147,13 @@ def reload_all(theme_name: str) -> dict:
         log_ok("SwayNC: CSS reloaded")
     else:
         results["swaync"] = False
+
+    # SwayOSD (restart to pick up CSS)
+    if apply_swayosd():
+        results["swayosd"] = True
+        log_ok("SwayOSD: Restarted (CSS reloaded)")
+    else:
+        results["swayosd"] = False
 
     # Tmux
     if apply_tmux():

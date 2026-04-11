@@ -1,0 +1,76 @@
+@define-color bg #282828;
+@define-color bg_dim #1d2021;
+@define-color surface #504945;
+@define-color fg #ebdbb2;
+@define-color fg_dim #bdae93;
+@define-color accent #98971a;
+@define-color accent_alt #d79921;
+@define-color urgent #cc241d;
+
+window#osd {
+  border-radius: 999px;
+  border: none;
+  background: alpha(@bg, 0.78);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35),
+              inset 0 1px 0 alpha(@fg, 0.06);
+}
+
+#container {
+  margin: 14px 20px;
+  min-width: 240px;
+  font-family: "JetBrainsMono Nerd Font Propo", sans-serif;
+  font-size: 13px;
+}
+
+window#osd image {
+  color: @fg;
+  margin-right: 12px;
+  -gtk-icon-transform: scale(1.05);
+}
+
+window#osd label {
+  color: @fg;
+  font-weight: 500;
+}
+
+window#osd label.muted {
+  color: @urgent;
+  text-decoration: line-through;
+}
+
+window#osd progressbar:disabled,
+window#osd image:disabled {
+  opacity: 0.4;
+}
+
+window#osd progressbar,
+window#osd segmentedprogress {
+  min-height: 8px;
+  border-radius: 999px;
+  background: transparent;
+  border: none;
+}
+
+window#osd trough,
+window#osd segment {
+  min-height: inherit;
+  border-radius: inherit;
+  border: none;
+  background: alpha(@fg, 0.15);
+}
+
+window#osd progress,
+window#osd segment.active {
+  min-height: inherit;
+  border-radius: inherit;
+  border: none;
+  background: @accent;
+}
+
+window#osd segment {
+  margin-left: 6px;
+}
+
+window#osd segment:first-child {
+  margin-left: 0;
+}
