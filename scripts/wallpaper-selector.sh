@@ -166,8 +166,12 @@ show_menu() {
 
     generate_thumbnails "$theme"
 
-    # Build rofi input with optional icons
-    local menu=""
+    # Build wallpaper list with thumbnails via temp file
+    # Format: name\0icon\0x1f/path (rofi icon format)
+    local tmpfile
+    tmpfile=$(mktemp)
+    local has_items=false
+
     for ext in "${IMAGE_EXTS[@]}"; do
         for img in "$src"/*"$ext"; do
             [[ -f "$img" ]] || continue
@@ -175,25 +179,35 @@ show_menu() {
             local name="${base%.*}"
             local thumb="$CACHE_DIR/$theme/${name}.png"
             if [[ -f "$thumb" ]]; then
-                menu+=$(printf '%s\x00icon\x1f%s\n' "$name" "$thumb")
+                printf '%s\0icon\x1f%s\n' "$name" "$thumb" >> "$tmpfile"
             else
-                menu+=$(printf '%s\n' "$name")
+                printf '%s\n' "$name" >> "$tmpfile"
             fi
+            has_items=true
         done
     done
 
+    if [[ "$has_items" != "true" ]]; then
+        log_err "No wallpapers found"
+        rm -f "$tmpfile"
+        return 1
+    fi
+
     local choice
     choice=$(
-        printf '%s' "$menu" | rofi -dmenu \
+        rofi -dmenu \
             -i \
             -p "🖼️  Select Wallpaper" \
-            -theme-str 'window { width: 800px; height: 600px; }' \
-            -theme-str 'listview { columns: 4; lines: 5; }' \
-            -theme-str 'element-icon { size: 180px; }' \
-            -theme-str 'element-text { horizontal-align: 0.5; }' \
+            -show-icons \
+            -theme-str 'window { width: 600px; }' \
+            -theme-str 'listview { lines: 8; }' \
+            -theme-str 'element-icon { size: 120px; }' \
+            -theme-str 'element-text { horizontal-align: 0.0; padding: 8px; }' \
+            < "$tmpfile" \
             2>/dev/null
-    ) || return 0
+    ) || { rm -f "$tmpfile"; return 0; }
 
+    rm -f "$tmpfile"
     [[ -n "$choice" ]] && apply_wallpaper "$theme" "$choice"
 }
 

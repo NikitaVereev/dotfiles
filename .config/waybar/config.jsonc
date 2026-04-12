@@ -188,7 +188,7 @@
   },
 
   "custom/separator#dot": {
-    "format": " ",
+    "format": "  ",
     "interval": 1,
     "tooltip": false
   },
