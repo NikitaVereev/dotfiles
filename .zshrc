@@ -17,7 +17,7 @@ autoload -Uz compinit && compinit
 # Wayland
 export MOZ_ENABLE_WAYLAND=1
 
-# Plugins (Arch: /usr/share/zsh/plugins/; Debian/Fedora: different paths)
+# Plugins (/usr/share/zsh/plugins/)
 [[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && \
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && \

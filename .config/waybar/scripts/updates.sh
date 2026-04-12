@@ -1,17 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# ── Cross-distro package update counter ────────────────────────────────────────
+# ── Arch Linux package update counter ─────────────────────────────────────────
 count_updates() {
-    if command -v checkupdates &>/dev/null; then
-        (checkupdates 2>/dev/null || true) | wc -l
-    elif command -v apt &>/dev/null; then
-        (apt list --upgradable 2>/dev/null || true) | grep -c 'upgradable' || echo 0
-    elif command -v dnf &>/dev/null; then
-        (dnf check-update -q 2>/dev/null || true) | grep -cE '^[a-z]' || echo 0
-    else
-        echo 0
-    fi
+    (checkupdates 2>/dev/null || true) | wc -l
 }
 
 # ── Cache (secure: XDG_RUNTIME_DIR, per-user, no symlink attacks) ─────────────
