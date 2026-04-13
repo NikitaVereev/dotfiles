@@ -4,20 +4,14 @@ import subprocess
 
 from theme_lib.config import HOME_DIR, log_info, log_ok, log_warn, log_err
 
-# Mapping of theme names → installed GTK theme names
-GTK_THEME_NAMES = {
-    "gruvbox": "Gruvbox-Dark",
-    "catppuccin": "Catppuccin-Dark",
-}
-
-# GTK apps to restart after theme change
-GTK_APPS = ["nwg-look", "nwg-drawer", "thunar", "gnome-control-center"]
+# GTK apps to restart after theme change (Arch Linux)
+GTK_APPS = ["nwg-look", "nwg-drawer", "thunar"]
 
 
 def apply_gtk_settings(theme_name: str, palette: dict) -> None:
     """Apply GTK theme via gsettings, config files, and Xresources."""
 
-    theme_display_name = GTK_THEME_NAMES.get(theme_name, theme_name.title())
+    theme_display_name = theme_name.title() + "-Dark"
 
     # ── gsettings (GNOME/GTK3/GTK4) ─────────────────────────────────────
     try:
@@ -36,10 +30,11 @@ def apply_gtk_settings(theme_name: str, palette: dict) -> None:
         log_ok("GTK: Applications restarted")
 
     except subprocess.CalledProcessError:
-        log_warn(f"GTK: Theme '{theme_display_name}' not found in system")
+        log_warn(f"GTK: Theme '{theme_display_name}' not found. Install via AUR (e.g., adw-gtk3, gruvbox-gtk-theme)")
         return
     except FileNotFoundError:
-        pass
+        log_warn("GTK: gsettings not found. Install: pacman -S glib2")
+        return
 
     # ── GTK 3.0 config ──────────────────────────────────────────────────
     gtk3_dir = HOME_DIR / ".config" / "gtk-3.0"

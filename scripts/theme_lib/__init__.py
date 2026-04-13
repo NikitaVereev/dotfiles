@@ -8,7 +8,7 @@ from theme_lib.templates import (
 )
 from theme_lib.hot_reload import (
     apply_hyprland, apply_waybar,
-    apply_nvim, set_nvim_theme, apply_swaync, apply_tmux,
+    apply_nvim, set_nvim_theme, apply_swaync, apply_swayosd, apply_tmux,
     reload_all,
 )
 from theme_lib.gtk import apply_gtk_settings
@@ -30,7 +30,7 @@ __all__ = [
     "NAMED_THEME_FILES",
     # Hot-reload
     "apply_hyprland", "apply_waybar",
-    "apply_nvim", "set_nvim_theme", "apply_swaync", "apply_tmux",
+    "apply_nvim", "set_nvim_theme", "apply_swaync", "apply_swayosd", "apply_tmux",
     "reload_all",
     # GTK
     "apply_gtk_settings",
