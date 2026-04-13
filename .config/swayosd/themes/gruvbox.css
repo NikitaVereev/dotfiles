@@ -9,8 +9,11 @@
 
 window#osd {
   border-radius: 999px;
-  border: none;
-  background: alpha(@bg, 0.78);
+  border: 1px solid alpha(@fg, 0.08);
+  background: alpha(@bg, 0.72);
+  box-shadow:
+    0 1px 2px alpha(@bg, 0.1),
+    0 8px 32px alpha(@bg, 0.25);
 }
 
 #container {
