@@ -5,6 +5,7 @@
   "margin-right": 12,
   "margin-left": 12,
   "margin-top": 4,
+
   "modules-left": ["custom/hypr", "custom/window"],
   "modules-center": ["group/center3", "hyprland/workspaces", "group/center2"],
   "modules-right": ["group/right1"],
@@ -43,7 +44,7 @@
     "format": "{icon}",
     "format-icons": {
       "default": "",
-      "active": "",
+      "active": "",
       "empty": ""
     },
     "persistent-workspaces": {
@@ -66,15 +67,15 @@
   },
 
   "custom/hypr": {
-    "format": "<span size='11500'></span>",
+    "format": "<span size='11000'></span>",
     "on-click": "rofi -show drun",
-    "tooltip-format": "Rofi Menu\n\nAlt + R"
+    "tooltip-format": "Rofi Menu\\n\\nAlt + R"
   },
 
   "clock": {
     "format": "{:%H:%M · %a, %d/%m}",
     "format-alt": "{:%A, %d %B %Y}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    "tooltip-format": "<big>{:%Y %B}</big>\\n<tt><small>{calendar}</small></tt>"
   },
 
   "network": {
@@ -83,7 +84,7 @@
     "format-wifi": "{icon}",
     "format-ethernet": "󰌘",
     "format-disconnected": "󰤭",
-    "tooltip-format-wifi": "{essid}\\n{signalStrength}% · {frequency}GHz",
+    "tooltip-format-wifi": "{essid}\\\\n{signalStrength}% · {frequency}GHz",
     "tooltip-format-ethernet": "{ifname}",
     "tooltip-format-disconnected": "Disconnected",
     "interval": 15,
@@ -96,7 +97,7 @@
       "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
       "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
     },
-    "format-full": "󰂅",
+    "format-full": "󰂅 100%",
     "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
     "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
     "interval": 10,
@@ -108,9 +109,9 @@
   },
 
   "bluetooth": {
-    "format": "<span size='11500'>󰂯</span>",
-    "format-disabled": "<span size='11500'>󰂲</span>",
-    "format-connected": "<span size='11500'></span>",
+    "format": "<span size='11000'>󰂯</span>",
+    "format-disabled": "<span size='11000'>󰂲</span>",
+    "format-connected": "<span size='11000'></span>",
     "format-no-controller": "",
     "tooltip-format": "Devices connected: {num_connections}",
     "on-click": "blueman-manager"
@@ -124,7 +125,7 @@
     "format-muted": "󰝟 {volume}%",
     "on-click": "pavucontrol",
     "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "tooltip-format": "{icon} {desc}\n{volume}% · {format_source}",
+    "tooltip-format": "{icon} {desc}\\n{volume}% · {format_source}",
     "scroll-step": 5,
     "format-icons": {
       "headphone": "",
@@ -146,13 +147,14 @@
   },
 
   "tray": {
-    "icon-size": 16,
-    "spacing": 8
+    "icon-size": 15,
+    "spacing": 7
   },
+
   "mpris": {
-    "format": "<span size='11500'>{player_icon}</span> {artist} - {title}",
+    "format": "<span size='11000'>{player_icon}</span> {artist} — {title}",
     "interval": 2,
-    "max-length": 35,
+    "max-length": 32,
     "on-click-middle": "playerctl play-pause",
     "on-click": "playerctl previous",
     "on-click-right": "playerctl next",
@@ -167,7 +169,7 @@
   },
 
   "custom/update": {
-    "format": "   {}",
+    "format": "  {}",
     "exec": "~/.config/waybar/scripts/updates.sh",
     "interval": 1800,
     "signal": 8,
