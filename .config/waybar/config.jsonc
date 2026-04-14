@@ -16,14 +16,13 @@
 
   "group/center3": {
     "orientation": "inherit",
-    "modules": ["cpu", "memory", "custom/separator#blank", "mpris"]
+    "modules": ["mpris"]
   },
 
   "group/right1": {
     "orientation": "inherit",
     "modules": [
       "tray",
-      "custom/separator#dot",
       "hyprland/language",
       "custom/mic",
       "pulseaudio",
@@ -70,20 +69,6 @@
     "format": "<span size='11500'></span>",
     "on-click": "rofi -show drun",
     "tooltip-format": "Rofi Menu\n\nAlt + R"
-  },
-
-  "cpu": {
-    "interval": 5,
-    "format": "{icon} ",
-    "format-icons": ["󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"],
-    "on-click": "kitty htop"
-  },
-
-  "memory": {
-    "interval": 5,
-    "format": "{icon} ",
-    "format-icons": ["󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"],
-    "on-click": "kitty htop"
   },
 
   "clock": {
@@ -179,18 +164,6 @@
       "mopidy": "",
       "spotify": ""
     }
-  },
-
-  "custom/separator#blank": {
-    "format": " ",
-    "interval": 1,
-    "tooltip": false
-  },
-
-  "custom/separator#dot": {
-    "format": "  ",
-    "interval": 1,
-    "tooltip": false
   },
 
   "custom/update": {

@@ -1,253 +1,357 @@
 @import "themes/current.css";
 
-/* ─────────────────────────────────────────────
+/* ─────────────────────────────────────────────────────────────
    BASE
-───────────────────────────────────────────── */
+───────────────────────────────────────────────────────────── */
 * {
   border: none;
   border-radius: 0;
   min-height: 0;
-  font-family: "JetBrainsMono Nerd Font Propo";
+  font-family: "JetBrainsMono Nerd Font Propo", sans-serif;
   font-size: 13px;
+  font-weight: 500;
   transition:
-    background-color 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    color 0.2s ease,
-    opacity 0.2s ease;
+    background-color 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 160ms ease,
+    border-color 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 160ms ease;
 }
 
-/* ─────────────────────────────────────────────
-   BAR WINDOW
-───────────────────────────────────────────── */
-.modules-left  { margin-left:  6px; }
-.modules-right { margin-right: 6px; }
-
+/* ─────────────────────────────────────────────────────────────
+   BAR
+───────────────────────────────────────────────────────────── */
 window#waybar {
-  background-color: alpha(@panel_bg, 0.92);
-  border-radius: 14px;
-  transition: background-color 0.4s ease;
+  background: alpha(@bg0, 0.72);
+  color: @fg;
+  border-radius: 999px;
+  border: 1px solid alpha(@fg, 0.075);
+  padding: 0 6px;
+  box-shadow:
+    0 10px 30px alpha(black, 0.22),
+    inset 0 1px 0 alpha(white, 0.05);
+}
+
+window#waybar.hidden {
+  opacity: 0.25;
 }
 
 window#waybar.empty #window {
   background: transparent;
-  background-color: transparent;
   border: none;
-  border-radius: 0;
+  box-shadow: none;
   color: transparent;
   padding: 0;
   margin: 0;
   min-width: 0;
 }
 
-/* ─────────────────────────────────────────────
-   GROUPS
-───────────────────────────────────────────── */
-#group-center3,
-#group_center3,
+/* ─────────────────────────────────────────────────────────────
+   SHARED GROUP MATERIAL
+   group/center2 -> #center2
+   group/center3 -> #center3
+   group/right1  -> #right1
+───────────────────────────────────────────────────────────── */
+#custom-hypr,
+#custom-window,
+#workspaces,
+#center2,
 #center3,
-#group-center2,
-#group_center2,
-#center2 {
-  font-weight: 800;
-  background: alpha(@fg, 0.1);
-  border-radius: 12px;
-  padding: 0px 8px;
-  margin: 3.5px 2px;
-  color: @fg;
-}
-
-#group-right1,
-#group_right1,
 #right1 {
-  font-weight: 800;
-  background: transparent;
-  padding: 0px 8px;
-  margin: 3.5px 2px;
+  background: alpha(@bg1, 0.58);
   color: @fg;
+  border-radius: 999px;
+  border: 1px solid alpha(@fg, 0.06);
+  box-shadow: inset 0 1px 0 alpha(white, 0.035);
 }
 
-/* ─────────────────────────────────────────────
-   WORKSPACES
-───────────────────────────────────────────── */
-#workspaces {
-  padding: 0 8px;
-  border-radius: 8px;
-  margin: 4px 6px;
-  background-color: alpha(@fg, 0.1);
-  opacity: 0.95;
-}
+/* ─────────────────────────────────────────────────────────────
+   LEFT
+───────────────────────────────────────────────────────────── */
 
-#workspaces button {
-  color: @fg;
-  padding: 0 6px;
-  margin: 0 1.5px;
-  min-width: 9px;
-  border-radius: 18px;
-  transition:
-    background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    color 0.3s ease,
-    opacity 0.3s ease;
-}
-
-#workspaces button.empty {
-  color: @fg;
-  opacity: 0.5;
-}
-
-#workspaces button.active {
-  border-radius: 18px;
-  color: @panel_bg;
-  background: alpha(@fg, 0.9);
-  opacity: 1;
-  margin: 4px 5px;
-  padding: 0 7px;
-  transition:
-    background-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    color 0.3s ease,
-    opacity 1s ease;
-}
-
-#workspaces button.active:hover {
-  background-color: alpha(@fg, 0.95);
-}
-
-#workspaces button:hover {
-  background-color: alpha(@fg, 0.15);
-}
-
-#workspaces button.empty:hover {
-  background-color: alpha(@fg, 0.1);
-  opacity: 0.8;
-}
-
-/* ─────────────────────────────────────────────
-   CUSTOM MODULES
-───────────────────────────────────────────── */
 #custom-hypr {
-  background: alpha(@fg, 0.1);
-  border-radius: 8px;
-  margin: 4px 5px 4px 2px;
-  padding: 0 7px;
-  color: @fg;
+  margin: 4px 8px 4px 0;
+  padding: 0 12px;
+  color: alpha(@fg, 0.96);
+  font-size: 13px;
 }
 
 #custom-hypr:hover {
-  background: alpha(@fg, 0.13);
+  background: alpha(@fg, 0.08);
+  box-shadow:
+    inset 0 1px 0 alpha(white, 0.05),
+    0 0 0 1px alpha(@fg, 0.03);
 }
 
 #custom-window {
-  margin: 3.5px 2px;
-  padding: 0 8px;
-  border-radius: 8px;
-  background: alpha(@fg, 0.1);
-  font-size: 13px;
-  color: alpha(@fg, 0.8);
+  margin: 4px 8px 4px 0;
+  padding: 0 14px;
+  color: alpha(@fg, 0.88);
+  font-size: 12px;
+  font-weight: 500;
 }
 
-#custom-update {
+#custom-window:hover {
+  background: alpha(@fg, 0.05);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   CENTER GROUPS
+───────────────────────────────────────────────────────────── */
+#center2,
+#center3 {
+  margin: 4px 6px;
+  padding: 0 14px;
+}
+
+#center3 {
+  color: alpha(@fg, 0.84);
+}
+
+#center2 {
   color: @fg;
-  transition: opacity 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────
+  WORKSPACES
+───────────────────────────────────────────────────────────── */
+#workspaces {
+  margin: 4px 6px;
+  padding: 0 6px;
+}
+
+#workspaces button {
+  padding: 0 7px;
+  margin: 2px 1px;
+  min-width: 12px;
+  border-radius: 999px;
+  background: transparent;
+  color: alpha(@fg, 0.30);
+  box-shadow: none;
+}
+
+#workspaces button:hover {
+  background: alpha(@fg, 0.08);
+  color: alpha(@fg, 0.68);
+}
+
+#workspaces button.empty {
+  color: alpha(@fg, 0.22);
+}
+
+#workspaces button.visible {
+  color: alpha(@fg, 0.44);
+}
+
+#workspaces button.active {
+  background: alpha(@fg, 0.94);
+  color: @bg0;
+  box-shadow:
+    0 1px 2px alpha(black, 0.12),
+    inset 0 1px 0 alpha(white, 0.18);
+}
+
+/* ─────────────────────────────────────────────────────────────
+  CENTER MODULES
+───────────────────────────────────────────────────────────── */
+
+#cpu,
+#memory {
+  color: alpha(@fg, 0.56);
+  padding: 0 4px;
+  font-size: 13px;
+}
+
+#mpris {
+  color: alpha(@fg, 0.90);
+  padding: 0 6px;
+  font-size: 12px;
+}
+
+#clock {
+  color: @fg;
+  padding: 0 4px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+  RIGHT GROUP
+───────────────────────────────────────────────────────────── */
+
+#right1 {
+  margin: 4px 0;
+  padding: 0 10px;
+}
+
+/* tray */
+#tray {
+  margin: 0 3px;
+  padding: 0 2px;
+  color: alpha(@fg, 0.90);
+}
+
+#tray > * {
+  padding: 0 3px;
+}
+
+/* system modules */
+#language,
+#custom-mic,
+#pulseaudio,
+#bluetooth,
+#network,
+#battery {
+  margin: 0 2px;
+  padding: 0 6px;
+  border-radius: 999px;
+  color: alpha(@fg, 0.86);
+}
+
+/* visual hierarchy */
+#language,
+#custom-mic {
+  color: alpha(@fg, 0.66);
+}
+
+#bluetooth {
+  color: alpha(@fg, 0.78);
+}
+
+#pulseaudio,
+#network,
+#battery {
+  color: alpha(@fg, 0.94);
+}
+
+/* hover on interactive modules */
+#language:hover,
+#custom-mic:hover,
+#pulseaudio:hover,
+#bluetooth:hover,
+#network:hover,
+#battery:hover {
+  background: alpha(@fg, 0.08);
+  box-shadow: inset 0 1px 0 alpha(white, 0.04);
+}
+
+/* ─────────────────────────────────────────────────────────────
+  AUDIO / MIC
+───────────────────────────────────────────────────────────── */
+#pulseaudio.muted,
+#custom-mic.muted {
+  color: alpha(@fg, 0.42);
+}
+
+#pulseaudio.bluetooth {
+  color: alpha(@fg, 0.92);
+}
+/* ─────────────────────────────────────────────────────────────
+  NETWORK
+───────────────────────────────────────────────────────────── */
+#network.disconnected {
+  color: alpha(@fg, 0.42);
+}
+
+/* ─────────────────────────────────────────────────────────────
+  BATTERY
+───────────────────────────────────────────────────────────── */
+#battery {
+  margin-right: 0;
+}
+
+#battery.warning {
+  color: #f0b35a;
+}
+
+#battery.critical {
+  color: #ff6b6b;
+  animation: battery-pulse 1.3s ease-in-out infinite alternate;
+}
+
+@keyframes battery-pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.48;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+  BLUETOOTH
+───────────────────────────────────────────────────────────── */
+#bluetooth.disabled,
+#bluetooth.off {
+  color: alpha(@fg, 0.38);
+}
+
+/* ─────────────────────────────────────────────────────────────
+  CUSTOM UPDATE
+───────────────────────────────────────────────────────────── */
+#custom-update {
+  color: alpha(@fg, 0.82);
+  padding: 0 2px 0 6px;
+  transition:
+    opacity 180ms ease,
+    margin 180ms ease,
+    padding 180ms ease,
+    min-width 180ms ease;
 }
 
 #custom-update.hidden {
   opacity: 0;
   margin: 0;
   padding: 0;
+  min-width: 0;
 }
 
-/* ─────────────────────────────────────────────
-   SYSTEM MODULES
-───────────────────────────────────────────── */
-#cpu,
-#memory {
-  font-size: 19px;
-  padding: 2px 1px;
-  color: alpha(@fg, 0.85);
+/* ─────────────────────────────────────────────────────────────
+  CUSTOM SEPARATORS
+───────────────────────────────────────────────────────────── */
+#custom-separator {
+  color: alpha(@fg, 0.28);
 }
 
-#clock {
-  font-size: 14px;
-  font-weight: 700;
-  color: @fg;
+#custom-separator.dot {
+  font-size: 6px;
+  padding: 0 4px;
 }
 
-#battery {
-  margin: 0 6px;
-  color: @fg;
+#custom-separator.blank {
+  padding: 0 6px;
 }
 
-#battery.warning { color: #e8a44a; }
-#battery.critical {
-  color: #e05c5c;
-  animation: blink 1.2s ease-in-out infinite alternate;
-}
-
-@keyframes blink {
-  from { opacity: 1; }
-  to   { opacity: 0.5; }
-}
-
-/* ─────────────────────────────────────────────
-   RIGHT MODULES
-───────────────────────────────────────────── */
-#pulseaudio,
-#custom-mic,
-#bluetooth,
-#network,
-#language,
-#custom-update,
-#battery {
-  margin: 0 4px;
-  padding: 0 2px;
-  color: @fg;
-}
-
-#pulseaudio.muted,
-#custom-mic.muted {
-  color: alpha(@fg, 0.4);
-}
-
-#pulseaudio.bluetooth {
-  color: alpha(@fg, 0.85);
-}
-
-#tray {
-  margin: 0 4px;
-  color: @fg;
-}
-
-#tray > * { padding: 0 3px; }
-
-/* ─────────────────────────────────────────────
-   MPRIS
-───────────────────────────────────────────── */
-#mpris { color: @fg; }
-
-/* ─────────────────────────────────────────────
-   SEPARATORS
-───────────────────────────────────────────── */
-#custom-separator#dot,
-#custom-separator#blank { color: @fg; }
-
-/* ─────────────────────────────────────────────
-   LANGUAGE
-───────────────────────────────────────────── */
-#language {
-  color: @fg;
-  margin: 0 4px;
-}
-
-/* ─────────────────────────────────────────────
-   TOOLTIPS
-───────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────
+  TOOLTIPS
+───────────────────────────────────────────────────────────── */
 tooltip {
-  background: alpha(@panel_bg, 0.97);
-  border: 1px solid alpha(@fg, 0.15);
-  border-radius: 6px 6px 10px 10px;
-  padding: 4px 2px;
+  background: alpha(@bg0, 0.96);
+  border: 1px solid alpha(@fg, 0.08);
+  border-radius: 14px;
+  box-shadow:
+    0 12px 30px alpha(black, 0.22),
+    inset 0 1px 0 alpha(white, 0.04);
+  padding: 8px 10px;
 }
 
 tooltip label {
   color: @fg;
   font-size: 12px;
-  padding: 2px 6px;
+  font-weight: 500;
+  padding: 2px 4px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+  TOOLTIPSSUBTLE TEXT DEPTH
+───────────────────────────────────────────────────────────── */
+#custom-hypr,
+#clock,
+#pulseaudio,
+#network,
+#battery,
+#bluetooth {
+  text-shadow: 0 1px 0 alpha(black, 0.10);
 }
