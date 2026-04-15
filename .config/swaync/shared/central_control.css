@@ -180,50 +180,52 @@
   padding: 0;
 }
 
-.widget-mpris .widget-mpris-player {
+.widget-mpris-player {
   border-radius: 20px;
   margin: 0;
   padding: 0;
 }
 
-.widget-mpris .widget-mpris-player .mpris-background {
-  filter: blur(8px);
+/* Album art */
+.widget-mpris-album-art {
+  border-radius: 14px;
+  box-shadow: 0 2px 8px alpha(@background, 0.5);
+  min-height: 96px;
+  min-width: 96px;
+  background-size: cover;
+  background-position: center;
 }
 
-.widget-mpris .widget-mpris-player .mpris-overlay {
+/* Player controls overlay */
+.widget-mpris-overlay {
   padding: 14px;
   background: alpha(@background, 0.6);
+  border-radius: 20px;
 }
 
-.widget-mpris .widget-mpris-player .mpris-overlay button:hover {
+.widget-mpris-overlay button:hover {
   background: alpha(@selected, 0.3);
 }
 
-.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
-  border-radius: 14px;
-  box-shadow: 0 2px 8px alpha(@background, 0.5);
-  -gtk-icon-size: 96px;
-}
-
-.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-title {
+.widget-mpris-title {
   font-weight: bold;
   font-size: 1.1rem;
   color: @text;
 }
 
-.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-subtitle {
+.widget-mpris-subtitle {
   font-weight: normal;
   font-size: 0.9rem;
   color: alpha(@text, 0.8);
 }
 
-.widget-mpris .widget-mpris-player .mpris-overlay > box > button {
+.widget-mpris-overlay > box > button {
   border-radius: 50%;
   box-shadow: 0 1px 3px alpha(@background, 0.3);
   transition: transform 0.15s ease, background 0.15s ease;
 }
 
-.widget-mpris .widget-mpris-player .mpris-overlay > box > button:hover {
+.widget-mpris-overlay > box > button:hover {
   transform: translateY(-1px) scale(1.05);
   background: alpha(@selected, 0.3);
 }
