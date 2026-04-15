@@ -1,253 +1,188 @@
-/* ─────────────────────────────────────────────
-   CONTROL CENTER BASE
-───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   Control Center — Premium, clean, readable
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Control Center Shell ──────────────────────────────── */
 
 .control-center {
-  background: alpha(@background, 0.65);
-  border-radius: 24px;
-  border: 1px solid alpha(@selected, 0.2);
-  margin: 8px;
-  padding: 10px;
-}
-
-.control-center .control-center-list-placeholder {
-  opacity: 0.5;
-  color: alpha(@text, 0.6);
+  background: @background;
+  border-radius: 20px;
+  border: 1px solid alpha(@text, 0.08);
+  padding: 12px;
 }
 
 .control-center .control-center-list {
   background: transparent;
 }
 
-.control-center .control-center-list .notification {
-  box-shadow:
-    0 0 0 1px alpha(@text, 0.06),
-    0 1px 3px 1px alpha(@background, 0.4),
-    0 2px 6px 2px alpha(@background, 0.2);
+.control-center .control-center-list-placeholder {
+  opacity: 0;
 }
 
-.control-center .control-center-list .notification .notification-default-action,
-.control-center .control-center-list .notification .notification-action {
-  transition: background 0.15s ease-in-out;
-}
+/* ── Title Widget ──────────────────────────────────────── */
 
-.control-center .notification-row .notification-background {
-  background: alpha(@background-alt, 0.3);
-  border-radius: 16px;
-  margin: 3px 0;
-  padding: 4px;
-}
-
-.control-center .notification-row .notification-background .close-button {
-  background: alpha(@text, 0.12);
-  color: @text;
-  border-radius: 100%;
-  padding: 0;
-  margin: 2px;
-}
-
-.control-center .notification-row .notification-background .close-button:hover {
-  background: @selected;
-  color: @background;
-}
-
-/* ── WIDGETS (Shared) ─────────────────────── */
-
-.widget {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: bold;
-}
-
-/* 1. Title Widget */
 .widget-title {
-  font-size: 1.1em;
-  margin: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 4px 4px 8px;
   color: @text;
 }
 
-.widget-title > button {
-  border-radius: 16px;
-  background: @background-alt;
-  padding: 6px 20px;
+.widget-title button {
+  border-radius: 999px;
+  background: alpha(@text, 0.1);
+  padding: 6px 18px;
   color: @text;
-  box-shadow:
-    0 1px 2px alpha(@background, 0.3);
-  transition: transform 0.2s ease, background 0.15s ease;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  transition: background-color 0.2s ease;
 }
 
-.widget-title > button:hover {
-  transform: translateY(-1px) scale(1.03);
-  background: @selected;
-  color: @background;
+.widget-title button:hover {
+  background: alpha(@text, 0.18);
 }
 
-/* 2. Buttons Grid Widget */
+/* ── Buttons Grid Widget ───────────────────────────────── */
+
 .widget-buttons-grid {
-  margin: 6px;
+  margin: 8px 4px;
   border-radius: 16px;
-  background: alpha(@background-alt, 0.5);
+  background: alpha(@text, 0.06);
   padding: 8px;
 }
 
 .widget-buttons-grid flowbox {
-  padding: 0 4px;
+  padding: 0;
 }
 
 .widget-buttons-grid flowbox > flowboxchild > button {
-  padding: 8px 0;
-  margin: 4px;
-  border-radius: 14px;
-  background: alpha(@background, 0.4);
+  padding: 10px 0;
+  margin: 3px;
+  border-radius: 12px;
+  background: transparent;
   color: @text;
-  font-size: 1.2em;
-  border: 1px solid alpha(@text, 0.08);
-  box-shadow:
-    inset 0 1px 1px alpha(@text, 0.05),
-    0 1px 2px alpha(@background, 0.2);
-  transition: transform 0.15s ease, background 0.15s ease;
+  font-size: 16px;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
 .widget-buttons-grid flowbox > flowboxchild > button:hover {
-  transform: translateY(-1px) scale(1.04);
-  background: alpha(@selected, 0.4);
+  background: alpha(@text, 0.1);
 }
 
 .widget-buttons-grid flowbox > flowboxchild > button:checked {
   background: @selected;
   color: @background;
-  box-shadow:
-    inset 0 1px 2px alpha(@background, 0.3);
 }
 
-/* 3. Volume & Backlight Widgets */
-.widget-volume,
-.widget-backlight {
-  margin: 6px;
-  padding: 10px;
-  background: alpha(@background-alt, 0.5);
+/* ── Volume Widget ─────────────────────────────────────── */
+
+.widget-volume {
+  margin: 8px 4px;
+  padding: 12px;
+  background: alpha(@text, 0.06);
   border-radius: 16px;
+}
+
+.widget-volume label {
+  font-size: 14px;
+  font-weight: 600;
   color: @text;
-  font-size: 1em;
 }
 
-.widget-volume row image,
-.widget-backlight row image {
-  -gtk-icon-size: 22px;
+.widget-volume trough {
+  background: alpha(@text, 0.12);
+  border-radius: 999px;
+  min-height: 6px;
 }
 
-.widget-volume trough,
+.widget-volume progress {
+  background: @selected;
+  border-radius: 999px;
+  min-height: 6px;
+}
+
+.widget-volume slider {
+  background: @text;
+  min-height: 16px;
+  min-width: 16px;
+  border-radius: 50%;
+  margin: -5px;
+  border: none;
+  box-shadow: 0 1px 4px alpha(@background, 0.4);
+}
+
+.widget-volume row image {
+  -gtk-icon-size: 20px;
+  color: @text;
+}
+
+.per-app-volume {
+  background: alpha(@text, 0.04);
+  margin: 8px 4px 4px;
+  border-radius: 12px;
+  padding: 4px;
+}
+
+/* ── Backlight Widget ──────────────────────────────────── */
+
+.widget-backlight {
+  margin: 8px 4px;
+  padding: 12px;
+  background: alpha(@text, 0.06);
+  border-radius: 16px;
+}
+
+.widget-backlight label {
+  font-size: 14px;
+  font-weight: 600;
+  color: @text;
+}
+
 .widget-backlight trough {
-  background: alpha(@text, 0.15);
-  border-radius: 10px;
-  min-height: 8px;
-  box-shadow: 0 1px 2px alpha(@background, 0.2);
+  background: alpha(@text, 0.12);
+  border-radius: 999px;
+  min-height: 6px;
 }
 
-.widget-volume progress,
 .widget-backlight progress {
   background: @selected;
-  border-radius: 10px;
-  min-height: 8px;
+  border-radius: 999px;
+  min-height: 6px;
 }
 
-.widget-volume slider,
 .widget-backlight slider {
   background: @text;
   min-height: 16px;
   min-width: 16px;
   border-radius: 50%;
-  margin: -4px;
-  box-shadow: 0 1px 3px alpha(@background, 0.4);
+  margin: -5px;
+  border: none;
+  box-shadow: 0 1px 4px alpha(@background, 0.4);
 }
 
-.widget-volume label,
-.widget-backlight label {
-  font-size: 1.1rem;
-}
-
-.per-app-volume {
-  background-color: alpha(@background, 0.4);
-  margin: 6px;
-  border-radius: 14px;
-}
-
-/* 4. MPRIS Widget */
-.widget-mpris {
-  margin: 10px 6px;
-  border-radius: 20px;
-  background: alpha(@background-alt, 0.5);
-  padding: 0;
-}
-
-.widget-mpris-player {
-  border-radius: 20px;
-  margin: 0;
-  padding: 0;
-}
-
-/* Album art */
-.widget-mpris-album-art {
-  border-radius: 14px;
-  box-shadow: 0 2px 8px alpha(@background, 0.5);
-  min-height: 96px;
-  min-width: 96px;
-  background-size: cover;
-  background-position: center;
-}
-
-/* Player controls overlay */
-.widget-mpris-overlay {
-  padding: 14px;
-  background: alpha(@background, 0.6);
-  border-radius: 20px;
-}
-
-.widget-mpris-overlay button:hover {
-  background: alpha(@selected, 0.3);
-}
-
-.widget-mpris-title {
-  font-weight: bold;
-  font-size: 1.1rem;
+.widget-backlight row image {
+  -gtk-icon-size: 20px;
   color: @text;
 }
 
-.widget-mpris-subtitle {
-  font-weight: normal;
-  font-size: 0.9rem;
-  color: alpha(@text, 0.8);
-}
+/* ── DND Widget ────────────────────────────────────────── */
 
-.widget-mpris-overlay > box > button {
-  border-radius: 50%;
-  box-shadow: 0 1px 3px alpha(@background, 0.3);
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-
-.widget-mpris-overlay > box > button:hover {
-  transform: translateY(-1px) scale(1.05);
-  background: alpha(@selected, 0.3);
-}
-
-.widget-mpris > box > button {
-  border-radius: 14px;
-  color: @text;
-}
-
-/* 5. DND Widget */
 .widget-dnd {
-  margin: 6px;
+  margin: 8px 4px;
   color: @text;
-  font-size: 0.95em;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .widget-dnd > switch {
-  background: alpha(@background-alt, 0.5);
-  border-radius: 14px;
-  padding: 3px;
-  min-width: 46px;
+  background: alpha(@text, 0.12);
+  border-radius: 999px;
+  padding: 2px;
+  min-width: 44px;
   min-height: 24px;
+  border: none;
 }
 
 .widget-dnd > switch:checked {
@@ -256,20 +191,117 @@
 
 .widget-dnd > switch slider {
   background: @text;
-  border-radius: 10px;
+  border-radius: 50%;
   min-width: 18px;
   min-height: 18px;
-  box-shadow: 0 1px 2px alpha(@background, 0.3);
+  margin: 1px;
+  box-shadow: 0 1px 3px alpha(@background, 0.3);
 }
 
-/* 6. Inhibitors Widget */
-.widget-inhibitors > label {
-  margin-right: 8px;
-  font-size: 1.2rem;
+/* ── Notifications in Control Center ───────────────────── */
+
+.control-center .notification-row {
+  padding: 0;
+  margin: 0;
 }
 
-.widget-inhibitors > button {
-  margin-left: 8px;
-  border-radius: 14px;
-  background: alpha(@background-alt, 0.5);
+.control-center .notification-row .notification-background {
+  padding: 0;
+  margin: 4px 0;
+}
+
+.control-center .notification-row .notification-background .notification {
+  border-radius: 16px;
+  border: none;
+  background: alpha(@text, 0.06);
+  padding: 0;
+}
+
+.control-center .notification-row .notification-background .notification .notification-default-action {
+  padding: 10px 12px;
+  background: transparent;
+  color: @text;
+  border-radius: 16px;
+}
+
+.control-center .notification-row .notification-background .notification .notification-default-action:hover {
+  background: alpha(@text, 0.1);
+}
+
+.control-center .notification-row .notification-background .notification .notification-default-action .notification-content {
+  padding: 0;
+  background: transparent;
+}
+
+.control-center .notification-row .notification-background .notification .notification-default-action .notification-content .summary {
+  font-size: 14px;
+  font-weight: 600;
+  color: @text;
+}
+
+.control-center .notification-row .notification-background .notification .notification-default-action .notification-content .time {
+  font-size: 11px;
+  color: alpha(@text, 0.4);
+}
+
+.control-center .notification-row .notification-background .notification .notification-default-action .notification-content .body {
+  font-size: 13px;
+  color: alpha(@text, 0.8);
+  margin-top: 2px;
+}
+
+.control-center .notification-row .notification-background .notification .notification-default-action .notification-content .app-icon {
+  -gtk-icon-size: 20px;
+  margin: 6px 8px 6px 0;
+}
+
+.control-center .notification-row .notification-background .notification .notification-default-action .notification-content .image {
+  -gtk-icon-size: 48px;
+  border-radius: 12px;
+  margin: 4px 0 4px 4px;
+}
+
+.control-center .notification-row .notification-background .close-button {
+  background: alpha(@text, 0.1);
+  color: @text;
+  border: none;
+  border-radius: 50%;
+  min-width: 22px;
+  min-height: 22px;
+  padding: 0;
+  margin: 6px;
+}
+
+.control-center .notification-row .notification-background .close-button:hover {
+  background: alpha(@text, 0.2);
+}
+
+/* ── Notification Groups ───────────────────────────────── */
+
+.notification-group {
+  transition: opacity 0.2s ease;
+}
+
+.notification-group .notification-group-headers {
+  margin: 4px 8px;
+  padding: 0;
+}
+
+.notification-group .notification-group-headers .notification-group-icon {
+  color: @text;
+  -gtk-icon-size: 16px;
+}
+
+.notification-group .notification-group-headers .notification-group-header {
+  font-size: 13px;
+  font-weight: 600;
+  color: @text;
+}
+
+.notification-group.collapsed .notification-row:not(:last-child) {
+  filter: blur(1px);
+}
+
+.notification-group.collapsed.not-expanded {
+  opacity: 0.3;
 }

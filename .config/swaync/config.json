@@ -8,38 +8,45 @@
   "layer-shell": true,
   "layer-shell-cover-screen": false,
   "cssPriority": "highest",
-  "control-center-margin-top": 0,
-  "control-center-margin-bottom": 0,
-  "control-center-margin-right": 0,
+  "control-center-margin-top": 8,
+  "control-center-margin-bottom": 8,
+  "control-center-margin-right": 8,
   "control-center-margin-left": 0,
   "notification-2fa-action": true,
   "notification-inline-replies": false,
-  "notification-body-image-height": 100,
-  "notification-body-image-width": 200,
-  "timeout": 9,
-  "timeout-low": 6,
+  "notification-body-image-height": 120,
+  "notification-body-image-width": 240,
+  "timeout": 8,
+  "timeout-low": 5,
   "timeout-critical": 0,
-  "fit-to-screen": true,
+  "fit-to-screen": false,
   "relative-timestamps": true,
-  "control-center-width": 500,
-  "control-center-height": 600,
-  "notification-window-width": 500,
+  "control-center-width": 420,
+  "control-center-height": 700,
+  "notification-window-width": 420,
   "keyboard-shortcuts": true,
   "notification-grouping": true,
   "image-visibility": "when-available",
   "transition-time": 200,
   "hide-on-clear": false,
   "hide-on-action": true,
-  "text-empty": "No Notifications",
+  "text-empty": "No notifications",
   "script-fail-notify": true,
   "notification-visibility": {
-    "example-name": {
+    "spotify": {
       "state": "muted",
       "urgency": "Low",
       "app-name": "Spotify"
     }
   },
-  "widgets": ["title", "buttons-grid", "mpris", "volume", "backlight", "dnd", "notifications"],
+  "widgets": [
+    "title",
+    "buttons-grid",
+    "volume",
+    "backlight",
+    "dnd",
+    "notifications"
+  ],
   "widget-config": {
     "notifications": {
       "vexpand": true
@@ -47,69 +54,52 @@
     "title": {
       "text": "Notifications",
       "clear-all-button": true,
-      "button-text": "Clear All"
+      "button-text": "Clear"
     },
     "dnd": {
       "text": "Do Not Disturb"
     },
-    "mpris": {
-      "autohide": false,
-      "show-album-art": "always",
-      "loop-carousel": true
-    },
     "volume": {
-      "device": "default",
       "label": "\ueb51",
-      "slider": true
+      "show-per-app": false,
+      "show-per-app-icon": true,
+      "show-per-app-label": false
     },
     "backlight": {
-      "device": "amdgpu_bl1",
       "label": "\ueb7e",
-      "slider": true,
       "min": 10
     },
     "buttons-grid": {
       "buttons-per-row": 4,
       "actions": [
         {
-          "label": "   \uea37 Bluetooth   ",
-          "type": "button",
-          "active": true
+          "label": "\uea37",
+          "command": "blueman-manager"
         },
         {
-          "label": "\ueb0d",
-          "type": "button",
-          "active": true
+          "label": "\ueba9",
+          "command": "hyprshot -m region -o ~/Pictures/screenshots/ -f 'screenshot_$(date +\"%Y%m%d_%H%M%S\").png' -c"
+        },
+        {
+          "label": "\uf489",
+          "command": "kitty htop"
+        },
+        {
+          "label": "\ueb51",
+          "command": "pavucontrol"
+        },
+        {
+          "label": "\ueb52",
+          "command": "kitty nmtui"
         },
         {
           "label": "\uea7a",
-          "type": "button",
-          "active": true
+          "command": "hyprlock"
         },
         {
           "label": "\ufaf8",
           "type": "toggle",
           "active": false
-        },
-        {
-          "label": "   \ueb52 Ethernet   ",
-          "type": "button",
-          "active": true
-        },
-        {
-          "label": "\ueaea",
-          "type": "button",
-          "active": true
-        },
-        {
-          "label": "\uea45",
-          "type": "button",
-          "active": true
-        },
-        {
-          "label": "\ufb26",
-          "type": "button",
-          "active": true
         }
       ]
     }
