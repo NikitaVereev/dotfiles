@@ -7,7 +7,6 @@
   "control-center-layer": "top",
   "layer-shell": true,
   "layer-shell-cover-screen": false,
-  "cssPriority": "highest",
   "control-center-margin-top": 8,
   "control-center-margin-bottom": 8,
   "control-center-margin-right": 8,
@@ -22,7 +21,7 @@
   "fit-to-screen": false,
   "relative-timestamps": true,
   "control-center-width": 500,
-  "control-center-height": 600,
+  "control-center-height": -1,
   "notification-window-width": 500,
   "keyboard-shortcuts": true,
   "notification-grouping": true,
@@ -76,6 +75,42 @@
           "type": "toggle",
           "active": true,
           "command": "swaync-client -t -sw;blueman-manager"
+        },
+        {
+          "label": "\ufb26",
+          "type": "toggle",
+          "active": true,
+          "command": "swaync-client -t -sw;rofi -show calc -modi calc -no-show-match -no-sort"
+        },
+        {
+          "label": "\ufb26",
+          "type": "toggle",
+          "active": true,
+          "command": "swaync-client -t -sw;rofi -show calc -modi calc -no-show-match -no-sort"
+        },
+        {
+          "label": "\ufb26",
+          "type": "toggle",
+          "active": true,
+          "command": "swaync-client -t -sw;rofi -show calc -modi calc -no-show-match -no-sort"
+        },
+        {
+          "label": "   \uea37 Bluetooth   ",
+          "type": "toggle",
+          "active": true,
+          "command": "swaync-client -t -sw;blueman-manager"
+        },
+        {
+          "label": "\ufb26",
+          "type": "toggle",
+          "active": true,
+          "command": "swaync-client -t -sw;rofi -show calc -modi calc -no-show-match -no-sort"
+        },
+        {
+          "label": "\ufb26",
+          "type": "toggle",
+          "active": true,
+          "command": "swaync-client -t -sw;rofi -show calc -modi calc -no-show-match -no-sort"
         },
         {
           "label": "\ufb26",
