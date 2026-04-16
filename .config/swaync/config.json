@@ -14,16 +14,16 @@
   "control-center-margin-left": 0,
   "notification-2fa-action": true,
   "notification-inline-replies": false,
-  "notification-body-image-height": 120,
-  "notification-body-image-width": 240,
-  "timeout": 8,
-  "timeout-low": 5,
+  "notification-body-image-height": 100,
+  "notification-body-image-width": 200,
+  "timeout": 9,
+  "timeout-low": 6,
   "timeout-critical": 0,
   "fit-to-screen": false,
   "relative-timestamps": true,
-  "control-center-width": 420,
-  "control-center-height": 700,
-  "notification-window-width": 420,
+  "control-center-width": 500,
+  "control-center-height": 600,
+  "notification-window-width": 500,
   "keyboard-shortcuts": true,
   "notification-grouping": true,
   "image-visibility": "when-available",
@@ -39,14 +39,7 @@
       "app-name": "Spotify"
     }
   },
-  "widgets": [
-    "title",
-    "buttons-grid",
-    "volume",
-    "backlight",
-    "dnd",
-    "notifications"
-  ],
+  "widgets": ["title", "buttons-grid", "mpris", "volume", "backlight", "dnd", "notifications"],
   "widget-config": {
     "notifications": {
       "vexpand": true
@@ -59,6 +52,11 @@
     "dnd": {
       "text": "Do Not Disturb"
     },
+    "mpris": {
+      "autohide": false,
+      "show-album-art": "always",
+      "loop-carousel": false
+    },
     "volume": {
       "label": "\ueb51",
       "show-per-app": false,
@@ -66,6 +64,7 @@
       "show-per-app-label": false
     },
     "backlight": {
+      "device": "amdgpu_bl1",
       "label": "\ueb7e",
       "min": 10
     },
@@ -73,33 +72,16 @@
       "buttons-per-row": 4,
       "actions": [
         {
-          "label": "\uea37",
-          "command": "blueman-manager"
-        },
-        {
-          "label": "\ueba9",
-          "command": "hyprshot -m region -o ~/Pictures/screenshots/ -f 'screenshot_$(date +\"%Y%m%d_%H%M%S\").png' -c"
-        },
-        {
-          "label": "\uf489",
-          "command": "kitty htop"
-        },
-        {
-          "label": "\ueb51",
-          "command": "pavucontrol"
-        },
-        {
-          "label": "\ueb52",
-          "command": "kitty nmtui"
-        },
-        {
-          "label": "\uea7a",
-          "command": "hyprlock"
-        },
-        {
-          "label": "\ufaf8",
+          "label": "   \uea37 Bluetooth   ",
           "type": "toggle",
-          "active": false
+          "active": true,
+          "command": "swaync-client -t -sw;blueman-manager"
+        },
+        {
+          "label": "\ufb26",
+          "type": "toggle",
+          "active": true,
+          "command": "swaync-client -t -sw;rofi -show calc -modi calc -no-show-match -no-sort"
         }
       ]
     }
