@@ -1,1 +1,1 @@
-gruvebox_1_gruvbox
+gruvebox1_catppuccin
