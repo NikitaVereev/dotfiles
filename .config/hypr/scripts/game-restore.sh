@@ -4,3 +4,6 @@
 [ -f ~/.config/hypr/modules/binds.conf.bak ] && mv ~/.config/hypr/modules/binds.conf.bak ~/.config/hypr/modules/binds.conf
 
 hyprctl reload
+
+notify-send "Reset game scripts"
+
