@@ -72,3 +72,4 @@ export STARSHIP_CONFIG=~/.config/starship/themes/current.toml
 # NVM (optional)
 export NVM_DIR="$HOME/.config/nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
+export PATH="$HOME/.local/bin:$PATH"
