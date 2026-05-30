@@ -2,34 +2,51 @@
 
 Hyprland (Wayland) dotfiles для Arch Linux.
 
+**Neovim-конфиг живёт отдельно** в репо [`nvim-config`](https://github.com/NikitaVereev/nvim-config)
+
 ## Установка
 
 ```bash
+# 1. Клонировать main dotfiles
 git clone https://github.com/NikitaVereev/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 
-# Создать symlink'и (через GNU stow)
+# 2. Развернуть симлинки (shell, tmux, hyprland, waybar, kitty, ...)
 stow -t ~ .
 
-# Или вручную:
-# ln -s ~/.dotfiles/.zshrc ~/.zshrc
-# ln -s ~/.dotfiles/.config/hypr ~/.config/hypr
-# ln -s ~/.dotfiles/.config/nvim ~/.config/nvim
-# ... и т.д.
+# 3. Подтянуть nvim-config и плагины (а также TPM)
+./install.sh
 ```
+
+`install.sh` сделает:
+
+- `git clone nvim-config → ~/.config/nvim`
+- `git clone TPM → ~/.tmux/plugins/tpm`
+- `nvim --headless +Lazy! sync +qa` (bootstrap плагинов)
+
+Потом внутри tmux: `<prefix> I` (Shift-I) — установит tmux-плагины.
+
+## Только Neovim (без desktop-стека)
+
+```bash
+git clone https://github.com/NikitaVereev/nvim-config.git ~/.config/nvim
+nvim
+```
+
+Дальше следуй `README.md` в самом `nvim-config` репо — там полный список системных deps (ripgrep, fd, lazygit, tree-sitter, ...).
 
 ## Стек
 
-| Компонент | Инструменты                        |
-| --------- | ---------------------------------- |
-| WM        | Hyprland, Hyprlock, Hyprpaper      |
-| Панель    | Waybar                             |
-| Терминал  | Kitty                              |
-| Shell     | Zsh + Oh My Zsh + Starship + Atuin |
-| Редактор  | Neovim (Lazy.nvim)                 |
-| Лаунчер   | Rofi                               |
-| Файловый  | Yazi, Thunar                       |
-| Tmux      | TPM + Resurrect                    |
+| Компонент | Инструменты                                                            |
+| --------- | ---------------------------------------------------------------------- |
+| WM        | Hyprland, Hyprlock, Hyprpaper                                          |
+| Панель    | Waybar                                                                 |
+| Терминал  | Kitty                                                                  |
+| Shell     | Zsh + Oh My Zsh + Starship + Atuin                                     |
+| Редактор  | [Neovim](https://github.com/NikitaVereev/nvim-config) (отдельный репо) |
+| Лаунчер   | Rofi                                                                   |
+| Файловый  | Yazi, Thunar                                                           |
+| Tmux      | TPM + Resurrect                                                        |
 
 ## Управление темами
 
@@ -59,16 +76,6 @@ stow -t ~ .
 | `Mod1 + 1-9`       | Рабочие столы |
 | `Mod1 + Shift + T` | Смена темы    |
 
-### Neovim (Leader = Space)
-
-| Клавиши     | Действие    |
-| ----------- | ----------- |
-| `Space + e` | Проводник   |
-| `Space + f` | Поиск файла |
-| `Space + /` | Grep        |
-| `Space + b` | Буферы      |
-| `Space + g` | Git         |
-
 ### Tmux (Prefix = Ctrl+A)
 
 | Клавиши            | Действие             |
@@ -86,6 +93,7 @@ stow -t ~ .
 ├── .editorconfig
 ├── .prettierrc
 ├── README.md
+├── install.sh                  # пост-stow bootstrap (клонирует nvim-config, TPM, плагины)
 ├── scripts/
 │   ├── theme-manager.py        # Orchestrator
 │   ├── theme-selector.sh       # Rofi → theme manager
@@ -103,7 +111,6 @@ stow -t ~ .
 │   └── templates/              # Jinja2-style templates (.j2)
 └── .config/
     ├── hypr/           # Hyprland
-    ├── nvim/           # Neovim
     ├── waybar/         # Waybar
     ├── rofi/           # Rofi
     ├── swaync/         # Уведомления
@@ -116,8 +123,11 @@ stow -t ~ .
 
 ## Post-Install
 
-1. **Tmux плагины**: Откройте tmux, нажмите `Ctrl+A + I`
-2. **Neovim плагины**: Запустите `nvim` (авто-установка)
+`./install.sh` делает большую часть. Что нужно вручную:
+
+1. **Tmux плагины**: Откройте tmux, нажмите `Ctrl+A + I` (Shift-I)
+2. **Mason tools** (форматтеры/линтеры): В nvim — `:MasonToolsInstall`
+3. **Treesitter парсеры**: В nvim — `:TSUpdate`
 
 ## GTK-темы
 

@@ -26,8 +26,8 @@ doc/tags
 .DS_Store
 Thumbs.db
 
-# ── Plugins (auto-install via Lazy.nvim / TPM) ─────────────────
-.config/nvim/plugin/
+# ── Plugins (auto-install via TPM) ─────────────────────────────
+# nvim plugins live in separate repo (nvim-config); not relevant here
 .config/tmux/plugins/
 
 # ── Tmux ───────────────────────────────────────────────────────
@@ -47,7 +47,6 @@ Thumbs.db
 .config/tmux/themes/*.conf
 .config/waybar/themes/*.css
 .config/yazi/themes/*.toml
-.config/nvim/themes/current_theme
 
 # Theme palette symlink
 themes/palettes/current.toml
@@ -55,9 +54,6 @@ themes/palettes/current.toml
 # ── Cache ──────────────────────────────────────────────────────
 .cache/
 
-
-# ── Lazy.nvim lock file (optional - commit if you want pinned versions) ─
-# .config/nvim/lazy-lock.json
 
 # Wallpapers (user content)
 wallpapers/original/
